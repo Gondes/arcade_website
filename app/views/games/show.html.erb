@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<!--Somehow link to the rounds page-->
+<!--How do I know which game to go?-->
+<p>
+  <strong>User 1:</strong>
+  <%= @game.player_1.name %>
+</p>
+
+<p>
+  <strong>User 2:</strong>
+  <%= @game.player_2.name %>
+</p>
+
+<p>
+  <strong>Winner:</strong>
+  <%= @game.winner_id %>
+</p>
+
+<p>
+  <strong>Done:</strong>
+  <%= @game.done %>
+</p>
+
+<p>
+  <strong>Best Of:</strong>
+  <%= @game.best_of %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>

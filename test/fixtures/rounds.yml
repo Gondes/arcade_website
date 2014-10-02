@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game_id: 1
+  user_1_id: 1
+  user_1_move: MyString
+  user_2_id: 1
+  user_2_move: MyString
+  winner_id: 1
+  tie: false
+
+two:
+  game_id: 1
+  user_1_id: 1
+  user_1_move: MyString
+  user_2_id: 1
+  user_2_move: MyString
+  winner_id: 1
+  tie: false

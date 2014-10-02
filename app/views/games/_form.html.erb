@@ -1,0 +1,33 @@
+<%= form_for(@game) do |f| %>
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+      <ul>
+      <% @game.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :player_1 %><br>
+    <%= f.select :user_1_id, options_from_collection_for_select(User.all, 'id', 'name') %>
+  </div>
+  <div class="field">
+    <%= f.label :player_2 %><br>
+    <%= f.select :user_2_id, options_from_collection_for_select(User.all, 'id', 'name') %>
+  </div>
+  <div class="field">
+    <%= f.radio_button :game_to, '2', :checked => true %>
+    <%= f.label :game_to, 'Best of 3' %><br>
+    <%= f.radio_button :game_to, '3', :checked => false %>
+    <%= f.label :game_to, 'Best of 5' %><br>
+    <%= f.radio_button :game_to, '4', :checked => false %>
+    <%= f.label :game_to, 'Best of 7' %><br>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  user_name: MyString
+  games_played_count: 1
+  wins_count: 1
+  loss_count: 1
+  tie_count: 1
+  best_win_streak: 1
+  current_win_streak: 1
+
+two:
+  first_name: MyString
+  last_name: MyString
+  user_name: MyString
+  games_played_count: 1
+  wins_count: 1
+  loss_count: 1
+  tie_count: 1
+  best_win_streak: 1
+  current_win_streak: 1

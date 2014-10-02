@@ -1,0 +1,15 @@
+Lets play <%= @game.player_1.name %>  and <%= @game.player_2.name  %>!!!!<br>
+
+<p>TT--|<%= @game.game_to %>|--TT</p>
+
+<% @game.generate_win_chart %>
+<% @test_text = "Hello World" %>
+<p>--|<%= @test_text + " And All Who Inhabit It" %>|--</p>
+<p>--|<%= @game.get_result(0, 2) %>|--</p>
+
+
+<% @game.rounds.each_with_index do |round, i| %>
+  <%= link_to "Round #{i+1}", play_games_url(game_id: @game.id, round_id: round.id) %><br>
+<% end %>
+
+<p><%= link_to "Manage Rounds", rounds_url(game_id: @game.id) %></p>
