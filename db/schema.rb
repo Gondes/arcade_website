@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001135447) do
+ActiveRecord::Schema.define(version: 20141002173524) do
 
   create_table "games", force: true do |t|
     t.integer  "user_1_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20141001135447) do
     t.boolean  "tie"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "round_number"
   end
 
   create_table "users", force: true do |t|

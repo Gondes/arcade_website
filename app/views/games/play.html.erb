@@ -8,7 +8,7 @@ Lets play <%= @game.player_1.name %>  and <%= @game.player_2.name  %>!!!!
   <%= hidden_field_tag(:game_id, @game.id) %>
 
   <ul>
-    <%= radio_button_tag(:user_1_move, "rock") %>
+    <%= radio_button_tag(:user_1_move, "rock", :checked => true) %>
     <%= label_tag(:user_1_move, "I choose Rock") %><br>
     <%= radio_button_tag(:user_1_move, "paper") %>
     <%= label_tag(:user_1_move, "I choose Paper") %><br>
@@ -19,7 +19,7 @@ Lets play <%= @game.player_1.name %>  and <%= @game.player_2.name  %>!!!!
   <h2><%= @game.player_2.name%> pick your move!</h2>
 
   <ul>
-    <%= radio_button_tag(:user_2_move, "rock") %>
+    <%= radio_button_tag(:user_2_move, "rock", :checked => true) %>
     <%= label_tag(:user_2_move, "I choose Rock") %><br>
     <%= radio_button_tag(:user_2_move, "paper") %>
     <%= label_tag(:user_2_move, "I choose Paper") %><br>

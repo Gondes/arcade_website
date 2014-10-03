@@ -8,6 +8,15 @@
 </head>
 <body>
 
+<h1>Arcade</h1>
+
+<hr />
+<ul>
+    <li><%= link_to 'Home', root_path %></li>
+	<li><%= link_to "Manage Users", users_url %></li>
+	<li><%= link_to "Manage Games", games_url %></li>
+</ul>
+<hr />
 <%= yield %>
 
 </body>

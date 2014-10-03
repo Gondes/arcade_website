@@ -43,6 +43,9 @@ class GamesController < ApplicationController
           #Round.create!(:game_id => @game.id)
           round = Round.new
           round.game = @game
+          round.user_1_id = @game.user_1_id
+          round.user_2_id = @game.user_2_id
+          round.round_number = i + 1
           round.save!
         end
 

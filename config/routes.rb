@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :rounds do 
     collection do 
+      get :choose_move
       get :get_result
     end
   end

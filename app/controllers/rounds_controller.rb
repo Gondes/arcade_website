@@ -18,13 +18,21 @@ class RoundsController < ApplicationController
   def show
   end
 
-  def get_result
-    #Rails.logger.info '^' * 200
-    #Rails.logger.info id.inspect
-    #Rails.logger.info params.inspect
+  def choose_move
 
-    #@game = Game.find params[:game_id]
-    #@round = Round.find params[:round_id]
+  end
+
+  def get_result
+    Rails.logger.info '^' * 200
+    #Rails.logger.info id.inspect
+    Rails.logger.info params.inspect
+    @game = Game.find params[:game_id]
+    @round = Round.find params[:round_id]
+
+    @round.user_1_move = params[:aaaa]
+    @round.user_1_move = params[:bbbbb]
+    @round.save!
+
   end
 
   # GET /rounds/new
@@ -34,6 +42,10 @@ class RoundsController < ApplicationController
 
   # GET /rounds/1/edit
   def edit
+    #@game = Game.find params[:game_id]
+    #@round = Round.find params[:round_id]
+
+    #@round.get_round_result
   end
 
   # POST /rounds
@@ -59,11 +71,25 @@ class RoundsController < ApplicationController
       if @round.update(round_params)
         format.html { redirect_to @round, notice: 'Round was successfully updated.' }
         format.json { render :show, status: :ok, location: @round }
+
+        @round.find_winner
+
+        if @round.save!
+          format.html { redirect_to @round, notice: 'Round was successfully updated.' }
+          format.json { render :show, status: :ok, location: @round }
+        else
+          format.html { render :edit }
+          format.json { render json: @round.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render :edit }
         format.json { render json: @round.errors, status: :unprocessable_entity }
       end
     end
+
+
+    @round.update(round_params)
+
   end
 
   # DELETE /rounds/1
@@ -84,6 +110,6 @@ class RoundsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def round_params
-      params.require(:round).permit(:game_id, :user_1_id, :user_1_move, :user_2_id, :user_2_move, :winner_id, :tie)
+      params.require(:round).permit(:game_id, :user_1_id, :user_1_move, :user_2_id, :user_2_move, :winner_id, :tie, :round_number)
     end
 end

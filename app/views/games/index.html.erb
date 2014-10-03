@@ -20,9 +20,8 @@
         <td><%= game.winner_id %></td>
         <td><%= game.done %></td>
         <td><%= game.best_of %></td>
-        <td><%= link_to 'Start', start_games_url(id: game.id) %></td>
-        <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
+        <td><%= link_to 'Start', rounds_url(game_id: game.id)  %></td>
+        <td><%= link_to 'Results', game %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -32,3 +31,4 @@
 <br>
 
 <%= link_to 'New Game', new_game_path %>
+<%= link_to 'Home', root_path %>

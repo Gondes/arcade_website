@@ -1,27 +1,27 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Game:</strong>
-  <%= @round.game_id %>
+  <strong>Round Number:</strong>
+  <%= @round.round_number %>
 </p>
 
 <p>
-  <strong>User 1:</strong>
-  <%= @round.user_1_id %>
+  <strong>Player 1:</strong>
+  <%= @round.player_1.name %>
 </p>
 
 <p>
-  <strong>User 1 move:</strong>
+  <strong>Player 1 Move:</strong>
   <%= @round.user_1_move %>
 </p>
 
 <p>
-  <strong>User 2:</strong>
-  <%= @round.user_2_id %>
+  <strong>Player 2:</strong>
+  <%= @round.player_2.name %>
 </p>
 
 <p>
-  <strong>User 2 move:</strong>
+  <strong>Player 2 Move:</strong>
   <%= @round.user_2_move %>
 </p>
 
@@ -30,10 +30,10 @@
   <%= @round.winner_id %>
 </p>
 
-<p>
+<!--<p>
   <strong>Tie:</strong>
   <%= @round.tie %>
-</p>
+</p>-->
 
-<%= link_to 'Edit', edit_round_path(@round) %> |
-<%= link_to 'Back', rounds_path %>
+
+<%= link_to 'Back', rounds_path(game_id: @round.game.id) %>

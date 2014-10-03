@@ -3,35 +3,38 @@
 <table border="1">
   <thead>
     <tr>
-      <th>Game</th>
+      <th>Round</th>
       <th>User 1</th>
       <th>User 1 move</th>
       <th>User 2</th>
       <th>User 2 move</th>
       <th>Winner</th>
       <th>Tie</th>
-      <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @rounds.each do |round| %>
       <tr>
-        <td><%= round.game_id %></td>
-        <td><%= round.user_1_id %></td>
+        <td><%= round.round_number %></td>
+        <td><%= @game.player_1.name %></td>
         <td><%= round.user_1_move %></td>
-        <td><%= round.user_2_id %></td>
+        <td><%= round.player_2.name %></td>
         <td><%= round.user_2_move %></td>
-        <td><%= round.winner_id %></td>
+        <% if round.played? %>
+          <td>Not Played</td>
+        <% elsif round.winner.nil? %>
+          <td>Tie</td>
+        <% else %>
+          <td><%= round.winner.name %></td>
+        <% end %>
         <td><%= round.tie %></td>
-        <td><%= link_to 'Show', round %></td>
-        <td><%= link_to 'Edit', edit_round_path(round) %></td>
-        <td><%= link_to 'Destroy', round, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Play', edit_round_path(round) if round.played? %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
 
-<%= link_to 'New Round', new_round_path %>
+<%= link_to 'Back', games_path %>
