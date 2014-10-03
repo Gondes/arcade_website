@@ -1,6 +1,5 @@
-<h1>Editing round</h1>
+<h1>Play round!</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @round %> |
-<%= link_to 'Back', rounds_path %>
+<%= link_to 'Back', rounds_path(game_id: @round.game.id) %>

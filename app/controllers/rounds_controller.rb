@@ -5,7 +5,6 @@ class RoundsController < ApplicationController
   # GET /rounds.json
   def index
     if params.has_key? :game_id
-      #Rails.logger.info  'H' * 200
       @game = Game.find params[:game_id]
       @rounds = @game.rounds
     else
@@ -16,23 +15,6 @@ class RoundsController < ApplicationController
   # GET /rounds/1
   # GET /rounds/1.json
   def show
-  end
-
-  def choose_move
-
-  end
-
-  def get_result
-    Rails.logger.info '^' * 200
-    #Rails.logger.info id.inspect
-    Rails.logger.info params.inspect
-    @game = Game.find params[:game_id]
-    @round = Round.find params[:round_id]
-
-    @round.user_1_move = params[:aaaa]
-    @round.user_1_move = params[:bbbbb]
-    @round.save!
-
   end
 
   # GET /rounds/new
@@ -68,15 +50,20 @@ class RoundsController < ApplicationController
   # PATCH/PUT /rounds/1.json
   def update
     respond_to do |format|
-      if @round.update(round_params)
-        format.html { redirect_to @round, notice: 'Round was successfully updated.' }
-        format.json { render :show, status: :ok, location: @round }
-
-        @round.find_winner
-
-        if @round.save!
+      if @round.unplayed?
+        if @round.update(round_params)
           format.html { redirect_to @round, notice: 'Round was successfully updated.' }
           format.json { render :show, status: :ok, location: @round }
+
+          @round.find_winner
+
+          if @round.save!
+            format.html { redirect_to @round, notice: 'Round and Game were successfully updated.' }
+            format.json { render :show, status: :ok, location: @round }
+          else
+            format.html { render :edit }
+            format.json { render json: @round.errors, status: :unprocessable_entity }
+          end
         else
           format.html { render :edit }
           format.json { render json: @round.errors, status: :unprocessable_entity }
@@ -86,10 +73,6 @@ class RoundsController < ApplicationController
         format.json { render json: @round.errors, status: :unprocessable_entity }
       end
     end
-
-
-    @round.update(round_params)
-
   end
 
   # DELETE /rounds/1
@@ -110,6 +93,7 @@ class RoundsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def round_params
-      params.require(:round).permit(:game_id, :user_1_id, :user_1_move, :user_2_id, :user_2_move, :winner_id, :tie, :round_number)
+      params.require(:round).permit(:game_id, :user_1_id, :user_1_move, :user_2_id, :user_2_move,
+                                    :winner_id, :tie, :round_number)
     end
 end

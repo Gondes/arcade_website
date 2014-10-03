@@ -1,7 +1,6 @@
 class Round < ActiveRecord::Base
 	belongs_to :game
 
-
   WIN_MATRIX =  [
                   ["Chart", "Rock", "Paper", "Scissor", "Nothing"],
                   ["Rock", 0, -1, 1, 1],
@@ -9,7 +8,7 @@ class Round < ActiveRecord::Base
                   ["Scissor", -1, 1, 0, 1],
                   ["Nothing", -1, -1, -1, 0]
                 ]
-
+  
 	def game
 		Game.find game_id
 	end
@@ -28,7 +27,7 @@ class Round < ActiveRecord::Base
     end
   end
 
-  def played?
+  def unplayed?
     user_1_move.nil? and user_2_move.nil?
   end
 
@@ -57,12 +56,16 @@ class Round < ActiveRecord::Base
     case WIN_MATRIX[user_1_move_id][user_2_move_id]
     when 0
       self.tie = 1
+      self.game.increment!(:tie_count)
     when 1
       self.tie = 0
       self.winner_id = self.user_1_id
+      self.game.increment!(:user_1_win_count)
     else
       self.tie = 0
       self.winner_id = self.user_2_id
+      self.game.increment!(:user_2_win_count)
     end
+    self.game.try_to_generate_winner
   end
 end

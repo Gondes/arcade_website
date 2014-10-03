@@ -27,7 +27,13 @@
 
 <p>
   <strong>Winner:</strong>
-  <%= @round.winner_id %>
+  <% if @round.unplayed? %>
+    <td>Not Played</td>
+  <% elsif @round.winner.nil? %>
+    <td>Tie!</td>
+  <% else %>
+    <td><%= @round.winner.name %></td>
+  <% end %>
 </p>
 
 <!--<p>

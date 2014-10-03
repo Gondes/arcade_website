@@ -3,12 +3,12 @@
 <table border="1">
   <thead>
     <tr>
-      <th>User 1</th>
-      <th>User 2</th>
+      <th>Player 1</th>
+      <th>Player 2</th>
       <th>Winner</th>
-      <th>Done</th>
+      <th>Status</th>
       <th>Best Of</th>
-      <th colspan="4"></th>
+      <th colspan="2">Options</th>
     </tr>
   </thead>
 
@@ -17,11 +17,25 @@
       <tr>
         <td><%= game.player_1.name %></td>
         <td><%= game.player_2.name %></td>
-        <td><%= game.winner_id %></td>
-        <td><%= game.done %></td>
+
+        <% if game.winner.nil? %>   <!--Winner Column-->
+          <td></td>
+        <% else %>
+          <td><%= game.winner.name %></td>
+        <% end %>
+
+        <% if game.finished? %>   <!--Status Column-->
+          <td>Finished</td>
+        <% else %>
+          <td>In Progress</td>
+        <% end %>
         <td><%= game.best_of %></td>
-        <td><%= link_to 'Start', rounds_url(game_id: game.id)  %></td>
-        <td><%= link_to 'Results', game %></td>
+
+        <% if game.finished? %>  <!--Option Column 1-->
+          <td><%= link_to 'Results', rounds_url(game_id: game.id)  %></td>
+        <% else %>
+          <td><%= link_to 'Enter', rounds_url(game_id: game.id)  %></td>
+        <% end %>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -31,4 +45,3 @@
 <br>
 
 <%= link_to 'New Game', new_game_path %>
-<%= link_to 'Home', root_path %>

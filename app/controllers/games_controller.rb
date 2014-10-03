@@ -12,15 +12,6 @@ class GamesController < ApplicationController
   def show
   end
 
-  def start
-    @game = Game.find params[:id]
-  end
-
-  def play
-    @game = Game.find params[:game_id]
-    @round = Round.find params[:round_id]
-  end
-
   # GET /games/new
   def new
     @game = Game.new
@@ -61,11 +52,7 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
   def update
-
-    Rails.logger.info '*' * 200
-
     respond_to do |format|
-      Rails.logger.info game_params.inspect
       if @game.update(game_params)
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
@@ -94,6 +81,7 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:user_1_id, :user_2_id, :winner_id, :done, :game_to)
+      params.require(:game).permit(:user_1_id, :user_2_id, :winner_id, :done, :game_to,
+                                   :user_1_win_count, :user_2_win_count, :tie_count)
     end
 end

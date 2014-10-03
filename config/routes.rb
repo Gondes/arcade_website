@@ -2,19 +2,9 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  resources :rounds do 
-    collection do 
-      get :choose_move
-      get :get_result
-    end
-  end
+  resources :rounds
 
-  resources :games do 
-    collection do 
-      get :play
-      get :start
-    end
-  end
+  resources :games
 
   resources :users
 

@@ -11,16 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141002173524) do
+ActiveRecord::Schema.define(version: 20141003143131) do
 
   create_table "games", force: true do |t|
     t.integer  "user_1_id"
     t.integer  "user_2_id"
     t.integer  "winner_id"
     t.boolean  "done"
-    t.integer  "game_to",    limit: 255
+    t.integer  "game_to",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_1_win_count"
+    t.integer  "user_2_win_count"
+    t.integer  "tie_count"
   end
 
   create_table "rounds", force: true do |t|

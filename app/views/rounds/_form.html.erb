@@ -11,26 +11,29 @@
     </div>
   <% end %>
 
-
-  <div class="field">
-    <strong><%= @round.game.player_1.name %></strong><br>
-    <%= f.radio_button :user_1_move, 'rock', :checked => true %>
-    <%= f.label :user_1_move, 'I choose Rock' %><br>
-    <%= f.radio_button :user_1_move, 'paper' %>
-    <%= f.label :user_1_move, 'I choose Paper' %><br>
-    <%= f.radio_button :user_1_move, 'scissor' %>
-    <%= f.label :user_1_move, 'I choose Scissor' %><br>
-  </div>
-  <div class="field">
-    <strong>Player 2 move</strong><br>
-    <%= f.radio_button :user_2_move, 'rock', :checked => true %>
-    <%= f.label :user_2_move, 'I choose Rock' %><br>
-    <%= f.radio_button :user_2_move, 'paper' %>
-    <%= f.label :user_2_move, 'I choose Paper' %><br>
-    <%= f.radio_button :user_2_move, 'scissor' %>
-    <%= f.label :user_2_move, 'I choose Scissor' %><br>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <% if @round.unplayed? %>
+    <div class="field">
+      <strong><%= @round.game.player_1.name %></strong><br>
+      <%= f.radio_button :user_1_move, 'rock', :checked => true %>
+      <%= f.label :user_1_move, 'I choose Rock' %><br>
+      <%= f.radio_button :user_1_move, 'paper' %>
+      <%= f.label :user_1_move, 'I choose Paper' %><br>
+      <%= f.radio_button :user_1_move, 'scissor' %>
+      <%= f.label :user_1_move, 'I choose Scissor' %><br>
+    </div>
+    <div class="field">
+      <strong><%= @round.game.player_2.name %></strong><br>
+      <%= f.radio_button :user_2_move, 'rock', :checked => true %>
+      <%= f.label :user_2_move, 'I choose Rock' %><br>
+      <%= f.radio_button :user_2_move, 'paper' %>
+      <%= f.label :user_2_move, 'I choose Paper' %><br>
+      <%= f.radio_button :user_2_move, 'scissor' %>
+      <%= f.label :user_2_move, 'I choose Scissor' %><br>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% else %>
+    <p>This round is finished</p>
+  <% end %>
 <% end %>

@@ -1,16 +1,13 @@
-<h1>Listing rounds</h1>
+<h1>Game Rounds</h1>
 
 <table border="1">
   <thead>
     <tr>
       <th>Round</th>
-      <th>User 1</th>
-      <th>User 1 move</th>
-      <th>User 2</th>
-      <th>User 2 move</th>
+      <th><%= @game.player_1.name %>'s move</th>
+      <th><%= @game.player_2.name %>'s move</th>
       <th>Winner</th>
-      <th>Tie</th>
-      <th></th>
+      <th>Play</th>
     </tr>
   </thead>
 
@@ -18,19 +15,20 @@
     <% @rounds.each do |round| %>
       <tr>
         <td><%= round.round_number %></td>
-        <td><%= @game.player_1.name %></td>
         <td><%= round.user_1_move %></td>
-        <td><%= round.player_2.name %></td>
         <td><%= round.user_2_move %></td>
-        <% if round.played? %>
+        <% if round.unplayed? %>
           <td>Not Played</td>
         <% elsif round.winner.nil? %>
-          <td>Tie</td>
+          <td>Tie!</td>
         <% else %>
-          <td><%= round.winner.name %></td>
+          <td><%= round.winner.name %> Wins!</td>
         <% end %>
-        <td><%= round.tie %></td>
-        <td><%= link_to 'Play', edit_round_path(round) if round.played? %></td>
+        <% if round.unplayed? %>
+          <td><%= link_to 'Play', edit_round_path(round)%></td>
+        <% else %>
+          <td>Done</td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
