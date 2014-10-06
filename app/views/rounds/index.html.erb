@@ -1,4 +1,4 @@
-<h1>Game Rounds</h1>
+<h1>Game rounds</h1>
 
 <table border="1">
   <thead>
@@ -19,7 +19,7 @@
         <td><%= round.user_2_move %></td>
         <% if round.unplayed? %>
           <td>Not Played</td>
-        <% elsif round.winner.nil? %>
+        <% elsif round.tie %>
           <td>Tie!</td>
         <% else %>
           <td><%= round.winner.name %> Wins!</td>

@@ -24,10 +24,6 @@ class RoundsController < ApplicationController
 
   # GET /rounds/1/edit
   def edit
-    #@game = Game.find params[:game_id]
-    #@round = Round.find params[:round_id]
-
-    #@round.get_round_result
   end
 
   # POST /rounds
@@ -93,7 +89,7 @@ class RoundsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def round_params
-      params.require(:round).permit(:game_id, :user_1_id, :user_1_move, :user_2_id, :user_2_move,
+      params.require(:round).permit(:game_id, :user_1_move, :user_2_move,
                                     :winner_id, :tie, :round_number)
     end
 end

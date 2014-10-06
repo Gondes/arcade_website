@@ -11,26 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003143131) do
+ActiveRecord::Schema.define(version: 20141003185035) do
 
   create_table "games", force: true do |t|
-    t.integer  "user_1_id"
-    t.integer  "user_2_id"
+    t.integer  "user_1_id",                        null: false
+    t.integer  "user_2_id",                        null: false
     t.integer  "winner_id"
-    t.boolean  "done"
-    t.integer  "game_to",          limit: 255
+    t.boolean  "done",             default: false
+    t.integer  "round_count",      default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_1_win_count"
-    t.integer  "user_2_win_count"
-    t.integer  "tie_count"
+    t.integer  "user_1_win_count", default: 0
+    t.integer  "user_2_win_count", default: 0
+    t.integer  "tie_count",        default: 0
   end
 
   create_table "rounds", force: true do |t|
-    t.integer  "game_id"
-    t.integer  "user_1_id"
+    t.integer  "game_id",      null: false
     t.string   "user_1_move"
-    t.integer  "user_2_id"
     t.string   "user_2_move"
     t.integer  "winner_id"
     t.boolean  "tie"
@@ -40,15 +38,15 @@ ActiveRecord::Schema.define(version: 20141003143131) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "user_name"
-    t.integer  "games_played_count"
-    t.integer  "wins_count"
-    t.integer  "loss_count"
-    t.integer  "tie_count"
-    t.integer  "best_win_streak"
-    t.integer  "current_win_streak"
+    t.string   "first_name",                     null: false
+    t.string   "last_name",                      null: false
+    t.string   "user_name",                      null: false
+    t.integer  "games_played_count", default: 0
+    t.integer  "wins_count",         default: 0
+    t.integer  "loss_count",         default: 0
+    t.integer  "tie_count",          default: 0
+    t.integer  "best_win_streak",    default: 0
+    t.integer  "current_win_streak", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

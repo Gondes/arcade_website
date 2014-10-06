@@ -6,22 +6,12 @@
 </p>
 
 <p>
-  <strong>Player 1:</strong>
-  <%= @round.player_1.name %>
-</p>
-
-<p>
-  <strong>Player 1 Move:</strong>
+  <strong><%= @round.game.player_1.name %> Move:</strong>
   <%= @round.user_1_move %>
 </p>
 
 <p>
-  <strong>Player 2:</strong>
-  <%= @round.player_2.name %>
-</p>
-
-<p>
-  <strong>Player 2 Move:</strong>
+  <strong><%= @round.game.player_2.name %> Move:</strong>
   <%= @round.user_2_move %>
 </p>
 
@@ -29,7 +19,7 @@
   <strong>Winner:</strong>
   <% if @round.unplayed? %>
     <td>Not Played</td>
-  <% elsif @round.winner.nil? %>
+  <% elsif @round.tie %>
     <td>Tie!</td>
   <% else %>
     <td><%= @round.winner.name %></td>

@@ -13,13 +13,6 @@ class Round < ActiveRecord::Base
 		Game.find game_id
 	end
 
-	def player_1
-		User.find user_1_id
-	end
-
-	def player_2
-		User.find user_2_id
-	end
 
   def winner
     unless winner_id.nil?
@@ -59,11 +52,11 @@ class Round < ActiveRecord::Base
       self.game.increment!(:tie_count)
     when 1
       self.tie = 0
-      self.winner_id = self.user_1_id
+      self.winner_id = game.user_1_id
       self.game.increment!(:user_1_win_count)
     else
       self.tie = 0
-      self.winner_id = self.user_2_id
+      self.winner_id = game.user_2_id
       self.game.increment!(:user_2_win_count)
     end
     self.game.try_to_generate_winner

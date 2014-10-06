@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  after_initialize :init
+  #after_initialize :init
   has_many :rounds, :dependent => :destroy
   accepts_nested_attributes_for :rounds
 
@@ -25,13 +25,9 @@ class Game < ActiveRecord::Base
       User.find winner_id
     end
   end
-
-  def best_of
-    game_to * 2 - 1
-  end
-
+  
   def finished?
-    self.best_of == self.user_1_win_count + self.user_2_win_count + self.tie_count
+    self.round_count == self.user_1_win_count + self.user_2_win_count + self.tie_count
   end
 
   def try_to_generate_winner
@@ -47,7 +43,6 @@ class Game < ActiveRecord::Base
         self.player_1.loses
         self.player_2.wins
       else
-        self.update_attribute(:winner_id, 0)     #becuse user id will never be 0, 0 represents a tie
         self.player_1.ties
         self.player_2.ties
       end

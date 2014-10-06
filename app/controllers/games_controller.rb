@@ -15,7 +15,6 @@ class GamesController < ApplicationController
   # GET /games/new
   def new
     @game = Game.new
-    #3.times { @game.rounds.build }
   end
 
   # GET /games/1/edit
@@ -30,12 +29,10 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.save
 
-        (0..@game.best_of - 1).each do |i|
+        (0..@game.round_count - 1).each do |i|
           #Round.create!(:game_id => @game.id)
           round = Round.new
           round.game = @game
-          round.user_1_id = @game.user_1_id
-          round.user_2_id = @game.user_2_id
           round.round_number = i + 1
           round.save!
         end
@@ -81,7 +78,7 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:user_1_id, :user_2_id, :winner_id, :done, :game_to,
+      params.require(:game).permit(:user_1_id, :user_2_id, :winner_id, :done, :round_count,
                                    :user_1_win_count, :user_2_win_count, :tie_count)
     end
 end
