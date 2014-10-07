@@ -1,11 +1,9 @@
 class User < ActiveRecord::Base
-  #after_initialize :init
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :user_name, presence: true
 
   def name
-    # "#{first_name} #{last_name}"
     "#{user_name}"
   end
 
