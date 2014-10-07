@@ -15,35 +15,4 @@
   <%= @user.user_name %>
 </p>
 
-<p>
-  <strong>Games played count:</strong>
-  <%= @user.games_played_count %>
-</p>
-
-<p>
-  <strong>Wins count:</strong>
-  <%= @user.wins_count %>
-</p>
-
-<p>
-  <strong>Loss count:</strong>
-  <%= @user.loss_count %>
-</p>
-
-<p>
-  <strong>Tie count:</strong>
-  <%= @user.tie_count %>
-</p>
-
-<p>
-  <strong>Best win streak:</strong>
-  <%= @user.best_win_streak %>
-</p>
-
-<p>
-  <strong>Current win streak:</strong>
-  <%= @user.current_win_streak %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
