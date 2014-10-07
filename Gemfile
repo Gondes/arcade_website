@@ -42,4 +42,4 @@ gem 'less-rails'
 
 gem 'haml', '~> 4.0.0'
 
-#gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails'
