@@ -13,7 +13,6 @@ class Round < ActiveRecord::Base
 		Game.find game_id
 	end
 
-
   def winner
     unless winner_id.nil?
       User.find winner_id
@@ -22,6 +21,15 @@ class Round < ActiveRecord::Base
 
   def unplayed?
     user_1_move.nil? and user_2_move.nil?
+  end
+
+  def is_locked?
+    if round_number != 1
+      @temp = Round.find_by!(:game_id => self.game_id, :round_number => (self.round_number - 1))
+      return @temp.unplayed?
+    else
+      return false
+    end
   end
 
 	def get_move_value(move)

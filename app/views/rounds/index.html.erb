@@ -1,8 +1,8 @@
 <h1>Game rounds</h1>
 
-<% if !@game.finished? %>
+<% if !@game.finished? %>     <!--Winner Message-->
   <p></p>
-<% elsif @game.winner.nil? %>   <!--Winner Column-->
+<% elsif @game.winner.nil? %>
   <strong>Result: It's a tie!</strong>
 <% else %>
   <strong>Result: <%= @game.winner.name %> wins this game!</strong>
@@ -25,14 +25,17 @@
         <td><%= round.round_number %></td>
         <td><%= round.user_1_move %></td>
         <td><%= round.user_2_move %></td>
-        <% if round.unplayed? %>
-          <td>Not Played</td>
+        <% if round.unplayed? %>     <!--Winner Column-->
+          <td></td>
         <% elsif round.tie %>
           <td>Tie!</td>
         <% else %>
           <td><%= round.winner.name %> Wins!</td>
         <% end %>
-        <% if round.unplayed? %>
+
+        <% if round.is_locked? %>
+          <td></td>
+        <% elsif round.unplayed? %>     <!--Options Column-->
           <td><%= link_to 'Play', edit_round_path(round)%></td>
         <% else %>
           <td>Done</td>

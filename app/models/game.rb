@@ -1,15 +1,14 @@
 class Game < ActiveRecord::Base
-  #after_initialize :init
+  validate :player_1_and_2_are_different
   has_many :rounds, :dependent => :destroy
   accepts_nested_attributes_for :rounds
 
   attr_accessor :test_text
 
-  def init
-    self.user_1_win_count   ||= 0      #will set the default value only if it's nil
-    self.user_2_win_count   ||= 0
-    self.tie_count          ||= 0
-    self.done               ||= false
+  def player_1_and_2_are_different
+    if self.user_1_id == self.user_2_id
+      errors.add(:base, 'Player 1 must be different from Player 2')
+    end
   end
 
   def player_1
