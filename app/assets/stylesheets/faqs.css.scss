@@ -1,0 +1,15 @@
+// Place all the styles related to the faqs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+article.faq {
+  margin-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-style: double;
+  background-color: #99FFFF;
+}
+
+h4.faq {
+  font-weight: bold;
+}

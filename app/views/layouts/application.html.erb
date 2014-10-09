@@ -19,6 +19,7 @@
           <ul class="nav navbar-nav">
             <li><%= link_to "Manage Users", users_url  %></li>
             <li><%= link_to "Manage Games", games_url  %></li>
+            <li><%= link_to "FAQ", faqs_url  %></li>
           </ul>
         </div>
       </div>
@@ -26,12 +27,16 @@
 
     <div class="container">
     	<div class="row">
-    		<div class="col-lg-9"><%= yield %></div>
-    		<div class="col-lg-3">
+    		<div class="col-lg-9" id="main"><%= yield %></div>
+    		<div class="col-lg-3" id="side_bar">
     			<h2>About Us</h2>
     			<p>This is just a filler text that will be later replace with actual information that will be useful for the person(s) using this website. Until then, please put up with this completely verbose and useless block of rambling text. I thank you for your understanding.</p>
     		</div>
     	</div>
+    </div>
+
+    <div class="footer">
+      <hr>
     </div>
   </body>
 </html>
