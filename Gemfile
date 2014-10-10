@@ -44,3 +44,7 @@ gem 'less-rails'
 gem 'haml', '~> 4.0.0'
 
 gem 'twitter-bootstrap-rails'
+
+# A heroku injected plugin
+gem 'rails_12factor'
+
