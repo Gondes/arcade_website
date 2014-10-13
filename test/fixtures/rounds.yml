@@ -2,18 +2,16 @@
 
 one:
   game_id: 1
-  user_1_id: 1
-  user_1_move: MyString
-  user_2_id: 1
-  user_2_move: MyString
+  user_1_move: rock
+  user_2_move: scissor
   winner_id: 1
   tie: false
+  round_number: 1
 
 two:
   game_id: 1
-  user_1_id: 1
-  user_1_move: MyString
-  user_2_id: 1
-  user_2_move: MyString
-  winner_id: 1
-  tie: false
+  user_1_move: paper
+  user_2_move: paper
+  winner_id: 
+  tie: true
+  round_number: 2

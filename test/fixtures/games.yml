@@ -2,14 +2,20 @@
 
 one:
   user_1_id: 1
-  user_2_id: 1
+  user_2_id: 2
   winner_id: 1
   done: false
-  type: 
+  round_count: 3
+  user_1_win_count: 0
+  user_2_win_count: 0
+  tie_count: 0
 
 two:
   user_1_id: 1
-  user_2_id: 1
-  winner_id: 1
+  user_2_id: 2
+  winner_id: 2
   done: false
-  type: 
+  round_count: 3
+  user_1_win_count: 0
+  user_2_win_count: 0
+  tie_count: 0

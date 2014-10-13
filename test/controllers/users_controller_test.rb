@@ -39,6 +39,11 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to user_path(assigns(:user))
   end
 
+  test "should reset user stats" do
+    put :reset_stats, id: @user, user: { best_win_streak: 0, current_win_streak: 0, first_name: @user.first_name, games_played_count: 0, last_name: @user.last_name, loss_count: 0, tie_count: 0, user_name: @user.user_name, wins_count: 0 }
+    assert_redirected_to users_path
+  end
+
   test "should destroy user" do
     assert_difference('User.count', -1) do
       delete :destroy, id: @user
