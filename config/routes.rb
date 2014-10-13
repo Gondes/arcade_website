@@ -6,7 +6,12 @@ Rails.application.routes.draw do
 
   resources :games
 
-  resources :users
+  resources :users do
+    collection do
+      put 'reset_stats/:id(.:format)', :to => 'users#reset_stats',
+                                        :as => :reset_stats
+    end
+  end
 
   resources :faqs
   
