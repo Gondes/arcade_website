@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+round_one:
   game_id: 1
   user_1_move: rock
   user_2_move: scissor
@@ -8,7 +8,7 @@ one:
   tie: false
   round_number: 1
 
-two:
+round_two:
   game_id: 1
   user_1_move: paper
   user_2_move: paper
