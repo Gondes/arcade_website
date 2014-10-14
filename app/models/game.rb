@@ -3,8 +3,6 @@ class Game < ActiveRecord::Base
   has_many :rounds, :dependent => :destroy
   accepts_nested_attributes_for :rounds
 
-  attr_accessor :test_text
-
   def player_1_and_2_are_different
     if self.user_1_id == self.user_2_id
       errors.add(:base, 'Player 1 must be different from Player 2')

@@ -1,23 +1,23 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  first_name: MyString
-  last_name: MyString
-  user_name: MyString
-  games_played_count: 1
-  wins_count: 1
-  loss_count: 1
+user_one:
+  first_name: Edward
+  last_name: Elric
+  user_name: Fullmetal Alchemist
+  games_played_count: 10
+  wins_count: 5
+  loss_count: 4
   tie_count: 1
-  best_win_streak: 1
-  current_win_streak: 1
+  best_win_streak: 2
+  current_win_streak: 2
 
-two:
-  first_name: MyString
-  last_name: MyString
-  user_name: MyString
-  games_played_count: 1
-  wins_count: 1
-  loss_count: 1
-  tie_count: 1
-  best_win_streak: 1
-  current_win_streak: 1
+user_two:
+  first_name: Roy
+  last_name: Mustang
+  user_name: Flame Alchemist
+  games_played_count: 0
+  wins_count: 0
+  loss_count: 0
+  tie_count: 0
+  best_win_streak: 0
+  current_win_streak: 0

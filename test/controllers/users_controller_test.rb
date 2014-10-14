@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = users(:one)
+    @user = users(:user_one)
   end
 
   test "should get index" do
@@ -39,9 +39,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to user_path(assigns(:user))
   end
 
-  test "should reset user stats" do
-    put :reset_stats, id: @user, user: { best_win_streak: 0, current_win_streak: 0, first_name: @user.first_name, games_played_count: 0, last_name: @user.last_name, loss_count: 0, tie_count: 0, user_name: @user.user_name, wins_count: 0 }
+  test "should reset user stats" do     #still need to find out how to get this test to work
+    put :reset_stats, :id => @user, :user => { :user_id => @user.id }
     assert_redirected_to users_path
+    assert_equal( 0, @user.wins_count, "wins_count should be set to 0" )
+    assert_equal( 0, @user.loss_count, "loss_count should be set to 0" )
+    assert_equal( 0, @user.tie_count, "tie_count should be set to 0" )
+    assert_equal( 0, @user.current_win_streak, "current_win_streak should be set to 0" )
+    assert_equal( 0, @user.best_win_streak, "best_win_streak should be set to 0" )
+    assert_equal( 0, @user.games_played_count, "games_played_count should be set to 0" )
   end
 
   test "should destroy user" do
