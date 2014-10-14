@@ -13,6 +13,16 @@
  *= require_tree .
  *= require_self
  */
+html{
+  background-color: darkgreen;
+}
+
+body{
+  border-style: dashed;
+  border-width: 1px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
 div#main{
   border-style: solid;
