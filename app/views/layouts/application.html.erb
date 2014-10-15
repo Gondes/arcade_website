@@ -27,6 +27,14 @@
 
     <div class="container">
     	<div class="row">
+
+        <% if notice %>
+          <p class="alert alert-success"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+        
     		<div class="col-lg-9" id="main"><%= yield %></div>
     		<div class="col-lg-3" id="side_bar">
     			<h2>About Us</h2>
