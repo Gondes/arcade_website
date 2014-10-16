@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :accounts
   root 'home#index'
 
   resources :rock_paper_scissor_rounds
