@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :name, 'Select Game Type' %><br>
+    <%= f.radio_button :name, 'rock_paper_scissor', :checked => true %>
+    <%= f.label :name, 'Rock Paper Scissor' %><br>
+  </div>
+  <div class="field">
     <%= f.label :player_1 %><br>
     <%= f.select :user_1_id, options_from_collection_for_select(User.all, 'id', 'name') %>
   </div>
@@ -20,7 +25,10 @@
     <%= f.select :user_2_id, options_from_collection_for_select(User.all, 'id', 'name') %>
   </div>
   <div class="field">
-    <%= f.radio_button :round_count, '3', :checked => true %>
+    <%= f.label :round_count, 'Select Round Count' %><br>
+    <%= f.radio_button :round_count, '1', :checked => true %>
+    <%= f.label :round_count, 'Best of 1' %><br>
+    <%= f.radio_button :round_count, '3', :checked => false %>
     <%= f.label :round_count, 'Best of 3' %><br>
     <%= f.radio_button :round_count, '5', :checked => false %>
     <%= f.label :round_count, 'Best of 5' %><br>

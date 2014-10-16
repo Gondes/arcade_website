@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010145148) do
+ActiveRecord::Schema.define(version: 20141016134126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "connect_4_rounds", force: true do |t|
+    t.integer  "game_id",      null: false
+    t.text     "moves_log"
+    t.integer  "winner_id"
+    t.boolean  "tie"
+    t.integer  "round_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "faqs", force: true do |t|
     t.string   "question"
@@ -34,9 +44,10 @@ ActiveRecord::Schema.define(version: 20141010145148) do
     t.integer  "user_1_win_count", default: 0
     t.integer  "user_2_win_count", default: 0
     t.integer  "tie_count",        default: 0
+    t.string   "name"
   end
 
-  create_table "rounds", force: true do |t|
+  create_table "rock_paper_scissor_rounds", force: true do |t|
     t.integer  "game_id",      null: false
     t.string   "user_1_move"
     t.string   "user_2_move"

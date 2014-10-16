@@ -1,4 +1,4 @@
-<h1>Game rounds</h1>
+<h1>Rock Paper Scissor rounds</h1>
 
 <% if !@game.finished? %>     <!--Winner Message-->
   <p></p>
@@ -36,7 +36,7 @@
         <% if round.is_locked? %>
           <td></td>
         <% elsif round.unplayed? %>     <!--Options Column-->
-          <td><%= link_to 'Play', edit_round_path(round)%></td>
+          <td><%= link_to 'Play', edit_rock_paper_scissor_round_path(round)%></td>
         <% else %>
           <td>Done</td>
         <% end %>

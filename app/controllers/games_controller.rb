@@ -29,12 +29,15 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.save
 
-        (0..@game.round_count - 1).each do |i|
-          #Round.create!(:game_id => @game.id)
-          round = Round.new
-          round.game = @game
-          round.round_number = i + 1
-          round.save!
+        #This needs a major change in logic to accomidate other game types
+        if @game.name == "rock_paper_scissor"
+          (0..@game.round_count - 1).each do |i|
+            #Round.create!(:game_id => @game.id)
+            rock_paper_scissor_round = RockPaperScissorRound.new
+            rock_paper_scissor_round.game = @game
+            rock_paper_scissor_round.round_number = i + 1
+            rock_paper_scissor_round.save!
+          end
         end
 
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
@@ -79,6 +82,6 @@ class GamesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
       params.require(:game).permit(:user_1_id, :user_2_id, :winner_id, :done, :round_count,
-                                   :user_1_win_count, :user_2_win_count, :tie_count)
+                                   :user_1_win_count, :user_2_win_count, :tie_count, :name)
     end
 end

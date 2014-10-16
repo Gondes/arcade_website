@@ -1,4 +1,4 @@
-class RoundsController < ApplicationController
+class RockPaperScissorRoundsController < ApplicationController
   before_action :set_round, only: [:show, :edit, :update, :destroy]
 
   # GET /rounds
@@ -6,9 +6,9 @@ class RoundsController < ApplicationController
   def index
     if params.has_key? :game_id
       @game = Game.find params[:game_id]
-      @rounds = @game.rounds
+      @rounds = @game.rock_paper_scissor_rounds
     else
-      @rounds = Round.all
+      @rounds = RockPaperScissorRound.all
     end
   end
 
@@ -19,7 +19,7 @@ class RoundsController < ApplicationController
 
   # GET /rounds/new
   def new
-    @round = Round.new
+    @round = RockPaperScissorRound.new
   end
 
   # GET /rounds/1/edit
@@ -29,11 +29,11 @@ class RoundsController < ApplicationController
   # POST /rounds
   # POST /rounds.json
   def create
-    @round = Round.new(round_params)
+    @round = RockPaperScissorRound.new(rock_paper_scissor_round_params)
 
     respond_to do |format|
       if @round.save
-        format.html { redirect_to @round, notice: 'Round was successfully created.' }
+        format.html { redirect_to @round, notice: 'RockPaperScissorRound was successfully created.' }
         format.json { render :show, status: :created, location: @round }
       else
         format.html { render :new }
@@ -47,7 +47,7 @@ class RoundsController < ApplicationController
   def update
     respond_to do |format|
       if @round.unplayed?
-        if @round.update(round_params)
+        if @round.update(rock_paper_scissor_round_params)
           format.html { redirect_to @round, notice: 'Round was successfully updated.' }
           format.json { render :show, status: :ok, location: @round }
 
@@ -76,7 +76,7 @@ class RoundsController < ApplicationController
   def destroy
     @round.destroy
     respond_to do |format|
-      format.html { redirect_to rounds_url, notice: 'Round was successfully destroyed.' }
+      format.html { redirect_to rock_paper_scissor_rounds_url, notice: 'RockPaperScissorRound was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -84,12 +84,12 @@ class RoundsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_round
-      @round = Round.find(params[:id])
+      @round = RockPaperScissorRound.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def round_params
-      params.require(:round).permit(:game_id, :user_1_move, :user_2_move,
+    def rock_paper_scissor_round_params
+      params.require(:rock_paper_scissor_round).permit(:game_id, :user_1_move, :user_2_move,
                                     :winner_id, :tie, :round_number)
     end
 end

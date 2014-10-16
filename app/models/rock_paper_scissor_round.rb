@@ -1,4 +1,4 @@
-class Round < ActiveRecord::Base
+class RockPaperScissorRound < ActiveRecord::Base
 	belongs_to :game
 
   WIN_MATRIX =  [
@@ -25,7 +25,7 @@ class Round < ActiveRecord::Base
 
   def is_locked?
     if round_number != 1
-      @temp = Round.find_by!(:game_id => self.game_id, :round_number => (self.round_number - 1))
+      @temp = RockPaperScissorRound.find_by!(:game_id => self.game_id, :round_number => (self.round_number - 1))
       return @temp.unplayed?
     else
       return false
