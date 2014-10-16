@@ -29,29 +29,36 @@ $(document).ready(function(){
   <% end %>
 
   <% if @round.unplayed? %>
-    <strong><%= @round.game.player_1.name %></strong><br>
-    <div class="field" id="field_1">
-      <%= f.radio_button :user_1_move, 'rock', :checked => true %>
-      <%= f.label :user_1_move, 'I choose Rock' %><br>
-      <%= f.radio_button :user_1_move, 'paper' %>
-      <%= f.label :user_1_move, 'I choose Paper' %><br>
-      <%= f.radio_button :user_1_move, 'scissor' %>
-      <%= f.label :user_1_move, 'I choose Scissor' %><br>
-    </div>
-    
-    <strong><%= @round.game.player_2.name %></strong><br>
-    <div class="field" id="field_2">
-      <%= f.radio_button :user_2_move, 'rock', :checked => true %>
-      <%= f.label :user_2_move, 'I choose Rock' %><br>
-      <%= f.radio_button :user_2_move, 'paper' %>
-      <%= f.label :user_2_move, 'I choose Paper' %><br>
-      <%= f.radio_button :user_2_move, 'scissor' %>
-      <%= f.label :user_2_move, 'I choose Scissor' %><br>
-    </div>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+    <!--Caution about accounts that have not yet made a user-->
+    <% if !current_account.nil? and current_account.user_id == (Game.find @round.game_id).user_1_id %>
+      <strong><%= @round.game.player_1.name %></strong><br>
+      <div class="field" id="field_1">
+        <%= f.radio_button :user_1_move, 'rock', :checked => true %>
+        <%= f.label :user_1_move, 'I choose Rock' %><br>
+        <%= f.radio_button :user_1_move, 'paper' %>
+        <%= f.label :user_1_move, 'I choose Paper' %><br>
+        <%= f.radio_button :user_1_move, 'scissor' %>
+        <%= f.label :user_1_move, 'I choose Scissor' %><br>
+      </div>
+    <% elsif !current_account.nil? and current_account.user_id == (Game.find @round.game_id).user_2_id %>
+      <strong><%= @round.game.player_2.name %></strong><br>
+      <div class="field" id="field_2">
+        <%= f.radio_button :user_2_move, 'rock', :checked => true %>
+        <%= f.label :user_2_move, 'I choose Rock' %><br>
+        <%= f.radio_button :user_2_move, 'paper' %>
+        <%= f.label :user_2_move, 'I choose Paper' %><br>
+        <%= f.radio_button :user_2_move, 'scissor' %>
+        <%= f.label :user_2_move, 'I choose Scissor' %><br>
+      </div>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
   <% else %>
     <p>This round is finished</p>
   <% end %>
 <% end %>
+
+<%= link_to image_tag("rock.png"), "/" %>
+<%= link_to image_tag("scissor.png"), "/" %>
+<%= link_to image_tag("paper.png"), "/" %>

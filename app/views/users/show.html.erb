@@ -1,19 +1,24 @@
-<p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
-</p>
+<% if account_signed_in? && !current_account.user_id.nil? && current_account.user_id == @user.id %>
+  <p>
+    <strong>First name:</strong>
+    <%= @user.first_name %>
+  </p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
+  <p>
+    <strong>Last name:</strong>
+    <%= @user.last_name %>
+  </p>
 
-<p>
-  <strong>User name:</strong>
-  <%= @user.user_name %>
-</p>
+  <p>
+    <strong>User name:</strong>
+    <%= @user.user_name %>
+  </p>
 
-<td><%= link_to 'Edit', edit_user_path(@user) %></td>
-<td><%= link_to 'Reset', reset_stats_users_path(@user), method: :put, data: { confirm: 'Are you sure you want to reset your stats?' } %></td><br>
+  <td><%= link_to 'Edit', edit_user_path(@user) %></td>
+  <td><%= link_to 'Reset', reset_stats_users_path(@user), method: :put, data: { confirm: 'Are you sure you want to reset your stats?' } %></td><br>
+<% else %>
+  <h1>Woops!</h1>
+  <p>You tried to access someone else's profile. That's not cool.</p>
+<% end %>
 
 <%= link_to 'Back', users_path %>
