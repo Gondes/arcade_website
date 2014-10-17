@@ -46,26 +46,22 @@ class RockPaperScissorRoundsController < ApplicationController
   # PATCH/PUT /rounds/1.json
   def update
     respond_to do |format|
-      if @round.unplayed?
-        if @round.update(rock_paper_scissor_round_params)
-          format.html { redirect_to @round, notice: 'Round was successfully updated.' }
-          format.json { render :show, status: :ok, location: @round }
-
+      if !(@round.finished?) and @round.update(rock_paper_scissor_round_params) and @round.save!
+        if @round.finished?
           @round.find_winner
-
           if @round.save!
-            format.html { redirect_to @round, notice: 'Round and Game were successfully updated.' }
+            format.html { redirect_to @round, notice: 'This round has finished.' }
             format.json { render :show, status: :ok, location: @round }
           else
-            format.html { render :edit }
+            format.html { render :edit, notice: 'Error 2.' }
             format.json { render json: @round.errors, status: :unprocessable_entity }
           end
         else
-          format.html { render :edit }
-          format.json { render json: @round.errors, status: :unprocessable_entity }
+          format.html { redirect_to @round, notice: 'You have selected your move.' }
+          format.json { render :show, status: :ok, location: @round }
         end
       else
-        format.html { render :edit }
+        format.html { render :edit, notice: 'Error 1.' }
         format.json { render json: @round.errors, status: :unprocessable_entity }
       end
     end

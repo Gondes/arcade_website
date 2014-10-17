@@ -19,14 +19,14 @@ class RockPaperScissorRound < ActiveRecord::Base
     end
   end
 
-  def unplayed?
-    user_1_move.nil? or user_2_move.nil?
+  def finished?
+    !(user_1_move.nil?) and !(user_2_move.nil?)
   end
 
   def is_locked?
     if round_number != 1
       @temp = RockPaperScissorRound.find_by!(:game_id => self.game_id, :round_number => (self.round_number - 1))
-      return @temp.unplayed?
+      return !(@temp.finished?)
     else
       return false
     end
