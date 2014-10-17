@@ -18,7 +18,11 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    if !(account_signed_in?) or user_exists
+      redirect_to users_url
+    else
+      @user = User.new
+    end
   end
 
   # GET /users/1/edit
@@ -32,6 +36,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.account_id = current_account.id
 
     respond_to do |format|
       if @user.save

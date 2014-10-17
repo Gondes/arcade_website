@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   def authenticate_user_existance
-    if (current_account.user_id.nil?)
+    if !user_exists
       redirect_to new_user_path
     end
   end

@@ -20,4 +20,8 @@ class ApplicationController < ActionController::Base
     account_signed_in? and !(current_account.user_id.nil?) and some_id == current_account.user_id
   end
 
+  def user_exists
+    account_signed_in? and !(current_account.user_id.nil?)
+  end
+
 end
