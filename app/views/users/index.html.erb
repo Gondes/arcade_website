@@ -10,7 +10,11 @@
       <th><%= sortable "tie_count", "Ties" %></th>
       <th><%= sortable "best_win_streak", "Best win streak" %></th>
       <th><%= sortable "current_win_streak", "Current win streak" %></th>
-      <th colspan="3">Options</th>
+      <% if account_signed_in? %>
+        <th colspan="3">Options</th>
+      <% else %>
+        <th colspan="2">Options</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -26,7 +30,13 @@
         <td><%= user.current_win_streak %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Reset', reset_stats_users_path(user), method: :put, data: { confirm: 'Are you sure you want to reset your stats?' } %></td>
-        <td><%= link_to 'Challenge', new_game_path %></td>
+        <% if account_signed_in? %>
+          <% if user.id != current_account.user_id %>
+            <td><%= link_to 'Challenge', new_game_url(user_1_id: current_account.user_id, user_2_id: user.id) %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

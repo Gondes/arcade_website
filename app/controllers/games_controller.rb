@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  before_action :authenticate_account!
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   # GET /games
@@ -15,6 +16,12 @@ class GamesController < ApplicationController
   # GET /games/new
   def new
     @game = Game.new
+    #if (params.has_key? :user_1_id) and (params.has_key? :user_2_id)
+    #  @game.user_1_id = params[:user_1_id].to_i
+    #  @game.user_2_id = params[:user_2_id].to_i
+    #else
+      #@rounds = RockPaperScissorRound.all
+    #end
   end
 
   # GET /games/1/edit
@@ -37,6 +44,16 @@ class GamesController < ApplicationController
             rock_paper_scissor_round.game = @game
             rock_paper_scissor_round.round_number = i + 1
             rock_paper_scissor_round.save!
+
+            connect_4_round = nil
+          end
+        elsif @game.name == "connect_4"
+          (0..@game.round_count - 1).each do |i|
+            #Round.create!(:game_id => @game.id)
+            connect_4_round = RockPaperScissorRound.new
+            connect_4_round.game = @game
+            connect_4_round.round_number = i + 1
+            connect_4_round.save!
           end
         end
 
