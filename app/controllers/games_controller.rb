@@ -1,6 +1,13 @@
 class GamesController < ApplicationController
   before_action :authenticate_account!
+  before_action :authenticate_user_existance
   before_action :set_game, only: [:show, :edit, :update, :destroy]
+
+  def authenticate_user_existance
+    if (current_account.user_id.nil?)
+      redirect_to new_user_path
+    end
+  end
 
   # GET /games
   # GET /games.json
@@ -44,8 +51,6 @@ class GamesController < ApplicationController
             rock_paper_scissor_round.game = @game
             rock_paper_scissor_round.round_number = i + 1
             rock_paper_scissor_round.save!
-
-            connect_4_round = nil
           end
         elsif @game.name == "connect_4"
           (0..@game.round_count - 1).each do |i|

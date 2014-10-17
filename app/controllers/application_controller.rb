@@ -15,4 +15,9 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     "/"
   end
+
+  def valid_user(some_id)
+    account_signed_in? and !(current_account.user_id.nil?) and some_id == current_account.user_id
+  end
+
 end

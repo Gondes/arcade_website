@@ -35,10 +35,12 @@
         <% end %>
         <td><%= game.round_count %></td>
 
-        <% if game.finished? %>  <!--Option Column 1-->
+        <% if game.finished? %>  <!--Option Column-->
           <td><%= link_to 'Results', rock_paper_scissor_rounds_url(game_id: game.id) %></td>
-        <% else %>
+        <% elsif game.player_1.id == current_account.user_id || game.player_2.id == current_account.user_id %>
           <td><%= link_to 'Play', rock_paper_scissor_rounds_url(game_id: game.id)  %></td>
+        <% else %>
+          <td></td>
         <% end %>
         <td><%= link_to 'Delete', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
