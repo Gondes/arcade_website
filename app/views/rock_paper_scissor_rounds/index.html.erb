@@ -9,9 +9,6 @@ $(document).ready(
 
 <h1>Rock Paper Scissor rounds</h1>
 
-<div id="show" align="center"></div>
-
-<div id="responsecontainer">
 <% if @game.finished? %>     <!--Winner Message-->
   <% if @game.winner.nil? %>
     <strong>Result: It's a tie!</strong>
@@ -75,7 +72,5 @@ $(document).ready(
   </tbody>
 </table>
 <br>
-
-</div>
 
 <%= button_to 'Back', games_path, :method => "get" %>
