@@ -1,21 +1,3 @@
-<script>
-$(document).ready(function(){
-  $("#btn_1").click(function(){
-    $("#field_1").toggle();
-    return false;
-  });
-});
-$(document).ready(function(){
-  $("#btn_2").click(function(){
-    $("#field_2").toggle();
-    return false;
-  });
-});
-</script>
-
-<button id="btn_1">Toggle P1</button>
-<button id="btn_2">Toggle P2</button><br>
-
 <%= form_for(@round) do |f| %>
   <% if @round.errors.any? %>
     <div id="error_explanation">
@@ -44,8 +26,8 @@ $(document).ready(function(){
           <%= f.submit "Submit" %>
         </div>
       <% else %>
-        <p>You have chosen <%= @round.user_1_move %></p>
-        <p>Waiting for your opponent to make a move</p>
+        <p>You have chosen <%= @round.user_1_move %>.</p>
+        <p>Waiting for your opponent to make a move.</p>
       <% end %>
     <% elsif !current_user.nil? and current_user.id == (Game.find @round.game_id).user_2_id %>
       <strong><%= @round.game.player_2.name %></strong><br>
@@ -62,8 +44,8 @@ $(document).ready(function(){
           <%= f.submit "Submit" %>
         </div>
       <% else %>
-        <p>You have chosen <%= @round.user_2_move %></p>
-        <p>Waiting for your opponent to make a move</p>
+        <p>You have chosen <%= @round.user_2_move %>.</p>
+        <p>Waiting for your opponent to make a move.</p>
       <% end %>
     <% end %>
   <% else %>

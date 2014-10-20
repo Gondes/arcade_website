@@ -1,23 +1,11 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  #before_action :authenticate_user_existance
   before_action :set_game, only: [:show, :edit, :update, :destroy]
-
-  #def authenticate_user_existance
-  #  if !user_exists
-  #    redirect_to new_user_path
-  #  end
-  #end
 
   # GET /games
   # GET /games.json
   def index
     @games = Game.all
-  end
-
-  # GET /games/1
-  # GET /games/1.json
-  def show
   end
 
   # GET /games/new
@@ -56,8 +44,8 @@ class GamesController < ApplicationController
           end
         end
 
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
-        format.json { render :show, status: :created, location: @game }
+        format.html { redirect_to games_url, notice: 'Game was successfully created.' }
+        format.json { render :index, status: :created, location: @game }
       else
         format.html { render :new }
         format.json { render json: @game.errors, status: :unprocessable_entity }

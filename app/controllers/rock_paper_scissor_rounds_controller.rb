@@ -30,11 +30,6 @@ class RockPaperScissorRoundsController < ApplicationController
   def show
   end
 
-  # GET /rounds/new
-  def new
-    @round = RockPaperScissorRound.new
-  end
-
   # GET /rounds/1/edit
   def edit
   end
@@ -46,8 +41,8 @@ class RockPaperScissorRoundsController < ApplicationController
 
     respond_to do |format|
       if @round.save
-        format.html { redirect_to @round, notice: 'RockPaperScissorRound was successfully created.' }
-        format.json { render :show, status: :created, location: @round }
+        format.html { redirect_to rock_paper_scissor_rounds_url, notice: 'RockPaperScissorRound was successfully created.' }
+        format.json { render :index, status: :created, location: @round }
       else
         format.html { render :new }
         format.json { render json: @round.errors, status: :unprocessable_entity }
