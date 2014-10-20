@@ -1,5 +1,17 @@
+<script>
+$(document).ready(
+  function() {
+    setInterval(function() {
+      location.reload();
+    }, 5000);
+  });
+</script>
+
 <h1>Rock Paper Scissor rounds</h1>
 
+<div id="show" align="center"></div>
+
+<div id="responsecontainer">
 <% if @game.finished? %>     <!--Winner Message-->
   <% if @game.winner.nil? %>
     <strong>Result: It's a tie!</strong>
@@ -8,7 +20,7 @@
   <% end %>
 <% else %>
   <strong></strong>
-<% end %>  
+<% end %>
 
 <table border="4" class="table table-striped table-condensed">
   <thead>
@@ -63,5 +75,7 @@
   </tbody>
 </table>
 <br>
+
+</div>
 
 <%= button_to 'Back', games_path, :method => "get" %>
