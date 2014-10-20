@@ -3,7 +3,12 @@ class RockPaperScissorRoundsController < ApplicationController
   before_action :set_round, only: [:show, :edit, :update, :destroy]
 
   def authenticate_player
-    @game = Game.find params[:game_id]
+    if params[:game_id].nil?
+      @round = RockPaperScissorRound.find params[:id]
+      @game = Game.find @round.game_id
+    else
+      @game = Game.find params[:game_id]
+    end
     if (@game.player_1.id != current_account.user_id and @game.player_2.id != current_account.user_id)
       redirect_to games_url
     end
@@ -12,6 +17,7 @@ class RockPaperScissorRoundsController < ApplicationController
   # GET /rounds
   # GET /rounds.json
   def index
+    authenticate_player
     if params.has_key? :game_id
       @game = Game.find params[:game_id]
       @rounds = @game.rock_paper_scissor_rounds
