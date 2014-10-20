@@ -32,7 +32,7 @@ $(document).ready(function(){
     <% if !current_user.nil? and current_user.id == (Game.find @round.game_id).user_1_id %>
       <strong><%= @round.game.player_1.name %></strong><br>
       <% if @round.user_1_move.nil? %>
-        <div class="field" id="field_1">
+        <div class="field">
           <%= f.radio_button :user_1_move, 'rock', :checked => true %>
           <%= image_tag("rock.png") %><br>
           <%= f.radio_button :user_1_move, 'scissor' %>
@@ -50,7 +50,7 @@ $(document).ready(function(){
     <% elsif !current_user.nil? and current_user.id == (Game.find @round.game_id).user_2_id %>
       <strong><%= @round.game.player_2.name %></strong><br>
       <% if @round.user_2_move.nil? %>
-        <div class="field" id="field_2">
+        <div class="field">
           <%= f.radio_button :user_2_move, 'rock', :checked => true %>
           <%= image_tag("rock.png") %><br>
           <%= f.radio_button :user_2_move, 'scissor' %>

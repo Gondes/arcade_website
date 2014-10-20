@@ -1,12 +1,7 @@
 class Game < ActiveRecord::Base
   validate :player_1_and_2_are_different
-  #if self.name == "rock_paper_scissor"
   has_many :rock_paper_scissor_rounds, :dependent => :destroy
   accepts_nested_attributes_for :rock_paper_scissor_rounds
-  #elsif self.name == "connect_4"
-  #has_many :connect_4_rounds, :dependent => :destroy
-  #accepts_nested_attributes_for :connect_4_rounds
-  #end
 
   def player_1_and_2_are_different
     if self.user_1_id == self.user_2_id

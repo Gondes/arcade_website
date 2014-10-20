@@ -1,72 +1,33 @@
-<script>
-$(document).ready(function(){
-  $("#users_f_n").hover(function(){
-    $("#users_f_n_help").css("visibility","visible");
-    },function(){
-    $("#users_f_n_help").css("visibility","hidden");
-  });
-});
-$(document).ready(function(){
-  $("#users_l_n").hover(function(){
-    $("#users_l_n_help").css("visibility","visible");
-    },function(){
-    $("#users_l_n_help").css("visibility","hidden");
-  });
-});
-$(document).ready(function(){
-  $("#users_u_n").hover(function(){
-    $("#users_u_n_help").css("visibility","visible");
-    },function(){
-    $("#users_u_n_help").css("visibility","hidden");
-  });
-});
-</script>
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-2">
-      <%= form_for(@user) do |f| %>
-        <% if @user.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-            <ul>
-            <% @user.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <div class="field" id="users_f_n">
-          <%= f.label :first_name %><br>
-          <%= f.text_field :first_name %>
-        </div>
-
-        <div class="field" id="users_l_n">
-          <%= f.label :last_name %><br>
-          <%= f.text_field :last_name %>
-        </div>
-
-        <div class="field" id="users_u_n">
-          <%= f.label :user_name %><br>
-          <%= f.text_field :user_name %>
-        </div>
-        <div class="actions">
-          <%= f.submit %>
-        </div>
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
       <% end %>
+      </ul>
     </div>
-    <div class="col-lg-4">
-      <p>&nbsp</p>
-      <p class="user_help" id="users_f_n_help">Enter a first name less than or equal to 24 characters</p>
-      <p>&nbsp</p>
-      <p class="user_help" id="users_l_n_help">Enter a last name less than or equal to 24 characters</p>
-      <p>&nbsp</p>
-      <p class="user_help" id="users_u_n_help">Enter a user name less than or equal to 24 characters</p>
-      <p>&nbsp</p>
-    </div>
+  <% end %>
+
+  <div class="field" id="users_f_n">
+    <%= f.label :first_name %><br>
+    <%= f.text_field :first_name %>
   </div>
-</div>
+
+  <div class="field" id="users_l_n">
+    <%= f.label :last_name %><br>
+    <%= f.text_field :last_name %>
+  </div>
+
+  <div class="field" id="users_u_n">
+    <%= f.label :user_name %><br>
+    <%= f.text_field :user_name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
 
 
