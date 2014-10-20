@@ -5,10 +5,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def after_sign_in_path_for(resource)
-    if current_account.user_id.nil?
+    if current_user.id.nil?
       new_user_path
     else
-      user_path(current_account.user_id)
+      user_path(current_user.id)
     end
   end
 
@@ -17,11 +17,11 @@ class ApplicationController < ActionController::Base
   end
 
   def valid_user(some_id)
-    account_signed_in? and !(current_account.user_id.nil?) and some_id == current_account.user_id
+    user_signed_in? and !(current_user.id.nil?) and some_id == current_user.id
   end
 
   def user_exists
-    account_signed_in? and !(current_account.user_id.nil?)
+    user_signed_in? and !(current_user.id.nil?)
   end
 
 end

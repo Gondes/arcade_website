@@ -9,7 +9,7 @@ class RockPaperScissorRoundsController < ApplicationController
     else
       @game = Game.find params[:game_id]
     end
-    if (@game.player_1.id != current_account.user_id and @game.player_2.id != current_account.user_id)
+    if (@game.player_1.id != current_user.id and @game.player_2.id != current_user.id)
       redirect_to games_url
     end
   end
@@ -17,7 +17,6 @@ class RockPaperScissorRoundsController < ApplicationController
   # GET /rounds
   # GET /rounds.json
   def index
-    authenticate_player
     if params.has_key? :game_id
       @game = Game.find params[:game_id]
       @rounds = @game.rock_paper_scissor_rounds

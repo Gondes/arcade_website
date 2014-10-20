@@ -29,8 +29,7 @@ $(document).ready(function(){
   <% end %>
 
   <% if !(@round.finished?) %>
-    <!--Caution about accounts that have not yet made a user-->
-    <% if !current_account.nil? and current_account.user_id == (Game.find @round.game_id).user_1_id %>
+    <% if !current_user.nil? and current_user.id == (Game.find @round.game_id).user_1_id %>
       <strong><%= @round.game.player_1.name %></strong><br>
       <% if @round.user_1_move.nil? %>
         <div class="field" id="field_1">
@@ -48,8 +47,7 @@ $(document).ready(function(){
         <p>You have chosen <%= @round.user_1_move %></p>
         <p>Waiting for your opponent to make a move</p>
       <% end %>
-    <!--Caution about accounts that have not yet made a user-->
-    <% elsif !current_account.nil? and current_account.user_id == (Game.find @round.game_id).user_2_id %>
+    <% elsif !current_user.nil? and current_user.id == (Game.find @round.game_id).user_2_id %>
       <strong><%= @round.game.player_2.name %></strong><br>
       <% if @round.user_2_move.nil? %>
         <div class="field" id="field_2">

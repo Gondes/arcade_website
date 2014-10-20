@@ -1,4 +1,4 @@
-<% if account_signed_in? && !current_account.user_id.nil? && current_account.user_id == @user.id %>
+<% if user_signed_in? && !current_user.id.nil? && current_user.id == @user.id %>
   <p>
     <strong>First name:</strong>
     <%= @user.first_name %>

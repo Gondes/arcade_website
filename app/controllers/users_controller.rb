@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    if !(account_signed_in?) or user_exists
+    if !(user_signed_in?) or user_exists
       redirect_to users_url
     else
       @user = User.new
@@ -36,13 +36,9 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    @user.account_id = current_account.id
 
     respond_to do |format|
       if @user.save
-        #Replace these next two lines latter with better implemintation
-        current_account.user_id = @user.id
-        current_account.save
 
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
@@ -95,7 +91,8 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count, :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak)
+      params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count, :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak,
+        :email, :encrypted_password)
     end
 
     def sort_column

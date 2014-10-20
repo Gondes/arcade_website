@@ -1,13 +1,13 @@
 class GamesController < ApplicationController
-  before_action :authenticate_account!
-  before_action :authenticate_user_existance
+  before_action :authenticate_user!
+  #before_action :authenticate_user_existance
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
-  def authenticate_user_existance
-    if !user_exists
-      redirect_to new_user_path
-    end
-  end
+  #def authenticate_user_existance
+  #  if !user_exists
+  #    redirect_to new_user_path
+  #  end
+  #end
 
   # GET /games
   # GET /games.json
@@ -23,12 +23,6 @@ class GamesController < ApplicationController
   # GET /games/new
   def new
     @game = Game.new
-    #if (params.has_key? :user_1_id) and (params.has_key? :user_2_id)
-    #  @game.user_1_id = params[:user_1_id].to_i
-    #  @game.user_2_id = params[:user_2_id].to_i
-    #else
-      #@rounds = RockPaperScissorRound.all
-    #end
   end
 
   # GET /games/1/edit
