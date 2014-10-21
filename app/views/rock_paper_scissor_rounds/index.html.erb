@@ -7,7 +7,7 @@ $(document).ready(
   });
 </script>
 
-<h1>Rock Paper Scissor rounds</h1>
+<h1>Rock Paper Scissor: <%= @game.player_1.name %> vs <%= @game.player_2.name %></h1>
 
 <% if @game.finished? %>     <!--Winner Message-->
   <% if @game.winner.nil? %>

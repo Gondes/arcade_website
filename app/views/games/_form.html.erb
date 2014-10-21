@@ -18,23 +18,13 @@
   </div>
 
   <div class="field">
-    <% if params[:user_1_id].nil? %>
-      <%= f.label :user_1_id %><br>
-      <%= f.select :user_1_id, options_from_collection_for_select(User.all, 'id', 'name') %>
-    <% else %>
-      <%= f.label :user_1_id, "Challenger" %><br>
-      <%= f.select :user_1_id, options_for_select([ [(User.find params[:user_1_id]).name, params[:user_1_id]] ]) %>
-    <% end %>
+    <%= f.label :user_1_id, "Challenger" %><br>
+    <%= f.select :user_1_id, options_for_select([ [(User.find params[:user_1_id]).name, params[:user_1_id]] ]) %>
   </div>
 
   <div class="field">
-    <% if params[:user_1_id].nil? %>
-      <%= f.label :user_2_id %><br>
-      <%= f.select :user_2_id, options_from_collection_for_select(User.all, 'id', 'name') %>
-    <% else %>
-      <%= f.label :user_2_id, "Challenged" %><br>
-      <%= f.select :user_2_id, options_for_select([ [(User.find params[:user_2_id]).name, params[:user_2_id]] ]) %>
-    <% end %>
+    <%= f.label :user_2_id, "Challenged" %><br>
+    <%= f.select :user_2_id, options_for_select([ [(User.find params[:user_2_id]).name, params[:user_2_id]] ]) %>
   </div>
 
   <div class="field">

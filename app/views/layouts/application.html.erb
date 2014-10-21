@@ -18,8 +18,8 @@
         <a class="navbar-brand" href="/">Arcade</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Manage Users", users_url  %></li>
-            <li><%= link_to "Manage Games", games_url  %></li>
+            <li><%= link_to "Users List", users_url  %></li>
+            <li><%= link_to "Games List", games_url  %></li>
             <li><%= link_to "FAQ", faqs_url  %></li>
             <% if user_signed_in? %>
               <% if current_user.id.nil? %>

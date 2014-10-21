@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :set_game, only: [:show, :update, :destroy]
 
   # GET /games
   # GET /games.json
@@ -8,13 +8,23 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
-  # GET /games/new
-  def new
-    @game = Game.new
+  # GET /games/1
+  # GET /games/1.json
+  def show
+    if @game.done
+      @rounds = @game.rock_paper_scissor_rounds
+    else
+      redirect_to games_path
+    end
   end
 
-  # GET /games/1/edit
-  def edit
+  # GET /games/new
+  def new
+    if ( valid_user(params[:user_1_id].to_i) or valid_user(params[:user_2_id].to_i) ) and (params[:user_1_id] != params[:user_2_id])
+      @game = Game.new
+    else
+      redirect_to games_path
+    end
   end
 
   # POST /games
@@ -39,7 +49,7 @@ class GamesController < ApplicationController
         format.html { redirect_to games_url, notice: 'Game was successfully created.' }
         format.json { render :index, status: :created, location: @game }
       else
-        format.html { render :new }
+        format.html { redirect_to games_url }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
@@ -53,7 +63,7 @@ class GamesController < ApplicationController
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
-        format.html { render :edit }
+        format.html { redirect_to @game }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
