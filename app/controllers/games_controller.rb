@@ -34,14 +34,6 @@ class GamesController < ApplicationController
             rock_paper_scissor_round.round_number = i + 1
             rock_paper_scissor_round.save!
           end
-        elsif @game.name == "connect_4"
-          (0..@game.round_count - 1).each do |i|
-            #Round.create!(:game_id => @game.id)
-            connect_4_round = RockPaperScissorRound.new
-            connect_4_round.game = @game
-            connect_4_round.round_number = i + 1
-            connect_4_round.save!
-          end
         end
 
         format.html { redirect_to games_url, notice: 'Game was successfully created.' }

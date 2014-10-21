@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def valid_user(some_id)
-    user_signed_in? and !(current_user.id.nil?) and some_id == current_user.id
+    user_exists and some_id == current_user.id
   end
 
   def user_exists

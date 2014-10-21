@@ -95,6 +95,7 @@ class UsersController < ApplicationController
         :email, :encrypted_password)
     end
 
+    # These two methods are used to make the table sortable.
     def sort_column
       User.column_names.include?(params[:sort]) ? params[:sort] : "user_name"
     end

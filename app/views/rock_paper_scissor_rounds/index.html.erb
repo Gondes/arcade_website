@@ -44,14 +44,14 @@ $(document).ready(
           <% end %>
         <% elsif !round.is_locked? %>
           <% if round.user_1_move.nil? %>
-            <td>deciding...</td>
+            <td>Deciding...</td>
           <% else %>
-            <td>locked in</td>
+            <td>Locked in</td>
           <% end %>
           <% if round.user_2_move.nil? %>
-            <td>deciding...</td>
+            <td>Deciding...</td>
           <% else %>
-            <td>locked in</td>
+            <td>Locked in</td>
           <% end %>
           <td></td>
         <% else %>

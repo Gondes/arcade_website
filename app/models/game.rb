@@ -22,6 +22,11 @@ class Game < ActiveRecord::Base
       User.find winner_id
     end
   end
+
+  def clean_name
+    var = name.gsub!('_',' ')
+    var.split.map(&:capitalize).join(' ')
+  end
   
   def finished?
     self.round_count == self.user_1_win_count + self.user_2_win_count + self.tie_count
