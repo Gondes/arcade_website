@@ -1,20 +1,35 @@
-<p id="notice"><%= notice %></p>
+<h1>Rock Paper Scissor: <%= @game.player_1.name %> vs <%= @game.player_2.name %></h1>
+<% if @game.winner_id.nil? %>
+  <h2>Results: It's a Tie!</h2>
+<% else %>
+  <h2>Results: <%= @game.winner.name %> Wins!</h2>
+<% end %>
 
-<!--Somehow link to the rounds page-->
-<!--How do I know which game to go?-->
-<p>
-  <strong>Player 1:</strong>
-  <%= @game.player_1.name %>
-</p>
+<table border="4" class="table table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Round</th>
+      <th><%= @game.player_1.name %>'s move</th>
+      <th><%= @game.player_2.name %>'s move</th>
+      <th>Winner</th>
+    </tr>
+  </thead>
 
-<p>
-  <strong>Player 2:</strong>
-  <%= @game.player_2.name %>
-</p>
+  <tbody>
+    <% @rounds.each do |round| %>
+      <tr>
+        <td><%= round.round_number %></td>
+        <td><%= round.user_1_move %></td>
+        <td><%= round.user_2_move %></td>
+        <% if round.tie %>
+          <td>Tie!</td>
+        <% else %>
+          <td><%= round.winner.name %>!</td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<p>
-  <strong>Game Best Of:</strong>
-  <%= @game.round_count %>
-</p>
-
+<%= link_to 'Delete', @game, method: :delete, data: { confirm: 'Are you sure?' } %><br>
 <%= link_to 'Back', games_path %>

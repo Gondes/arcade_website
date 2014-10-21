@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   validate :player_1_and_2_are_different
-  has_many :rounds, :dependent => :destroy
-  accepts_nested_attributes_for :rounds
+  has_many :rock_paper_scissor_rounds, :dependent => :destroy
+  accepts_nested_attributes_for :rock_paper_scissor_rounds
 
   def player_1_and_2_are_different
     if self.user_1_id == self.user_2_id
@@ -21,6 +21,11 @@ class Game < ActiveRecord::Base
     unless winner_id.nil?
       User.find winner_id
     end
+  end
+
+  def clean_name
+    var = name.gsub!('_',' ')
+    var.split.map(&:capitalize).join(' ')
   end
   
   def finished?

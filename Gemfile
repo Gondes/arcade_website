@@ -48,3 +48,4 @@ gem 'twitter-bootstrap-rails'
 # A heroku injected plugin
 gem 'rails_12factor'
 
+gem 'devise'

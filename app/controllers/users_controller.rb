@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :reset_stats]
 
   helper_method :sort_column, :sort_direction
   # GET /users
@@ -11,15 +11,25 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if !(valid_user(@user.id))
+      redirect_to users_url
+    end
   end
 
   # GET /users/new
   def new
-    @user = User.new
+    if !(user_signed_in?) or user_exists
+      redirect_to users_url
+    else
+      @user = User.new
+    end
   end
 
   # GET /users/1/edit
   def edit
+    if !(valid_user(@user.id))
+      redirect_to users_url
+    end
   end
 
   # POST /users
@@ -29,6 +39,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -80,9 +91,11 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count, :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak)
+      params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count, :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak,
+        :email, :encrypted_password)
     end
 
+    # These two methods are used to make the table sortable.
     def sort_column
       User.column_names.include?(params[:sort]) ? params[:sort] : "user_name"
     end

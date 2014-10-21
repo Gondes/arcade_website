@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<h2>Profile: <%=@user.user_name %></h2>
 
 <p>
   <strong>First name:</strong>
@@ -11,8 +11,36 @@
 </p>
 
 <p>
-  <strong>User name:</strong>
-  <%= @user.user_name %>
+  <strong>Games Played:</strong>
+  <%= @user.games_played_count %>
 </p>
+
+<p>
+  <strong>Wins Total:</strong>
+  <%= @user.wins_count %>
+</p>
+
+<p>
+  <strong>Loss Total:</strong>
+  <%= @user.loss_count %>
+</p>
+
+<p>
+  <strong>Ties Total:</strong>
+  <%= @user.tie_count %>
+</p>
+
+<p>
+  <strong>Best Win Streak:</strong>
+  <%= @user.best_win_streak %>
+</p>
+
+<p>
+  <strong>Current Win Streak:</strong>
+  <%= @user.current_win_streak %>
+</p>
+
+<td><%= link_to 'Edit', edit_user_path(@user) %></td>
+<td><%= link_to 'Reset', reset_stats_users_path(@user), method: :put, data: { confirm: 'Are you sure you want to reset your stats?' } %></td><br>
 
 <%= link_to 'Back', users_path %>

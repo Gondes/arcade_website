@@ -1,0 +1,57 @@
+<%= form_for(@round) do |f| %>
+  <% if @round.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@round.errors.count, "error") %> prohibited this round from being saved:</h2>
+      <ul>
+      <% @round.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if !(@round.finished?) %>
+  s
+    <% if !current_user.nil? and current_user.id == (Game.find @round.game_id).user_1_id %>
+      <strong><%= @round.game.player_1.name %></strong><br>
+      <% if @round.user_1_move.nil? %>
+        <div class="field">
+          <%= f.radio_button :user_1_move, 'rock', :checked => true %>
+          <%= image_tag("rock.png") %><br>
+          <%= f.radio_button :user_1_move, 'scissor' %>
+          <%= image_tag("scissor.png") %><br>
+          <%= f.radio_button :user_1_move, 'paper' %>
+          <%= image_tag("paper.png") %><br>
+        </div>
+        <div class="actions">
+          <%= f.submit "Submit" %>
+        </div>
+      <% else %>
+        <p>You have chosen <%= @round.user_1_move %>.</p>
+        <p>Waiting for your opponent to make a move.</p>
+      <% end %>
+
+    <% elsif !current_user.nil? and current_user.id == (Game.find @round.game_id).user_2_id %>
+      <strong><%= @round.game.player_2.name %></strong><br>
+      <% if @round.user_2_move.nil? %>
+        <div class="field">
+          <%= f.radio_button :user_2_move, 'rock', :checked => true %>
+          <%= image_tag("rock.png") %><br>
+          <%= f.radio_button :user_2_move, 'scissor' %>
+          <%= image_tag("scissor.png") %><br>
+          <%= f.radio_button :user_2_move, 'paper' %>
+          <%= image_tag("paper.png") %><br>
+        </div>
+        <div class="actions">
+          <%= f.submit "Submit" %>
+        </div>
+      <% else %>
+        <p>You have chosen <%= @round.user_2_move %>.</p>
+        <p>Waiting for your opponent to make a move.</p>
+      <% end %>
+    <% end %>
+
+  <% else %>
+    <p>This round is finished</p>
+  <% end %>
+<% end %>

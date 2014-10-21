@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_game, only: [:show, :update, :destroy]
 
   # GET /games
   # GET /games.json
@@ -10,15 +11,20 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    if @game.done
+      @rounds = @game.rock_paper_scissor_rounds
+    else
+      redirect_to games_path
+    end
   end
 
   # GET /games/new
   def new
-    @game = Game.new
-  end
-
-  # GET /games/1/edit
-  def edit
+    if ( valid_user(params[:user_1_id].to_i) or valid_user(params[:user_2_id].to_i) ) and (params[:user_1_id] != params[:user_2_id])
+      @game = Game.new
+    else
+      redirect_to games_path
+    end
   end
 
   # POST /games
@@ -29,18 +35,21 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.save
 
-        (0..@game.round_count - 1).each do |i|
-          #Round.create!(:game_id => @game.id)
-          round = Round.new
-          round.game = @game
-          round.round_number = i + 1
-          round.save!
+        #This needs a major change in logic to accomidate other game types
+        if @game.name == "rock_paper_scissor"
+          (0..@game.round_count - 1).each do |i|
+            #Round.create!(:game_id => @game.id)
+            rock_paper_scissor_round = RockPaperScissorRound.new
+            rock_paper_scissor_round.game = @game
+            rock_paper_scissor_round.round_number = i + 1
+            rock_paper_scissor_round.save!
+          end
         end
 
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
-        format.json { render :show, status: :created, location: @game }
+        format.html { redirect_to games_url, notice: 'Game was successfully created.' }
+        format.json { render :index, status: :created, location: @game }
       else
-        format.html { render :new }
+        format.html { redirect_to games_url }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
@@ -54,7 +63,7 @@ class GamesController < ApplicationController
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
-        format.html { render :edit }
+        format.html { redirect_to @game }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
@@ -79,6 +88,6 @@ class GamesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
       params.require(:game).permit(:user_1_id, :user_2_id, :winner_id, :done, :round_count,
-                                   :user_1_win_count, :user_2_win_count, :tie_count)
+                                   :user_1_win_count, :user_2_win_count, :tie_count, :name)
     end
 end

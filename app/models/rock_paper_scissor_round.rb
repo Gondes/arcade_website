@@ -1,5 +1,5 @@
-class Round < ActiveRecord::Base
-	belongs_to :game
+class RockPaperScissorRound < ActiveRecord::Base
+  belongs_to :game
 
   WIN_MATRIX =  [
                   ["Chart", "Rock", "Paper", "Scissor", "Nothing"],
@@ -9,9 +9,9 @@ class Round < ActiveRecord::Base
                   ["Nothing", -1, -1, -1, 0]
                 ]
   
-	def game
-		Game.find game_id
-	end
+  def game
+    Game.find game_id
+  end
 
   def winner
     unless winner_id.nil?
@@ -19,31 +19,31 @@ class Round < ActiveRecord::Base
     end
   end
 
-  def unplayed?
-    user_1_move.nil? and user_2_move.nil?
+  def finished?
+    !(user_1_move.nil?) and !(user_2_move.nil?)
   end
 
   def is_locked?
     if round_number != 1
-      @temp = Round.find_by!(:game_id => self.game_id, :round_number => (self.round_number - 1))
-      return @temp.unplayed?
+      @temp = RockPaperScissorRound.find_by!(:game_id => self.game_id, :round_number => (self.round_number - 1))
+      return !(@temp.finished?)
     else
       return false
     end
   end
 
-	def get_move_value(move)
-		case move.downcase
+  def get_move_value(move)
+    case move.downcase
     when "rock"
-		  1
-		when "paper"
-		  2
-		when "scissor"
-			3
+      1
+    when "paper"
+      2
+    when "scissor"
+      3
     else
       0
-		end
-	end
+    end
+  end
 
   def user_1_move_id
     get_move_value(user_1_move)

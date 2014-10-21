@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  resources :rounds
+  resources :rock_paper_scissor_rounds
 
   resources :games
 
@@ -12,6 +12,8 @@ Rails.application.routes.draw do
                                         :as => :reset_stats
     end
   end
+
+  devise_for :user, :controllers => { registrations: 'registrations' }
 
   resources :faqs
   

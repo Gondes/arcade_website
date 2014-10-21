@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Round Number:</strong>
   <%= @round.round_number %>
@@ -17,13 +15,15 @@
 
 <p>
   <strong>Winner:</strong>
-  <% if @round.unplayed? %>
-    <td>Not Played</td>
-  <% elsif @round.tie %>
-    <td>Tie!</td>
+  <% if @round.finished? %>
+    <% if @round.tie %>
+      <td>Tie!</td>
+    <% else %>
+      <td><%= @round.winner.name %></td>
+    <% end %>
   <% else %>
-    <td><%= @round.winner.name %></td>
+    <td></td>
   <% end %>
 </p>
 
-<%= link_to 'Back', rounds_path(game_id: @round.game.id) %>
+<%= link_to 'Back', rock_paper_scissor_rounds_path(game_id: @round.game.id) %>

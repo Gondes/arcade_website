@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
   validates_length_of :user_name, :maximum => 24
   validates_length_of :first_name, :maximum => 24
   validates_length_of :last_name, :maximum => 24

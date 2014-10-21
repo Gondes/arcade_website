@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010145148) do
+ActiveRecord::Schema.define(version: 20141021134944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,9 +34,10 @@ ActiveRecord::Schema.define(version: 20141010145148) do
     t.integer  "user_1_win_count", default: 0
     t.integer  "user_2_win_count", default: 0
     t.integer  "tie_count",        default: 0
+    t.string   "name"
   end
 
-  create_table "rounds", force: true do |t|
+  create_table "rock_paper_scissor_rounds", force: true do |t|
     t.integer  "game_id",      null: false
     t.string   "user_1_move"
     t.string   "user_2_move"
@@ -48,17 +49,27 @@ ActiveRecord::Schema.define(version: 20141010145148) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "first_name",                     null: false
-    t.string   "last_name",                      null: false
-    t.string   "user_name",                      null: false
-    t.integer  "games_played_count", default: 0
-    t.integer  "wins_count",         default: 0
-    t.integer  "loss_count",         default: 0
-    t.integer  "tie_count",          default: 0
-    t.integer  "best_win_streak",    default: 0
-    t.integer  "current_win_streak", default: 0
+    t.string   "first_name",                          null: false
+    t.string   "last_name",                           null: false
+    t.string   "user_name",                           null: false
+    t.integer  "games_played_count",     default: 0
+    t.integer  "wins_count",             default: 0
+    t.integer  "loss_count",             default: 0
+    t.integer  "tie_count",              default: 0
+    t.integer  "best_win_streak",        default: 0
+    t.integer  "current_win_streak",     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
   end
 
 end

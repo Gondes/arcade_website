@@ -12,21 +12,26 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :player_1 %><br>
-    <%= f.select :user_1_id, options_from_collection_for_select(User.all, 'id', 'name') %>
+    <%= f.label :name, 'Select Game Type' %><br>
+    <%= f.radio_button :name, 'rock_paper_scissor', :checked => true %>
+    <%= f.label :name, 'Rock Paper Scissor' %><br>
   </div>
+
   <div class="field">
-    <%= f.label :player_2 %><br>
-    <%= f.select :user_2_id, options_from_collection_for_select(User.all, 'id', 'name') %>
+    <%= f.label :user_1_id, "Challenger" %><br>
+    <%= f.select :user_1_id, options_for_select([ [(User.find params[:user_1_id]).name, params[:user_1_id]] ]) %>
   </div>
+
   <div class="field">
-    <%= f.radio_button :round_count, '3', :checked => true %>
-    <%= f.label :round_count, 'Best of 3' %><br>
-    <%= f.radio_button :round_count, '5', :checked => false %>
-    <%= f.label :round_count, 'Best of 5' %><br>
-    <%= f.radio_button :round_count, '7', :checked => false %>
-    <%= f.label :round_count, 'Best of 7' %><br>
+    <%= f.label :user_2_id, "Challenged" %><br>
+    <%= f.select :user_2_id, options_for_select([ [(User.find params[:user_2_id]).name, params[:user_2_id]] ]) %>
   </div>
+
+  <div class="field">
+    <%= f.label :round_count, 'Select Round Count' %><br>
+    <%= f.select :round_count, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5], ['6', 6], ['7', 7]], 3) %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
