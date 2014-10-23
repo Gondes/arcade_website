@@ -25,12 +25,3 @@ test:
   password: password
   host: localhost
   database: myapp_test
-
-production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  username: app_user
-  password: password
-  host: localhost
-  database: myapp_production
