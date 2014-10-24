@@ -1,7 +1,5 @@
 class ChangingUserIntoDevise < ActiveRecord::Migration
   def change
-    drop_table :accounts
-
     add_column :users, :email, :string, default: "", null: false, unique: true
     add_column :users, :encrypted_password, :string, default: "", null: false
     add_column :users, :reset_password_token, :string, unique: true

@@ -49,3 +49,5 @@ gem 'twitter-bootstrap-rails'
 gem 'rails_12factor'
 
 gem 'devise'
+
+gem 'paperclip', '~> 4.2'
