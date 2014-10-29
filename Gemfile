@@ -51,3 +51,11 @@ gem 'rails_12factor'
 gem 'devise'
 
 gem 'paperclip', '~> 4.2'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+# Use for automated testing
+# gem 'guard-rspec'
+end
