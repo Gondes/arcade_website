@@ -64,10 +64,7 @@ describe FaqsController do
       item.answer.should eq(attributes[:answer])
       item.question.should eq(attributes[:question])
     end
-
-    it "should raise validation error for question's presence" do
-      # Still wondering how to check validation for backend update
-      false.should be(true) #Validation for backend update?
-    end
+    
+    pending "Still wondering how to check validation for backend update for #{__FILE__}"
   end
 end

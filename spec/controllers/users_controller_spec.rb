@@ -72,10 +72,7 @@ describe UsersController do
       @my_user.last_name.should eq(attributes[:last_name])
     end
 
-    #it "should raise validation error for question's presence" do
-      # Still wondering how to check validation for backend update
-      #false.should be(true) #Validation for backend update?
-    #end
+    pending "Still wondering how to check validation for backend update for #{__FILE__}"
   end
 
   describe "reset_stats" do
