@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe UsersController do
-  #before(:all) do
-  #  @my_user = create(:user)
-  #end
-
   before(:each) do
     @my_user = create(:user)
   end
@@ -37,19 +33,9 @@ describe UsersController do
     end
   end
 
-  describe "new" do
+  #describe "new" do
     #Technically, the new_user has been combined with the sign_up page so this is not needed
-    #it "GET user" do
-    #  get :new
-    #  expect(response).to be_success
-    #  response.status.should be(200)
-    #end
-
-    #it "should raise validation error for question's presence" do
-    #  my_user = build(:user, :question => nil, :answer => "a_update")
-    #  my_user.should_not be_valid
-    #end
-  end
+  #end
 
    describe "edit" do
     it "GET edit_user" do
@@ -68,10 +54,41 @@ describe UsersController do
 
   describe "destroy" do
     it "DELETE user" do
-      @account = create(:user, :user_name => "Fire", :email => "ricky.flame@example.com")
-      expect((User.find @account.id).user_name).should eq(@account.user_name)
-      delete :destroy, :id => @account
-      lambda { User.find @account.id }.should raise_error(ActiveRecord::RecordNotFound)
+      account = create(:user, :user_name => "Fire", :email => "ricky.flame@example.com")
+      expect((User.find account.id).user_name).should eq(account.user_name)
+      delete :destroy, :id => account
+      lambda { User.find account.id }.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe "update" do
+    it "PUT user" do
+      #account = create(:user)
+      attributes = attributes_for(:user, :user_name => "un", :first_name => "fn", :last_name => "ln")
+      put :update, :id => @my_user, :user => attributes
+      @my_user.reload
+      @my_user.user_name.should eq(attributes[:user_name])
+      @my_user.first_name.should eq(attributes[:first_name])
+      @my_user.last_name.should eq(attributes[:last_name])
+    end
+
+    #it "should raise validation error for question's presence" do
+      # Still wondering how to check validation for backend update
+      #false.should be(true) #Validation for backend update?
+    #end
+  end
+
+  describe "reset_stats" do
+    it "should reset user's stats and save" do
+      account = create(:user, :user_name => "Fire", :email => "ricky.flame@example.com", :games_played_count => 1)
+      put :reset_stats, :id => account
+      account.reload
+      account.games_played_count.should eq(0)
+      delete :destroy, :id => account
+      # I am assuming that testing one column should be sufficient to prove this action works
+      #put :reset_stats, :id => @my_user
+      #expect(response).to be_success
+      #response.status.should be(200)
     end
   end
 end
