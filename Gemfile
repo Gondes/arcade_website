@@ -53,7 +53,7 @@ gem 'devise'
 gem 'paperclip', '~> 4.2'
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.14.0.rc1'
   gem 'factory_girl_rails'
   gem 'capybara'
 # Use for automated testing
