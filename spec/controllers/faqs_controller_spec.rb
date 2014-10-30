@@ -1,9 +1,14 @@
 require 'spec_helper'
 
 describe FaqsController do
-  before(:all) do
+  before(:each) do
     @item = create(:faq)
   end
+
+  after(:each) do
+    delete :destroy, :id => @item
+  end
+
   describe "index" do
     it "GET index aka /root" do
       get :index
@@ -62,6 +67,7 @@ describe FaqsController do
 
     it "should raise validation error for question's presence" do
       # Still wondering how to check validation for backend update
+      false.should be(true) #Validation for backend update?
     end
   end
 end

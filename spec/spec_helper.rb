@@ -42,9 +42,16 @@ RSpec.configure do |config|
   end
 end
 
-#def log_in(account)
-#  visit new_user_session_path
-#  fill_in "Email", :with => account.email
-#  fill_in "Password", :with => account.password
-#  click_button "Log"
-#end
+#These Methods are helpers to sign in via the ui
+#There exists sign_in(user), sign_out(user) for backend testing
+def ui_sign_in(account)
+  visit new_user_session_path
+  fill_in "Email", :with => account.email
+  fill_in "Password", :with => account.password
+  click_button "Log"
+end
+
+def ui_sign_out
+  visit root_path
+  click_button "Logout"
+end
