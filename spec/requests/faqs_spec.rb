@@ -27,6 +27,7 @@ describe "Faqs" do
       expect((Faq.find_by question: item.question).answer).to eq(item.answer)
       visit faqs_path
       page.should have_content(item.question)
+      Faq.destroy(item.id)
     end
 
     it "should have created faq via new_page" do
@@ -35,6 +36,7 @@ describe "Faqs" do
       expect((Faq.find_by question: item.question).answer).to eq(item.answer)
       visit faqs_path
       page.should have_content(item.question)
+      Faq.destroy(Faq.find_by question: item.question)
     end
 
     it "should throw error when updating with blank question" do
@@ -60,13 +62,14 @@ describe "Faqs" do
     end
 
     it "should fill out valid faq and confirm" do
-      item = create(:faq)
-      visit edit_faq_path item
-      item = build(:faq, :question => "QuestionEFAQ", :answer => "AnswerEFAQ")
-      fill_in "Question", :with => item.question
-      fill_in "Answer", :with => item.answer
+      item1 = create(:faq)
+      visit edit_faq_path item1
+      item2 = build(:faq, :question => "QuestionEFAQ", :answer => "AnswerEFAQ")
+      fill_in "Question", :with => item2.question
+      fill_in "Answer", :with => item2.answer
       click_button "Update"
-      confirm_db_and_user_page(item)
+      confirm_db_and_user_page(item2)
+      Faq.destroy(item1.id)
     end
   end
 

@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+#require 'capybara/rspec'
+#require 'factory_girl_rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -23,7 +25,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -36,12 +38,13 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  RSpec.configure do |config|
-    config.include FactoryGirl::Syntax::Methods
-    config.include Devise::TestHelpers, type: :controller
+  config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, type: :controller
+
+  config.after :all do
+    ActiveRecord::Base.subclasses.each(&:delete_all)
   end
 end
-
 #These Methods are helpers to sign in via the ui
 #There exists sign_in(user), sign_out(user) for backend testing
 def ui_sign_in(account)
