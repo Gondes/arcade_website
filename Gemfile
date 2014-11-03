@@ -54,7 +54,7 @@ gem 'paperclip', '~> 4.2'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.0.rc1'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '~> 4.0'
   gem 'capybara'
 # Use for automated testing
 # gem 'guard-rspec'

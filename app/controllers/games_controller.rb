@@ -20,7 +20,7 @@ class GamesController < ApplicationController
 
   # GET /games/new
   def new
-    if ( valid_user(params[:user_1_id].to_i) or valid_user(params[:user_2_id].to_i) ) and (params[:user_1_id] != params[:user_2_id])
+    if ( valid_user(params[:user_1_id].to_i) or valid_user(params[:user_2_id].to_i) )# and (params[:user_1_id] != params[:user_2_id])
       @game = Game.new
     else
       redirect_to games_path
