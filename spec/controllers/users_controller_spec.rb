@@ -63,7 +63,6 @@ describe UsersController do
 
   describe "update" do
     it "PUT user" do
-      #account = create(:user)
       attributes = attributes_for(:user, :user_name => "un", :first_name => "fn", :last_name => "ln")
       put :update, :id => @my_user, :user => attributes
       @my_user.reload

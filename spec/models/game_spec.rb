@@ -87,7 +87,7 @@ describe Game do
       User.destroy(user1.id)
     end
 
-    pending "write validation for presence of player_1 and 2 ids in {__FILE__}"
+    pending "write validation for presence of player_1 and 2 ids in #{__FILE__}"
     #it "player_1_id and player_2_id should not be nil" do
     #  g1 = build(:game, :user_1_id => nil, :user_2_id => nil)
     #  g1.should_not be_valid
