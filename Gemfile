@@ -56,6 +56,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.14.0.rc1'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'capybara'
+  gem 'simplecov', :require => false
 # Use for automated testing
 # gem 'guard-rspec'
 end

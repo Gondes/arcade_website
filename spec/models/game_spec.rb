@@ -13,7 +13,7 @@ describe Game do
 
   describe "test" do
     it "using factories with associations" do
-      g1 = build(:game)
+      g1 = build(:game, :user_1_id => 10001, :user_2_id => 10002)
       g1.user_1_id.should eq(10001)
       g1.user_2_id.should eq(10002)
     end
@@ -76,6 +76,18 @@ describe Game do
       User.destroy(user1.id)
       User.destroy(user2.id)
     end
+
+    it "try_to_generate_winner assuming game.winner works" do
+      user1 = create(:user)
+      user2 = create(:user)
+      g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id,
+        :round_count => 3, :tie_count => 3)
+        #:round_count => 2, :user_1_win_count => 1, :user_2_win_count => 1)
+      g1.try_to_generate_winner
+      g1.winner.should eq(nil)
+      User.destroy(user1.id)
+      User.destroy(user2.id)
+    end
   end
   
 
@@ -87,7 +99,7 @@ describe Game do
       User.destroy(user1.id)
     end
 
-    pending "write validation for presence of player_1 and 2 ids in #{__FILE__}"
+    pending "write better validation for presence of player_1 and 2 ids in #{__FILE__}"
     #it "player_1_id and player_2_id should not be nil" do
     #  g1 = build(:game, :user_1_id => nil, :user_2_id => nil)
     #  g1.should_not be_valid

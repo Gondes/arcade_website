@@ -113,12 +113,28 @@ describe RockPaperScissorRound do
       rps.user_2_move_id.should eq(3)
     end
 
-    it "find_winner should update counts" do
+    it "find_winner should update counts with user_2's win" do
       rps = build(:rock_paper_scissor_round, :game => @game,
                   :user_1_move => "rock", :user_2_move => "paper")
       rps.game.user_2_win_count.should eq(0)
       rps.find_winner.should eq(nil)
       rps.game.user_2_win_count.should eq(1)
+    end
+
+    it "find_winner should update counts with user_1's win" do
+      rps = build(:rock_paper_scissor_round, :game => @game,
+                  :user_1_move => "scissor", :user_2_move => "paper")
+      rps.game.user_1_win_count.should eq(0)
+      rps.find_winner.should eq(nil)
+      rps.game.user_1_win_count.should eq(1)
+    end
+
+    it "find_winner should update counts with tie" do
+      rps = build(:rock_paper_scissor_round, :game => @game,
+                  :user_1_move => "scissor", :user_2_move => "scissor")
+      rps.game.tie_count.should eq(0)
+      rps.find_winner.should eq(nil)
+      rps.game.tie_count.should eq(1)
     end
 
     it "find_winner should update winner for game" do
