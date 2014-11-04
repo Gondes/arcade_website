@@ -6,8 +6,8 @@ FactoryGirl.define do
   #with the this game factory.
   factory :game do
     name "rock_paper_scissor"
-    user_1_id 10001
-    user_2_id 10002
+    #user_1_id 10001
+    #user_2_id 10002
 
     # user_with_posts will create post data after the user has been created
     factory :game_with_rock_paper_scissor_rounds do
