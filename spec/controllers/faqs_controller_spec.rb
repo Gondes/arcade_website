@@ -46,23 +46,43 @@ describe FaqsController do
     end
   end
 
+  describe "create" do
+    it "POST a new faq" do
+      attributes = attributes_for(:faq, :question => "Blah?", :answer => "Blah.")
+      expect { post :create, :faq => attributes }.should change(Faq, :count)
+      Faq.destroy(Faq.order("created_at").last)
+    end
+
+    it "POST should fail to create a new faq" do
+      attributes = attributes_for(:faq, :question => "", :answer => "Blah.")
+      expect { post :create, :faq => attributes }.should_not change(Faq, :count)
+    end
+  end
+
   describe "destroy" do
     it "DELETE faq" do
       item = create(:faq)
       expect((Faq.find item.id).question).should eq(item.question)
-      delete :destroy, :id => item
+      expect { delete :destroy, :id => item }.should change(Faq, :count)
       lambda { Faq.find item.id }.should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
   describe "update" do
     it "PUT faq" do
-      item = create(:faq)
       attributes = attributes_for(:faq, :question => "q_update", :answer => "a_update")
-      put :update, :id => item, :faq => attributes
-      item.reload
-      item.answer.should eq(attributes[:answer])
-      item.question.should eq(attributes[:question])
+      put :update, :id => @item, :faq => attributes
+      @item.reload
+      @item.answer.should eq(attributes[:answer])
+      @item.question.should eq(attributes[:question])
+    end
+
+    it "PUT faq" do
+      attributes = attributes_for(:faq, :question => "", :answer => "a_update")
+      put :update, :id => @item, :faq => attributes
+      @item.reload
+      @item.answer.should_not eq(attributes[:answer])
+      @item.question.should_not eq(attributes[:question])
     end
     
     pending "Still wondering how to check validation for backend update for #{__FILE__}"

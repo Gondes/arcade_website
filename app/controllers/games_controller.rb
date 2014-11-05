@@ -45,7 +45,6 @@ class GamesController < ApplicationController
             rock_paper_scissor_round.save!
           end
         end
-
         format.html { redirect_to games_url, notice: 'Game was successfully created.' }
         format.json { render :index, status: :created, location: @game }
       else

@@ -33,7 +33,8 @@ describe GamesController do
 
     it "GET show_user" do
       sign_in @my_user
-      game = create(:game, :done => true, :user_1_id => @my_user.id, :user_2_id => @my_enemy.id)
+      game = create(:game, :done => true, :user_1_id => @my_user.id,
+                    :user_2_id => @my_enemy.id)
       get :show, :id => game
       expect(response).to be_success
       response.status.should be(200)
@@ -65,26 +66,54 @@ describe GamesController do
     #player_1 != player_2 validation is in game model specs
   end
 
+  describe "create" do
+    it "POST should create new game" do
+      sign_in @my_user
+      attributes = attributes_for(:game, :round_count => 3,
+        :user_1_id => @my_user.id, :user_2_id => @my_enemy.id)
+      expect { post :create, :game => attributes }.should change(Game, :count)
+      Game.destroy(Game.order("created_at").last)
+      sign_out @my_user
+    end
+
+    it "POST should not create new game" do
+      sign_in @my_user
+      attributes = attributes_for(:game, :user_1_id => nil, :user_2_id => nil)
+      expect { post :create, :game => attributes }.should_not change(Game, :count)
+      sign_out @my_user
+    end
+  end
+
   describe "update" do
     it "should update the stats of the game" do
-      #game = create(:game, :user_1_id => @my_user.id, :user_2_id => @my_enemy.id)
+      sign_in @my_user
       @game.user_1_win_count.should eq(0)
       attributes = attributes_for(:game, :user_1_win_count => 1)
-      #put :update, :id => @game, :game => attributes   #I don't know why this one is not working
-      @game.update attributes
+      put :update, :id => @game, :game => attributes
       @game.reload
       @game.user_1_win_count.should eq(attributes[:user_1_win_count])
+      sign_out @my_user
+    end
+
+    it "should not update the stats of the game" do
+      sign_in @my_user
+      attributes = attributes_for(:game, :user_1_id => nil)
+      put :update, :id => @game, :game => attributes
+      @game.reload
+      @game.user_1_id.should_not eq(attributes[:user_1_id])
+      sign_out @my_user
     end
   end
 
   describe "destroy" do
     it "DELETE game" do
+      sign_in @my_user
       game = create(:game, :user_1_id => @my_user.id, :user_2_id => @my_enemy.id)
       game.reload
       expect((Game.find game.id).user_1_id).should eq(game.user_1_id)
-      #delete :destroy, :id => game   #I don't know why this one is not working
-      game.destroy
+      expect { delete :destroy, :id => game.id }.should change(Game, :count)
       lambda { Game.find game.id }.should raise_error(ActiveRecord::RecordNotFound)
+      sign_out @my_user
     end
   end
 

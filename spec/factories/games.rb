@@ -25,6 +25,8 @@ FactoryGirl.define do
       after(:create) do |game, evaluator|
         create_list(:rock_paper_scissor_round, evaluator.fg_rounds_count, game: game)
       end
+
+      #round_count fg_rounds_count
     end
   end
 end
