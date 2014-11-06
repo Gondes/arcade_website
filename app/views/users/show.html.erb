@@ -1,5 +1,9 @@
 <h2>Profile: <%=@user.user_name %></h2>
 
+<% if @user.icon? %>
+  <td><%= image_tag @user.icon.url(:small) %></td>
+<% end %>
+
 <p>
   <strong>First name:</strong>
   <%= @user.first_name %>

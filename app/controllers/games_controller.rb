@@ -20,7 +20,7 @@ class GamesController < ApplicationController
 
   # GET /games/new
   def new
-    if ( valid_user(params[:user_1_id].to_i) or valid_user(params[:user_2_id].to_i) ) and (params[:user_1_id] != params[:user_2_id])
+    if ( valid_user(params[:user_1_id].to_i) or valid_user(params[:user_2_id].to_i) )# and (params[:user_1_id] != params[:user_2_id])
       @game = Game.new
     else
       redirect_to games_path
@@ -45,7 +45,6 @@ class GamesController < ApplicationController
             rock_paper_scissor_round.save!
           end
         end
-
         format.html { redirect_to games_url, notice: 'Game was successfully created.' }
         format.json { render :index, status: :created, location: @game }
       else

@@ -49,3 +49,14 @@ gem 'twitter-bootstrap-rails'
 gem 'rails_12factor'
 
 gem 'devise'
+
+gem 'paperclip', '~> 4.2'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.14.0.rc1'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'capybara'
+  gem 'simplecov', :require => false
+# Use for automated testing
+# gem 'guard-rspec'
+end

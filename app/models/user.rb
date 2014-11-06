@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :user_name, presence: true
+  validates :user_name, uniqueness: { case_sensitive: false }
+
+  has_attached_file :icon, :styles => { :medium => "300x300>", :small => "100x100>", :tiny => "16x16" }
+  validates_attachment_size :icon, :less_than => 5.megabytes
+  validates_attachment_content_type :icon, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
   def name
     "#{user_name}"

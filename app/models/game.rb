@@ -1,4 +1,6 @@
 class Game < ActiveRecord::Base
+  validates :user_1_id, presence: true
+  validates :user_2_id, presence: true
   validate :player_1_and_2_are_different
   has_many :rock_paper_scissor_rounds, :dependent => :destroy
   accepts_nested_attributes_for :rock_paper_scissor_rounds

@@ -11,7 +11,6 @@
   <% end %>
 
   <% if !(@round.finished?) %>
-  s
     <% if !current_user.nil? and current_user.id == (Game.find @round.game_id).user_1_id %>
       <strong><%= @round.game.player_1.name %></strong><br>
       <% if @round.user_1_move.nil? %>

@@ -24,7 +24,7 @@ test:
   username: app_user
   password: password
   host: localhost
-  database: myapp_test
+  database: app_test
 
 production:
   adapter: postgresql
