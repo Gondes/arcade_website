@@ -60,9 +60,10 @@ class RockPaperScissorRoundsController < ApplicationController
           if @round.save!
             format.html { redirect_to @round, notice: 'This round has finished.' }
             format.json { render :show, status: :ok, location: @round }
-          else
-            format.html { render :edit, notice: 'Error 2.' }
-            format.json { render json: @round.errors, status: :unprocessable_entity }
+          # If you can make this statement fail, I would be very surprised
+          #else
+          #  format.html { render :edit, notice: 'Error 2.' }
+          #  format.json { render json: @round.errors, status: :unprocessable_entity }
           end
         else
           format.html { redirect_to @round, notice: 'You have selected your move.' }

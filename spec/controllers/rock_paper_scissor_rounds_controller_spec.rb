@@ -116,6 +116,19 @@ describe RockPaperScissorRoundsController do
       sign_out @my_user
     end
 
+    it "PUT should not update finished round" do
+      sign_in @my_user
+      rps = create(:rock_paper_scissor_round, :game => @game, :user_1_move => "paper",
+                     :user_2_move => "paper")
+      attributes = attributes_for(:rock_paper_scissor_round, :user_1_move => "scissor")
+      rps.user_1_move.should_not eq(attributes[:user_1_move])
+      put :update, :id => rps.id, :rock_paper_scissor_round => attributes
+      rps.reload
+      rps.user_1_move.should_not eq(attributes[:user_1_move])
+      RockPaperScissorRound.destroy(rps.id)
+      sign_out @my_user
+    end
+
     pending "Should write file for update fail in #{__FILE__}"
   end
 
