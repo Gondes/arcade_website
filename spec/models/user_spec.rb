@@ -43,6 +43,20 @@ describe "User" do
     end
   end
 
+  describe "is_disabled" do
+    it "should not be able to log in" do
+      user = create(:user, :is_disabled => true)
+      user.active_for_authentication?.should eq(false)
+      User.destroy(user.id)
+    end
+
+    it "should not affect admins" do
+      user = create(:user, :is_disabled => true, :admin => true)
+      user.active_for_authentication?.should eq(true)
+      User.destroy(user.id)
+    end
+  end
+
   describe "method" do
     it "name should return user_name" do
       user = create(:user)

@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   validates_attachment_size :icon, :less_than => 5.megabytes
   validates_attachment_content_type :icon, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
+  def active_for_authentication?
+    super and (!self.is_disabled or self.admin)
+  end
+
   def name
     "#{user_name}"
   end

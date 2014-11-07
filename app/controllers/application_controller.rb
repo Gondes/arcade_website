@@ -17,11 +17,15 @@ class ApplicationController < ActionController::Base
   end
 
   def valid_user(some_id)
-    user_exists and some_id == current_user.id
+    (user_exists and some_id == current_user.id) or current_user.try(:admin?)
   end
 
   def user_exists
     user_signed_in? and !(current_user.id.nil?)
+  end
+
+  def user_admin
+    user_signed_in? and current_user.admin
   end
 
 end

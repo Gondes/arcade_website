@@ -27,8 +27,53 @@
   </div>
 
   <div class="field">
+    <%= f.label :icon %><br>
     <%= f.file_field :icon %>
   </div>
+
+  <% if current_user.admin %>
+    <h4>Admin Edits</h4>
+    <div class="admin_field">
+      <%= f.label :games_played_count %><br>
+      <%= f.number_field :games_played_count, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :wins_count %><br>
+      <%= f.number_field :wins_count, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :loss_count %><br>
+      <%= f.number_field :loss_count, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :tie_count %><br>
+      <%= f.number_field :tie_count, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :best_win_streak %><br>
+      <%= f.number_field :best_win_streak, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :current_win_streak %><br>
+      <%= f.number_field :current_win_streak, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :is_disabled, "Disable this user?" %>
+      <%= f.check_box :is_disabled %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :is_hidden, "Hide this user?" %>
+      <%= f.check_box :is_hidden %>
+    </div>
+
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>

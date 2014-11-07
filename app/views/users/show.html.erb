@@ -1,5 +1,9 @@
 <h2>Profile: <%=@user.user_name %></h2>
 
+<% if @user.admin %>
+  <strong>Administrator</strong>
+<% end %><br>
+
 <% if @user.icon? %>
   <td><%= image_tag @user.icon.url(:small) %></td>
 <% end %>
@@ -44,7 +48,22 @@
   <%= @user.current_win_streak %>
 </p>
 
-<td><%= link_to 'Edit', edit_user_path(@user) %></td>
-<td><%= link_to 'Reset', reset_stats_users_path(@user), method: :put, data: { confirm: 'Are you sure you want to reset your stats?' } %></td><br>
+<% if current_user.admin %>
+  <p>
+    <strong>Disabled</strong>
+    <%= @user.is_disabled %>
+  </p>
 
+  <p>
+    <strong>Hidden</strong>
+    <%= @user.is_hidden %>
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@user) %>
+<%= link_to 'Reset', reset_stats_users_path(@user), method: :put, data: { confirm: 'Are you sure you want to reset your stats?' } %>
 <%= link_to 'Back', users_path %>
+<br>
+<% if current_user.admin %>
+  <%= link_to 'DELETE User', @user, method: :delete, data: { confirm: 'Are you sure? Remember to delete associated games.' } %>
+<% end %>

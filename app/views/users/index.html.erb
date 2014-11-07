@@ -13,34 +13,45 @@
       <th><%= sortable "best_win_streak", "Best win streak" %></th>
       <th><%= sortable "current_win_streak", "Current win streak" %></th>
       <% if user_signed_in? %>
-        <th colspan="1">Options</th>
+        <% if current_user.admin %>
+          <th colspan="2">Options</th>
+        <% else %>
+          <th colspan="1">Options</th>
+        <% end %>
       <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @users.each do |user| %>
-      <tr>
-        <% if user.icon? %>
-          <td><%= image_tag user.icon.url(:tiny) %></td>
-        <% else %>
-          <td></td>
-        <% end %>
-        <td class="name_column"><%= user.user_name %></td>
-        <td><%= user.games_played_count %></td>
-        <td><%= user.wins_count %></td>
-        <td><%= user.loss_count %></td>
-        <td><%= user.tie_count %></td>
-        <td><%= user.best_win_streak %></td>
-        <td><%= user.current_win_streak %></td>
-        <% if user_signed_in? %>
-          <% if user.id != current_user.id %>
-            <td><%= link_to 'Challenge', new_game_url(user_1_id: current_user.id, user_2_id: user.id) %></td>
+
+      <% if !user.is_hidden or current_user.try(:admin?)%>
+        <tr>
+          <% if user.icon? %>
+            <td><%= image_tag user.icon.url(:tiny) %></td>
           <% else %>
-            <td><%= link_to "View", user_path(current_user.id) %></td>
+            <td></td>
           <% end %>
-        <% end %>
-      </tr>
+          <td class="name_column"><%= user.user_name %></td>
+          <td><%= user.games_played_count %></td>
+          <td><%= user.wins_count %></td>
+          <td><%= user.loss_count %></td>
+          <td><%= user.tie_count %></td>
+          <td><%= user.best_win_streak %></td>
+          <td><%= user.current_win_streak %></td>
+          <% if user_signed_in? %>
+            <% if current_user.admin %>
+              <td><%= link_to "View", user_path(user.id) %></td>
+            <% end %>
+            <% if user.id != current_user.id %>
+              <td><%= link_to 'Challenge', new_game_url(user_1_id: current_user.id, user_2_id: user.id) %></td>
+            <% else %>
+              <td><%= link_to "View", user_path(current_user.id) %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+
     <% end %>
   </tbody>
 </table>

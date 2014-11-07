@@ -1,7 +1,14 @@
 class UsersController < ApplicationController
+  #before_action :check_if_disabled
   before_action :set_user, only: [:show, :edit, :update, :destroy, :reset_stats]
 
   helper_method :sort_column, :sort_direction
+
+  #def check_if_disabled
+  #  if current_user.try(:is_disabled)
+  #    sign_out
+  #end
+
   # GET /users
   # GET /users.json
   def index
@@ -92,7 +99,7 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count, :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak,
-        :email, :encrypted_password, :icon)
+        :email, :encrypted_password, :icon, :is_disabled, :is_hidden)
     end
 
     # These two methods are used to make the table sortable.
