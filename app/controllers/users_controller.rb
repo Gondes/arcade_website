@@ -1,13 +1,7 @@
 class UsersController < ApplicationController
-  #before_action :check_if_disabled
   before_action :set_user, only: [:show, :edit, :update, :destroy, :reset_stats]
 
   helper_method :sort_column, :sort_direction
-
-  #def check_if_disabled
-  #  if current_user.try(:is_disabled)
-  #    sign_out
-  #end
 
   # GET /users
   # GET /users.json
