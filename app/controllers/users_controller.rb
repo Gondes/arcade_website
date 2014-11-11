@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    if !(valid_user(@user.id))
+    if !(user_signed_in?)
       redirect_to users_url
     end
   end
