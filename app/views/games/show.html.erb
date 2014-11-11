@@ -19,8 +19,23 @@
     <% @rounds.each do |round| %>
       <tr>
         <td><%= round.round_number %></td>
-        <td><%= round.user_1_move %></td>
-        <td><%= round.user_2_move %></td>
+        
+        <% if round.user_1_move == "rock" %>
+          <td><%= image_tag("rock.png") %></td>
+        <% elsif round.user_1_move == "paper" %>
+          <td><%= image_tag("paper.png") %></td>
+        <% elsif round.user_1_move == "scissor" %>
+          <td><%= image_tag("scissor.png") %></td>
+        <% end %>
+
+        <% if round.user_2_move == "rock" %>
+          <td><%= image_tag("rock.png") %></td>
+        <% elsif round.user_2_move == "paper" %>
+          <td><%= image_tag("paper.png") %></td>
+        <% elsif round.user_2_move == "scissor" %>
+          <td><%= image_tag("scissor.png") %></td>
+        <% end %>
+
         <% if round.tie %>
           <td>Tie!</td>
         <% else %>
