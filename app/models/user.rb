@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
     "#{user_name}"
   end
 
+  def rank
+    (Rank.find_by level: self.level).name
+  end
+
   def wins
     self.increment!(:wins_count)
     self.increment!(:games_played_count)
@@ -49,5 +53,8 @@ class User < ActiveRecord::Base
     self.current_win_streak = 0
     self.best_win_streak = 0
     self.games_played_count = 0
+    self.coins = 0
+    self.exp = 0
+    self.level = 1
   end
 end

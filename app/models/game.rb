@@ -36,7 +36,6 @@ class Game < ActiveRecord::Base
 
   def try_to_generate_winner
     if self.finished?
-      self.update_attribute(:done, true)
       var = self.user_1_win_count - self.user_2_win_count
       if var > 0
         self.update_attribute(:winner_id, user_1_id)
@@ -50,6 +49,7 @@ class Game < ActiveRecord::Base
         self.player_1.ties
         self.player_2.ties
       end
+      self.update_attribute(:done, true)
     end
   end
 end

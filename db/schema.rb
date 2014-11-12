@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141106200826) do
+ActiveRecord::Schema.define(version: 20141112145415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 20141106200826) do
     t.integer  "user_2_win_count", default: 0
     t.integer  "tie_count",        default: 0
     t.string   "name"
+  end
+
+  create_table "ranks", force: true do |t|
+    t.integer  "level"
+    t.string   "name"
+    t.integer  "exp_required"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "rock_paper_scissor_rounds", force: true do |t|
@@ -77,6 +85,9 @@ ActiveRecord::Schema.define(version: 20141106200826) do
     t.boolean  "admin",                  default: false
     t.boolean  "is_disabled",            default: false
     t.boolean  "is_hidden",              default: false
+    t.integer  "coins",                  default: 0
+    t.integer  "exp",                    default: 0
+    t.integer  "level",                  default: 1
   end
 
 end

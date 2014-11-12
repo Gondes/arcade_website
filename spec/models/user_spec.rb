@@ -121,6 +121,9 @@ describe "User" do
       user.tie_count.should eq(0)
       user.best_win_streak.should eq(0)
       user.current_win_streak.should eq(0)
+      user.coins.should eq(0)
+      user.exp.should eq(0)
+      user.level.should eq(1)
       User.destroy(user.id)
     end
   end
