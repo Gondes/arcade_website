@@ -58,6 +58,10 @@ class RockPaperScissorRoundsController < ApplicationController
         if @round.finished?
           @round.find_winner
           if @round.save!
+            @round.game.save!
+            @round.game.player_1.save!
+            @round.game.player_2.save!
+            
             format.html { redirect_to @round, notice: 'This round has finished.' }
             format.json { render :show, status: :ok, location: @round }
           # If you can make this statement fail, I would be very surprised

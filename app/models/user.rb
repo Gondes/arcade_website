@@ -26,24 +26,28 @@ class User < ActiveRecord::Base
     (Rank.find_by level: self.level).name
   end
 
+  def add_one(x)
+    x + 1
+  end
+
   def wins
-    self.increment!(:wins_count)
-    self.increment!(:games_played_count)
-    self.increment!(:current_win_streak)
+    self.update_attributes( :wins_count => add_one(self.wins_count),
+                            :games_played_count => add_one(self.games_played_count),
+                            :current_win_streak => add_one(self.current_win_streak) )
     if (self.current_win_streak > self.best_win_streak)
-      self.update_attribute(:best_win_streak, self.current_win_streak)
+      self.update_attribute( :best_win_streak, self.current_win_streak )
     end
   end
 
   def loses
-    self.increment!(:loss_count)
-    self.increment!(:games_played_count)
-    self.update_attribute(:current_win_streak, 0)
+    self.update_attributes( :loss_count => add_one(self.loss_count),
+                            :games_played_count => add_one(self.games_played_count),
+                            :current_win_streak => 0 )
   end
 
   def ties
-    self.increment!(:tie_count)
-    self.increment!(:games_played_count)
+    self.update_attributes( :tie_count => add_one(self.tie_count),
+                            :games_played_count => add_one(self.games_played_count) )
   end
 
   def reset_stats

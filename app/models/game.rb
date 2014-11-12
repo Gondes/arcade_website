@@ -38,18 +38,18 @@ class Game < ActiveRecord::Base
     if self.finished?
       var = self.user_1_win_count - self.user_2_win_count
       if var > 0
-        self.update_attribute(:winner_id, user_1_id)
+        self.update_attributes( :done => true, :winner_id => user_1_id )
         self.player_1.wins
         self.player_2.loses
       elsif var < 0
-        self.update_attribute(:winner_id, user_2_id)
+        self.update_attributes( :done => true, :winner_id => user_2_id )
         self.player_1.loses
         self.player_2.wins
       else
+        self.update_attribute( :done, true )
         self.player_1.ties
         self.player_2.ties
       end
-      self.update_attribute(:done, true)
     end
   end
 end

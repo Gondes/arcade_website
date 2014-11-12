@@ -12,7 +12,6 @@
       <th><%= sortable "loss_count", "Loss" %></th>
       <th><%= sortable "tie_count", "Ties" %></th>
       <th><%= sortable "best_win_streak", "Best win streak" %></th>
-      <th><%= sortable "current_win_streak", "Current win streak" %></th>
       <% if user_signed_in? %>
         <th colspan="1">Options</th>
       <% end %>
@@ -36,7 +35,6 @@
           <td><%= user.loss_count %></td>
           <td><%= user.tie_count %></td>
           <td><%= user.best_win_streak %></td>
-          <td><%= user.current_win_streak %></td>
           <% if user_signed_in? %>
             <% if user.is_disabled %>
               <td>Disabled</td>

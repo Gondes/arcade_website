@@ -66,7 +66,7 @@ describe Game do
       g1.finished?.should eq(true)
     end
 
-    it "try_to_generate_winner assuming game.winner works" do
+    it "try_to_generate_winner should say user 1 wins assuming game.winner works" do
       user1 = create(:user)
       user2 = create(:user)
       g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id,
@@ -77,7 +77,7 @@ describe Game do
       User.destroy(user2.id)
     end
 
-    it "try_to_generate_winner assuming game.winner works" do
+    it "try_to_generate_winner should be a tie assuming game.winner works" do
       user1 = create(:user)
       user2 = create(:user)
       g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id,

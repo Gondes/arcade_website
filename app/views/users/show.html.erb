@@ -1,4 +1,5 @@
-<h2>Profile: <%=@user.user_name %></h2>
+<h2>Profile: <%= @user.user_name %></h2>
+<h3>Level: <%= @user.level %>-<%=@user.rank %></h3>
 
 <% if @user.admin %>
   <strong>Administrator</strong>

@@ -64,6 +64,13 @@ describe "User" do
       User.destroy(user.id)
     end
 
+    pending "Create Test for rank method in #{__FILE__}"
+    #it "rank should use level to find rank name" do  
+      #user = build(:user)
+      #rank = create()
+      #user.rank.should eq()
+    #end
+
     it "wins should only change games, wins, and streaks" do
       user = create(:zero_stat_user)
       user.wins
