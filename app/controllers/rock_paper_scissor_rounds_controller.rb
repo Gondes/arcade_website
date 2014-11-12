@@ -20,6 +20,7 @@ class RockPaperScissorRoundsController < ApplicationController
     if params.has_key? :game_id
       @game = Game.find params[:game_id]
       @rounds = @game.rock_paper_scissor_rounds
+      @rounds = @rounds.sort_by(&:round_number)
     else
       @rounds = RockPaperScissorRound.all
     end

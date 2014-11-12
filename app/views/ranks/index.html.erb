@@ -6,6 +6,7 @@
       <th>Level</th>
       <th>Rank</th>
       <th>EXP Required</th>
+      <th>Options</th>
     </tr>
   </thead>
 
@@ -15,6 +16,7 @@
         <td><%= rank.level %></td>
         <td><%= rank.name %></td>
         <td><%= rank.exp_required %></td>
+        <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
       </tr>
     <% end %>
   </tbody>
