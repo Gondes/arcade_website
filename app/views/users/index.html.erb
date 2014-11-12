@@ -23,7 +23,7 @@
 
       <% if !user.is_hidden or current_user.try(:admin?)%>
         <tr>
-          <td><%= user.level %>:<%= user.rank %></td>
+          <td><%= user.rank %></td>
           <% if user.icon? %>
             <td><%= image_tag user.icon.url(:tiny) %></td>
           <% else %>

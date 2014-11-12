@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def rank
-    (Rank.find_by level: self.level).name
+    self.level.to_s + "-" + (Rank.find_by level: self.level).name
   end
 
   def add_one(x)
