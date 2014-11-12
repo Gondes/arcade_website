@@ -29,6 +29,12 @@ class Game < ActiveRecord::Base
     var = name.gsub!('_',' ')
     var.split.map(&:capitalize).join(' ')
   end
+
+  def end_date
+    if self.done
+      self.updated_at.strftime("%m-%d-%C_%H")
+    end
+  end
   
   def finished?
     self.round_count == self.user_1_win_count + self.user_2_win_count + self.tie_count
