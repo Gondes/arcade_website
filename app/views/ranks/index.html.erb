@@ -1,0 +1,21 @@
+<h1>Ranks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>Rank</th>
+      <th>EXP Required</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ranks.each do |rank| %>
+      <tr>
+        <td><%= rank.level %></td>
+        <td><%= rank.name %></td>
+        <td><%= rank.exp_required %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
