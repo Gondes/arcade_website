@@ -1,3 +1,17 @@
 // Place all the styles related to the ranks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#panel,#flip
+{
+  width:170px;
+  padding:5px;
+  text-align:center;
+  background-color:#e5eecc;
+  border:solid 1px #c3c3c3;
+}
+#panel
+{
+  padding:0px;
+  display:none;
+}

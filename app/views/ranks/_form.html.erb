@@ -21,6 +21,11 @@
     <%= f.number_field :level, :min => 1 %>
   </div>
 
+  <div class="field">
+    <%= f.label :exp_required %><br>
+    <%= f.number_field :exp_required, :min => 0 %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

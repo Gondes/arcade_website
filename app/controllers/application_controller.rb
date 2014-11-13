@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     user_signed_in? and !(current_user.id.nil?)
   end
 
-  def user_admin
+  def user_admin?
     user_signed_in? and current_user.admin
   end
 

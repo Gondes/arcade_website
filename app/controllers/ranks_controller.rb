@@ -8,18 +8,21 @@ class RanksController < ApplicationController
     #@ranks.order(:created_at)
   end
 
-  def show
-  end
+  #def show
+  #end
 
   def new
     @rank = Rank.new
   end
 
   def edit
+    if !(user_admin?)
+      redirect_to ranks_path
+    end
   end
 
-  def create
-  end
+  #def create
+  #end
 
   def update
     respond_to do |format|
@@ -32,6 +35,9 @@ class RanksController < ApplicationController
       end
     end
   end
+
+  #def destroy
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -1,12 +1,14 @@
 <h1>Ranks</h1>
 
-<table>
+<table border="1">
   <thead>
     <tr>
       <th>Level</th>
       <th>Rank</th>
       <th>EXP Required</th>
-      <th>Options</th>
+      <% if current_user.try(:admin?) %>
+        <th>Options</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -16,7 +18,9 @@
         <td><%= rank.level %></td>
         <td><%= rank.name %></td>
         <td><%= rank.exp_required %></td>
-        <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
+        <% if current_user.try(:admin?) %>
+          <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

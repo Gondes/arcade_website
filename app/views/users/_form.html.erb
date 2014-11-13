@@ -1,3 +1,13 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script> 
+  $(document).ready(function(){
+    $("#flip").click(function(){
+      $("#panel").slideToggle("fast");
+    });
+  });
+</script>
+
 <%= form_for(@user, :html => { :multipart => true }) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -33,6 +43,40 @@
 
   <% if current_user.admin %>
     <h4>Admin Edits</h4>
+
+    <div class="admin_field">
+      <%= f.label :level %><br>
+      <%= f.number_field :level, :min => Rank.minimum("level"), :max => Rank.maximum("level") %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :exp %><br>
+      <%= f.number_field :exp, :min => 0, :max => Rank.maximum("exp_required") %>
+    </div>
+
+    <div id="flip">Show Ranks</div>
+    <div id="panel">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Rank</th>
+            <th>EXP Required</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% Rank.all.sort_by(&:level).each do |rank| %>
+            <tr>
+              <td><%= rank.level %></td>
+              <td><%= rank.name %></td>
+              <td><%= rank.exp_required %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
     <div class="admin_field">
       <%= f.label :games_played_count %><br>
       <%= f.number_field :games_played_count, :min => 0 %>
@@ -79,5 +123,3 @@
     <%= f.submit %>
   </div>
 <% end %>
-
-
