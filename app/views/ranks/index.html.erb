@@ -1,27 +1,33 @@
 <h1>Ranks</h1>
 
-<table border="1">
-  <thead>
-    <tr>
-      <th>Level</th>
-      <th>Rank</th>
-      <th>EXP Required</th>
-      <% if current_user.try(:admin?) %>
-        <th>Options</th>
-      <% end %>
-    </tr>
-  </thead>
+<% if !@ranks.empty? %>
+  <div class="table-responsive">
+    <table border="4" class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th>Rank</th>
+          <th>EXP Required</th>
+          <% if current_user.try(:admin?) %>
+            <th>Options</th>
+          <% end %>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @ranks.each do |rank| %>
-      <tr>
-        <td><%= rank.level %></td>
-        <td><%= rank.name %></td>
-        <td><%= rank.exp_required %></td>
-        <% if current_user.try(:admin?) %>
-          <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
+      <tbody>
+        <% @ranks.each do |rank| %>
+          <tr>
+            <td><%= rank.level %></td>
+            <td><%= rank.name %></td>
+            <td><%= rank.exp_required %></td>
+            <% if current_user.try(:admin?) %>
+              <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
+            <% end %>
+          </tr>
         <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <h2>There are no existing ranks</h2>
+<% end %>

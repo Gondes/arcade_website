@@ -11,9 +11,9 @@ class RanksController < ApplicationController
   #def show
   #end
 
-  def new
-    @rank = Rank.new
-  end
+  #def new
+  #  @rank = Rank.new
+  #end
 
   def edit
     if !(user_admin?)
