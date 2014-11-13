@@ -59,6 +59,17 @@ describe Game do
       g1.clean_name.should eq("Rock Paper Scissor")
     end
 
+    # This is subject to change until we finalize a time format
+    it "end_date should return month-day-year_hour:minute if done" do
+      g1 = build(:game, :done => true, :updated_at => Time.now)
+      g1.end_date.should eq(g1.updated_at.strftime("%m-%d-%C_%H:%M"))
+    end
+
+    it "end_date should return nothing if game is not done" do
+      g1 = build(:game, :done => false)
+      g1.end_date.should eq("")
+    end
+
     it "finished? should be finished if round_count == user_1_win_count + user_2_win_count + tie_count" do
       g1 = build(:game, :round_count => 3)
       g1.finished?.should eq(false)

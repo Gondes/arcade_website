@@ -7,15 +7,15 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 rank_list = [
   [ 1, 0, "Dirt" ],
-  [ 2, 10, "Rock" ],
-  [ 3, 30, "Iron" ],
-  [ 4, 60, "Bronze" ],
-  [ 5, 100, "Silver" ],
-  [ 6, 150, "Gold" ],
-  [ 7, 210, "Platinum" ],
-  [ 8, 280, "Ruby" ],
-  [ 9, 360, "Emerald" ],
-  [ 10, 450, "Diamond" ]
+  [ 2, 100, "Rock" ],
+  [ 3, 300, "Iron" ],
+  [ 4, 600, "Bronze" ],
+  [ 5, 1000, "Silver" ],
+  [ 6, 1500, "Gold" ],
+  [ 7, 2100, "Platinum" ],
+  [ 8, 2800, "Ruby" ],
+  [ 9, 3600, "Emerald" ],
+  [ 10, 4500, "Diamond" ]
 ]
 
 rank_list.each do |level, exp_required, name|
