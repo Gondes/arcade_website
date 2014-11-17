@@ -22,15 +22,19 @@ FactoryGirl.define do
       tie_count = 0
       best_win_streak = 0
       current_win_streak = 0
+      level = 1
+      exp = 0
     end
 
     factory :sample_stat_user do
-      games_played_count = 10
-      wins_count = 4
+      games_played_count = 26
+      wins_count = 20
       loss_count = 4
       tie_count = 2
       best_win_streak = 2
       current_win_streak = 1
+      level = 3
+      exp = 50
     end
   end
 end

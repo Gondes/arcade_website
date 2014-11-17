@@ -142,9 +142,11 @@ describe RockPaperScissorRound do
                     :user_2_id => @my_enemy.id, :fg_rounds_count => 1, :round_count => 1)
       rps = create(:rock_paper_scissor_round, :game => game,
                   :user_1_move => "rock", :user_2_move => "paper")
+      rank = create(:rank, :level => 1, :exp_required => 0)
       rps.find_winner
       rps.game.winner_id.should eq(game.user_2_id)
       Game.destroy(game.id)
+      Rank.destroy(rank.id)
     end
   end
 end

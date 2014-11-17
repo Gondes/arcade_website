@@ -6,11 +6,10 @@
       <thead>
         <tr>
           <th>Game</th>
-          <th>Finished</th>
+          <th>Finish Date</th>
           <th>Player 1</th>
           <th>Player 2</th>
           <th>Winner</th>
-          <th>Status</th>
           <th>Best Of</th>
           <th colspan="1">Options</th>
         </tr>
@@ -20,7 +19,11 @@
         <% @games.each do |game| %>
           <tr>
             <td><%= game.clean_name %></td>
-            <td><%= game.end_date %></td>
+            <% if game.end_date == "" %>
+              <td>In Progress</td>
+            <% else %>
+              <td><%= game.end_date %></td>
+            <% end %>
             <td><%= game.player_1.name %></td>
             <td><%= game.player_2.name %></td>
 
@@ -29,14 +32,9 @@
             <% elsif game.winner.nil? %>   <!--Winner Column-->
               <td>Tie!</td>
             <% else %>
-              <td><%= game.winner.name %></td>
+              <td><%= game.winner.name %>!</td>
             <% end %>
 
-            <% if game.finished? %>   <!--Status Column-->
-              <td>Finished</td>
-            <% else %>
-              <td>In Progress</td>
-            <% end %>
             <td><%= game.round_count %></td>
 
             <% if game.finished? %>   <!--Option Column-->

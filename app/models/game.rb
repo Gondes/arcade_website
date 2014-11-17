@@ -45,18 +45,20 @@ class Game < ActiveRecord::Base
   def try_to_generate_winner
     if self.finished?
       var = self.user_1_win_count - self.user_2_win_count
+      player_1_level = self.player_1.level
+      player_2_level = self.player_2.level
       if var > 0
         self.update_attributes( :done => true, :winner_id => user_1_id )
-        self.player_1.wins
-        self.player_2.loses
+        self.player_1.wins_against(player_2_level)
+        self.player_2.loses_against(player_1_level)
       elsif var < 0
         self.update_attributes( :done => true, :winner_id => user_2_id )
-        self.player_1.loses
-        self.player_2.wins
+        self.player_1.loses_against(player_2_level)
+        self.player_2.wins_against(player_1_level)
       else
         self.update_attribute( :done, true )
-        self.player_1.ties
-        self.player_2.ties
+        self.player_1.ties_against(player_2_level)
+        self.player_2.ties_against(player_1_level)
       end
     end
   end

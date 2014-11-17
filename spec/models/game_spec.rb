@@ -80,17 +80,20 @@ describe Game do
     it "try_to_generate_winner should say user 1 wins assuming game.winner works" do
       user1 = create(:user)
       user2 = create(:user)
+      rank = create(:rank, :level => 1, :exp_required => 0)
       g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id,
         :round_count => 3, :user_1_win_count => 1, :tie_count => 2)
       g1.try_to_generate_winner
       g1.winner.name.should eq(user1.name)
       User.destroy(user1.id)
       User.destroy(user2.id)
+      Rank.destroy(rank.id)
     end
 
     it "try_to_generate_winner should be a tie assuming game.winner works" do
       user1 = create(:user)
       user2 = create(:user)
+      rank = create(:rank, :level => 1, :exp_required => 0)
       g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id,
         :round_count => 3, :tie_count => 3)
         #:round_count => 2, :user_1_win_count => 1, :user_2_win_count => 1)
@@ -98,6 +101,7 @@ describe Game do
       g1.winner.should eq(nil)
       User.destroy(user1.id)
       User.destroy(user2.id)
+      Rank.destroy(rank.id)
     end
   end
   
