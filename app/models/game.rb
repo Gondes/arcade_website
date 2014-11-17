@@ -32,7 +32,7 @@ class Game < ActiveRecord::Base
 
   def end_date
     if self.done
-      self.updated_at.strftime("%m-%d-%C_%H:%M")
+      self.updated_at.strftime("%B %d, %Y, %H:%M %Z")
     else
       ""
     end
