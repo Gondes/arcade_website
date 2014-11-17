@@ -1,13 +1,5 @@
 <h2>Profile: <%= @user.user_name %></h2>
 <h3>Level: <%= @user.show_rank %></h3>
-<p>
-  <strong>EXP:</strong>
-  <%= @user.exp %>
-</p>
-<p>
-  <strong>Coins:</strong>
-  <%= @user.coins %>
-</p>
 
 <% if @user.admin %>
   <strong>Administrator</strong><br>
@@ -18,6 +10,15 @@
 <% end %>
 
 <% if current_user.id == @user.id or current_user.admin %>
+  <p>
+    <strong>EXP:</strong>
+    <%= @user.exp %>
+  </p>
+  <p>
+    <strong>Coins:</strong>
+    <%= @user.coins %>
+  </p>
+  
   <p>
     <strong>First name:</strong>
     <%= @user.first_name %>
