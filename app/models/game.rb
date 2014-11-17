@@ -39,7 +39,9 @@ class Game < ActiveRecord::Base
   end
   
   def finished?
-    self.round_count == self.user_1_win_count + self.user_2_win_count + self.tie_count
+    ( (self.round_count == self.user_1_win_count + self.user_2_win_count + self.tie_count) or 
+      (self.user_1_win_count > self.round_count - self.tie_count - self.user_1_win_count) or
+      (self.user_2_win_count > self.round_count - self.tie_count - self.user_2_win_count) )
   end
 
   def try_to_generate_winner

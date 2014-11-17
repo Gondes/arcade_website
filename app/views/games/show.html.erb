@@ -26,6 +26,8 @@
           <td><%= image_tag("paper.png") %></td>
         <% elsif round.user_1_move == "scissor" %>
           <td><%= image_tag("scissor.png") %></td>
+        <% else %>
+          <td></td>
         <% end %>
 
         <% if round.user_2_move == "rock" %>
@@ -34,10 +36,14 @@
           <td><%= image_tag("paper.png") %></td>
         <% elsif round.user_2_move == "scissor" %>
           <td><%= image_tag("scissor.png") %></td>
+        <% else %>
+          <td></td>
         <% end %>
 
         <% if round.tie %>
           <td>Tie!</td>
+        <% elsif round.winner.nil? %>
+          <td>Closed</td>
         <% else %>
           <td><%= round.winner.name %>!</td>
         <% end %>

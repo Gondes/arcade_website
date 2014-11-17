@@ -13,7 +13,7 @@ class GamesController < ApplicationController
   # GET /games/1.json
   def show
     if @game.done
-      @rounds = @game.rock_paper_scissor_rounds
+      @rounds = @game.rock_paper_scissor_rounds.sort_by(&:round_number)
     else
       redirect_to games_path
     end

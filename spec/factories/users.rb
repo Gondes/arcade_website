@@ -14,6 +14,8 @@ FactoryGirl.define do
     user_name
     email
     password "password"
+    level = 1
+    exp = 0
 
     factory :zero_stat_user do
       games_played_count = 0

@@ -70,6 +70,8 @@
           <td></td>
         <% elsif round.finished? %>     <!--Options Column-->
           <td>Done</td>
+        <% elsif @game.finished? %>
+          <td>Closed</td>
         <% else %>
           <td><%= link_to 'Play', edit_rock_paper_scissor_round_path(round)%></td>
         <% end %>

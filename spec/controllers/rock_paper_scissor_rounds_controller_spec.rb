@@ -94,6 +94,7 @@ describe RockPaperScissorRoundsController do
 
   describe "update" do
     it "PUT should update this completed round and find winner" do
+      rank = create(:rank, :level => 1, :exp_required => 0)
       sign_in @my_user
       attributes = attributes_for(:rock_paper_scissor_round, :user_1_move => "paper",
                                   :user_2_move => "paper")
@@ -103,6 +104,7 @@ describe RockPaperScissorRoundsController do
       @rps.user_1_move.should eq(attributes[:user_1_move])
       RockPaperScissorRound.destroy(@rps.id)
       sign_out @my_user
+      Rank.destroy(rank.id)
     end
 
     it "PUT should update, but not find a winner" do
