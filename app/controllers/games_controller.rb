@@ -6,7 +6,7 @@ class GamesController < ApplicationController
   # GET /games.json
   def index
     @games = Game.all
-    @games = @games.sort_by(&:created_at)
+    @games = @games.sort_by(&:created_at).reverse
   end
 
   # GET /games/1

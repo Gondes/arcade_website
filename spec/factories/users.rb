@@ -34,7 +34,7 @@ FactoryGirl.define do
       best_win_streak = 2
       current_win_streak = 1
       level = 3
-      exp = 50
+      exp = 400
     end
   end
 end

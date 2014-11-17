@@ -78,6 +78,11 @@
     </div>
 
     <div class="admin_field">
+      <%= f.label :coins %><br>
+      <%= f.number_field :coins, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
       <%= f.label :games_played_count %><br>
       <%= f.number_field :games_played_count, :min => 0 %>
     </div>

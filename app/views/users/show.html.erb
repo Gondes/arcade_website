@@ -1,6 +1,13 @@
 <h2>Profile: <%= @user.user_name %></h2>
 <h3>Level: <%= @user.show_rank %></h3>
-<strong>EXP: <%= @user.exp %></strong><br>
+<p>
+  <strong>EXP:</strong>
+  <%= @user.exp %>
+</p>
+<p>
+  <strong>Coins:</strong>
+  <%= @user.coins %>
+</p>
 
 <% if @user.admin %>
   <strong>Administrator</strong><br>
