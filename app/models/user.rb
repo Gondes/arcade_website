@@ -135,6 +135,14 @@ class User < ActiveRecord::Base
     return level_difference_exp * 5
   end
 
+  def remove_coins(amount)
+    self.coins -= amount
+  end
+
+  def add_coins(amount)
+    self.coins += amount
+  end
+
   def reset_stats
     self.wins_count = 0
     self.loss_count = 0

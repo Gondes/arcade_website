@@ -1,85 +1,89 @@
 <h1>Rock Paper Scissor: <%= @game.player_1.name %> vs <%= @game.player_2.name %></h1>
 
-<% if @game.finished? %>     <!--Winner Message-->
-  <% if @game.winner.nil? %>
-    <strong>Result: It's a tie!</strong>
-  <% else %>
-    <strong>Result: <%= @game.winner.name %> wins this game!</strong>
-  <% end %>
-<% else %>
-  <strong></strong>
-<% end %>
-
-<table border="4" class="table table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Round</th>
-      <th><%= @game.player_1.name %>'s move</th>
-      <th><%= @game.player_2.name %>'s move</th>
-      <th>Winner</th>
-      <th>Options</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @rounds.each do |round| %>
-      <tr>
-        <td><%= round.round_number %></td>
-        <% if round.finished? %>     <!--Winner Column-->
-
-          <% if round.user_1_move == "rock" %>
-            <td><%= image_tag("rock_transparent.png") %></td>
-          <% elsif round.user_1_move == "paper" %>
-            <td><%= image_tag("paper_transparent.png") %></td>
-          <% elsif round.user_1_move == "scissor" %>
-            <td><%= image_tag("scissor_transparent.png") %></td>
-          <% end %>
-
-          <% if round.user_2_move == "rock" %>
-            <td><%= image_tag("rock_transparent.png") %></td>
-          <% elsif round.user_2_move == "paper" %>
-            <td><%= image_tag("paper_transparent.png") %></td>
-          <% elsif round.user_2_move == "scissor" %>
-            <td><%= image_tag("scissor_transparent.png") %></td>
-          <% end %>
-          
-          <% if round.tie %>
-            <td>Tie!</td>
-          <% else %>
-            <td><%= round.winner.name %> Wins!</td>
-          <% end %>
-        <% elsif !round.is_locked? %>
-          <% if round.user_1_move.nil? %>
-            <td>Deciding...</td>
-          <% else %>
-            <td>Locked in</td>
-          <% end %>
-          <% if round.user_2_move.nil? %>
-            <td>Deciding...</td>
-          <% else %>
-            <td>Locked in</td>
-          <% end %>
-          <td></td>
-        <% else %>
-          <td></td>
-          <td></td>
-          <td></td>
-        <% end %>
-
-        <% if round.is_locked? %>
-          <td></td>
-        <% elsif round.finished? %>     <!--Options Column-->
-          <td>Done</td>
-        <% elsif @game.finished? %>
-          <td>Closed</td>
-        <% else %>
-          <td><%= link_to 'Play', edit_rock_paper_scissor_round_path(round)%></td>
-        <% end %>
-      </tr>
+<% if @game.accepted %>
+  <% if @game.finished? %>     <!--Winner Message-->
+    <% if @game.winner.nil? %>
+      <strong>Result: It's a tie!</strong>
+    <% else %>
+      <strong>Result: <%= @game.winner.name %> wins this game!</strong>
     <% end %>
-  </tbody>
-</table>
-<br>
+  <% else %>
+    <strong></strong>
+  <% end %>
+
+  <table border="4" class="table table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Round</th>
+        <th><%= @game.player_1.name %>'s move</th>
+        <th><%= @game.player_2.name %>'s move</th>
+        <th>Winner</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @rounds.each do |round| %>
+        <tr>
+          <td><%= round.round_number %></td>
+          <% if round.finished? %>     <!--Winner Column-->
+
+            <% if round.user_1_move == "rock" %>
+              <td><%= image_tag("rock_transparent.png") %></td>
+            <% elsif round.user_1_move == "paper" %>
+              <td><%= image_tag("paper_transparent.png") %></td>
+            <% elsif round.user_1_move == "scissor" %>
+              <td><%= image_tag("scissor_transparent.png") %></td>
+            <% end %>
+
+            <% if round.user_2_move == "rock" %>
+              <td><%= image_tag("rock_transparent.png") %></td>
+            <% elsif round.user_2_move == "paper" %>
+              <td><%= image_tag("paper_transparent.png") %></td>
+            <% elsif round.user_2_move == "scissor" %>
+              <td><%= image_tag("scissor_transparent.png") %></td>
+            <% end %>
+            
+            <% if round.tie %>
+              <td>Tie!</td>
+            <% else %>
+              <td><%= round.winner.name %> Wins!</td>
+            <% end %>
+          <% elsif !round.is_locked? %>
+            <% if round.user_1_move.nil? %>
+              <td>Deciding...</td>
+            <% else %>
+              <td>Locked in</td>
+            <% end %>
+            <% if round.user_2_move.nil? %>
+              <td>Deciding...</td>
+            <% else %>
+              <td>Locked in</td>
+            <% end %>
+            <td></td>
+          <% else %>
+            <td></td>
+            <td></td>
+            <td></td>
+          <% end %>
+
+          <% if round.is_locked? %>
+            <td></td>
+          <% elsif round.finished? %>     <!--Options Column-->
+            <td>Done</td>
+          <% elsif @game.finished? %>
+            <td>Closed</td>
+          <% else %>
+            <td><%= link_to 'Play', edit_rock_paper_scissor_round_path(round)%></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+<% else %>
+  <h3>Waiting for opponent to accept</h3>
+<% end %>
 
 <%= button_to 'Back', games_path, :method => "get" %>
 

@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_game, only: [:show, :update, :destroy]
+  before_action :set_game, only: [:show, :update, :destroy, :accept, :reject]
 
   # GET /games
   # GET /games.json
@@ -35,6 +35,11 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
+        @game.fee = @game.calculate_challenge_fee
+        @game.save
+        challenger = User.find(@game.player_1.id)
+        challenger.remove_coins(@game.fee)
+        challenger.save
 
         #This needs a major change in logic to accomidate other game types
         if @game.name == "rock_paper_scissor"
@@ -79,6 +84,32 @@ class GamesController < ApplicationController
     end
   end
 
+  def accept
+    challenged = User.find(@game.player_2.id)
+    challenged.add_coins(@game.fee)
+    @game.accepted = true
+
+    respond_to do |format|
+      if @game.save && challenged.save
+        format.html { redirect_to rock_paper_scissor_rounds_path(game_id: @game.id),
+                      notice: 'Challenge was accepted.' }
+      #format.html { redirect_to games_url, notice: 'Challenge was accepted.' }
+      end
+    end
+  end
+
+  def reject
+    challenged = User.find(@game.player_1.id)
+    challenged.add_coins(@game.fee)
+    challenged.save
+
+    @game.destroy
+    respond_to do |format|
+      format.html { redirect_to games_url, notice: 'Challenge was rejected.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game
@@ -88,6 +119,7 @@ class GamesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
       params.require(:game).permit(:user_1_id, :user_2_id, :winner_id, :done, :round_count,
-                                   :user_1_win_count, :user_2_win_count, :tie_count, :name)
+                                   :user_1_win_count, :user_2_win_count, :tie_count, :name,
+                                   :accepted)
     end
 end

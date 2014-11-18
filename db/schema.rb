@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112145415) do
+ActiveRecord::Schema.define(version: 20141118202224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 20141112145415) do
     t.integer  "user_2_win_count", default: 0
     t.integer  "tie_count",        default: 0
     t.string   "name"
+    t.boolean  "accepted",         default: false
+    t.integer  "fee",              default: 0
   end
 
   create_table "ranks", force: true do |t|

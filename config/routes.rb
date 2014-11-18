@@ -4,14 +4,25 @@ Rails.application.routes.draw do
 
   resources :rock_paper_scissor_rounds
 
-  resources :games
+  resources :games do
+    member do
+      put 'reject'
+      put 'accept'
+    end
+    collection do
+      #put 'accept'
+      #put 'accept/:id(.:format)', :to => 'games#accept',
+      #                            :as => :accept
+      #put 'reject'
+    end
+  end
 
   resources :ranks
 
   resources :users do
     collection do
       put 'reset_stats/:id(.:format)', :to => 'users#reset_stats',
-                                        :as => :reset_stats
+                                       :as => :reset_stats
     end
   end
 
