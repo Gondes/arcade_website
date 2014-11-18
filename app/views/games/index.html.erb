@@ -24,8 +24,8 @@
             <% else %>
               <td><%= game.end_date %></td>
             <% end %>
-            <td><%= game.player_1.name %>/<%= game.player_1.coins %></td>
-            <td><%= game.player_2.name %>/<%= game.player_2.coins %></td>
+            <td>Lvl-<%= game.player_1.level %> <%= game.player_1.name %></td>
+            <td>Lvl-<%= game.player_2.level %> <%= game.player_2.name %></td>
 
             <% if !game.finished? %>
               <td></td>
