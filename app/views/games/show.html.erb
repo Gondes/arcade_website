@@ -21,21 +21,21 @@
         <td><%= round.round_number %></td>
         
         <% if round.user_1_move == "rock" %>
-          <td><%= image_tag("rock.png") %></td>
+          <td><%= image_tag "rock_transparent.png" %></td>
         <% elsif round.user_1_move == "paper" %>
-          <td><%= image_tag("paper.png") %></td>
+          <td><%= image_tag("paper_transparent.png") %></td>
         <% elsif round.user_1_move == "scissor" %>
-          <td><%= image_tag("scissor.png") %></td>
+          <td><%= image_tag("scissor_transparent.png") %></td>
         <% else %>
           <td></td>
         <% end %>
 
         <% if round.user_2_move == "rock" %>
-          <td><%= image_tag("rock.png") %></td>
+          <td><%= image_tag("rock_transparent.png") %></td>
         <% elsif round.user_2_move == "paper" %>
-          <td><%= image_tag("paper.png") %></td>
+          <td><%= image_tag("paper_transparent.png") %></td>
         <% elsif round.user_2_move == "scissor" %>
-          <td><%= image_tag("scissor.png") %></td>
+          <td><%= image_tag("scissor_transparent.png") %></td>
         <% else %>
           <td></td>
         <% end %>
