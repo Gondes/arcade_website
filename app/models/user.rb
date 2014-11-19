@@ -137,6 +137,9 @@ class User < ActiveRecord::Base
 
   def remove_coins(amount)
     self.coins -= amount
+    if self.coins < 0
+      self.coins = 0
+    end
   end
 
   def add_coins(amount)

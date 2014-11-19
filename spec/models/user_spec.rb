@@ -183,6 +183,24 @@ describe "User" do
       end
     end
 
+    it "remove_coins(amount) should reduce current coins" do
+      user = build(:user, :coins => 30)
+      user.remove_coins(10)
+      user.coins.should eq(20)
+    end
+
+    it "remove_coins(amount) should not reduce below 0" do
+      user = build(:user, :coins => 10)
+      user.remove_coins(30)
+      user.coins.should eq(0)
+    end
+
+    it "add_coins(ammount) should add to current coins" do
+      user = build(:user, :coins => 0)
+      user.add_coins(10)
+      user.coins.should eq(10)
+    end
+
     it "wins_against(opponent_level) testing leveling up" do
       user = build(:user, :level => @rankMid.level, :exp => @rankMax.exp_required - 1)
       user.wins_against(@rankMid.level)

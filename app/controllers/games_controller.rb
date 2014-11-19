@@ -85,12 +85,12 @@ class GamesController < ApplicationController
   end
 
   def accept
-    challenged = User.find(@game.player_2.id)
-    challenged.add_coins(@game.fee)
     @game.accepted = true
-
     respond_to do |format|
-      if @game.save && challenged.save
+      if @game.save
+        challenged = User.find(@game.player_2.id)
+        challenged.add_coins(@game.fee)
+        challenged.save
         format.html { redirect_to rock_paper_scissor_rounds_path(game_id: @game.id),
                       notice: 'Challenge was accepted.' }
       #format.html { redirect_to games_url, notice: 'Challenge was accepted.' }

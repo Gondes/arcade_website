@@ -7,8 +7,8 @@ describe Game do
   end
 
   after(:all) do
-    User.destroy(d_user1.id)
-    User.destroy(d_user2.id)
+    User.destroy(@d_user1.id)
+    User.destroy(@d_user2.id)
   end
 
   describe "test" do
@@ -62,7 +62,7 @@ describe Game do
     # This is subject to change until we finalize a time format
     it "end_date should return month-day-year_hour:minute if done" do
       g1 = build(:game, :done => true, :updated_at => Time.now)
-      g1.end_date.should eq(g1.updated_at.strftime("%m-%d-%C_%H:%M"))
+      g1.end_date.should eq(g1.updated_at.strftime("%B %d, %Y, %H:%M %Z"))
     end
 
     it "end_date should return nothing if game is not done" do
@@ -78,46 +78,72 @@ describe Game do
     end
 
     it "try_to_generate_winner should say user 1 wins assuming game.winner works" do
-      user1 = create(:user)
-      user2 = create(:user)
       rank = create(:rank, :level => 1, :exp_required => 0)
-      g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id,
+      g1 = build(:game, :user_1_id => @d_user1.id, :user_2_id => @d_user2.id,
         :round_count => 3, :user_1_win_count => 1, :tie_count => 2)
       g1.try_to_generate_winner
-      g1.winner.name.should eq(user1.name)
-      User.destroy(user1.id)
-      User.destroy(user2.id)
+      g1.winner.name.should eq(@d_user1.name)
+      Rank.destroy(rank.id)
+    end
+
+    it "try_to_generate_winner should say user 2 wins assuming game.winner works" do
+      rank = create(:rank, :level => 1, :exp_required => 0)
+      g1 = build(:game, :user_1_id => @d_user1.id, :user_2_id => @d_user2.id,
+        :round_count => 3, :user_2_win_count => 1, :tie_count => 2)
+      g1.try_to_generate_winner
+      g1.winner.name.should eq(@d_user2.name)
       Rank.destroy(rank.id)
     end
 
     it "try_to_generate_winner should be a tie assuming game.winner works" do
-      user1 = create(:user)
-      user2 = create(:user)
       rank = create(:rank, :level => 1, :exp_required => 0)
-      g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id,
+      g1 = build(:game, :user_1_id => @d_user1.id, :user_2_id => @d_user1.id,
         :round_count => 3, :tie_count => 3)
         #:round_count => 2, :user_1_win_count => 1, :user_2_win_count => 1)
       g1.try_to_generate_winner
       g1.winner.should eq(nil)
+      Rank.destroy(rank.id)
+    end
+
+    it "calculate_challenge_fee should return 0 if fee is less then 0" do
+      user1 = create(:user, :level => 3)
+      user2 = create(:user, :level => 1)
+      g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id)
+      g1.calculate_challenge_fee.should eq(0)
       User.destroy(user1.id)
       User.destroy(user2.id)
-      Rank.destroy(rank.id)
+    end
+
+    it "calculate_challenge_fee should return level diff * 10" do
+      user1 = create(:user, :level => 1)
+      user2 = create(:user, :level => 3)
+      g1 = build(:game, :user_1_id => user1.id, :user_2_id => user2.id)
+      g1.calculate_challenge_fee.should eq(20)
+      User.destroy(user1.id)
+      User.destroy(user2.id)
     end
   end
   
 
   describe "validation" do
     it "player_1_id should not equal player_2_id" do
-      user1 = create(:user, :id => 1)
-      g1 = build(:game, :user_1_id => user1.id, :user_2_id => user1.id)
+      g1 = build(:game, :user_1_id => @d_user1.id, :user_2_id => @d_user1.id)
       g1.should_not be_valid
-      User.destroy(user1.id)
     end
 
-    pending "write better validation for presence of player_1 and 2 ids in #{__FILE__}"
-    #it "player_1_id and player_2_id should not be nil" do
-    #  g1 = build(:game, :user_1_id => nil, :user_2_id => nil)
-    #  g1.should_not be_valid
-    #end
+    it "player_1_id and player_2_id should not be nil" do
+      g1 = build(:game, :user_1_id => nil, :user_2_id => nil)
+      g1.should_not be_valid
+    end
+
+    it "player_1_id should not be nil" do
+      g1 = build(:game, :user_1_id => @d_user1.id, :user_2_id => nil)
+      g1.should_not be_valid
+    end
+
+    it "player_2_id should not be nil" do
+      g1 = build(:game, :user_1_id => nil, :user_2_id => @d_user2.id)
+      g1.should_not be_valid
+    end
   end
 end
