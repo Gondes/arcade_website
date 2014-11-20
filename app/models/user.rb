@@ -22,6 +22,18 @@ class User < ActiveRecord::Base
     "#{user_name}"
   end
 
+  def admin?
+    self.admin
+  end
+
+  def is_hidden?
+    self.is_hidden
+  end
+
+  def is_disabled?
+    self.is_disabled
+  end
+
   def rank
     Rank.find_by(:level => self.level)
   end
@@ -45,6 +57,14 @@ class User < ActiveRecord::Base
       self.rank
     end
   end
+
+  #def level_up
+  #  self.level += 1
+  #end
+
+  #def level_down
+  #  self.level -= 1
+  #end
 
   def rank_up
     self.update_attribute( :level, self.next_rank.level )

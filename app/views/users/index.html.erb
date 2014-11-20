@@ -21,7 +21,7 @@
       <tbody>
         <% @users.each do |user| %>
 
-          <% if !user.is_hidden or current_user.try(:admin?)%>
+          <% if !user.is_hidden? or current_user.try(:admin?)%>
             <tr>
               <% if user.icon? %>
                 <td><%= image_tag user.icon.url(:tiny) %></td>
@@ -35,7 +35,7 @@
               <td><%= user.loss_count %></td>
               <td><%= user.tie_count %></td>
               <% if user_signed_in? %>
-                <% if user.is_disabled %>
+                <% if user.is_disabled? %>
                   <td>Disabled</td>
                 <% elsif user.id != current_user.id %>
                   <td><%= link_to 'Challenge', new_game_url(user_1_id: current_user.id, user_2_id: user.id) %></td>

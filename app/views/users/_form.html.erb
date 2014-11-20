@@ -31,7 +31,7 @@
     <%= f.file_field :icon %>
   </div>
 
-  <% if current_user.admin %>
+  <% if current_user.admin? %>
     <h4>Admin Edits</h4>
 
     <div class="admin_field">

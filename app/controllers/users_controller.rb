@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    if !(valid_user(@user.id))
+    if !(valid_user(@user.id) or user_admin?)
       redirect_to users_url
     end
   end

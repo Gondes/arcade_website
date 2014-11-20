@@ -59,21 +59,33 @@ describe "User" do
     it "should not be able to log in" do
       user = create(:user, :is_disabled => true)
       user.active_for_authentication?.should eq(false)
-      User.destroy(user.id)
     end
 
     it "should not affect admins" do
-      user = create(:user, :is_disabled => true, :admin => true)
+      user = build(:user, :is_disabled => true, :admin => true)
       user.active_for_authentication?.should eq(true)
-      User.destroy(user.id)
     end
   end
 
   describe "method" do
     it "name should return user_name" do
-      user = create(:user)
+      user = build(:user)
       user.name.should eq(user.user_name)
-      User.destroy(user.id)
+    end
+
+    it "admin? should return admin boolean" do
+      user = build(:user, :admin => true)
+      user.admin?.should eq(true)
+    end
+
+    it "is_hidden? should return is_hidden boolean" do
+      user = build(:user, :is_hidden => true)
+      user.is_hidden?.should eq(true)
+    end
+
+    it "is_disabled? should return is_disabled boolean" do
+      user = build(:user, :is_disabled => true)
+      user.is_disabled?.should eq(true)
     end
 
     describe "rank logic:" do

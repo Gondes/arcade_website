@@ -16,8 +16,9 @@ class ApplicationController < ActionController::Base
     "/"
   end
 
+  # Checks if current_user is the same as user with some_id
   def valid_user(some_id)
-    (user_exists and some_id == current_user.id) or current_user.try(:admin?)
+    (user_exists and some_id == current_user.id)# or current_user.try(:admin?)
   end
 
   def user_exists
