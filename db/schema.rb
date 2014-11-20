@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118202224) do
+ActiveRecord::Schema.define(version: 20141120201212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: true do |t|
+    t.text     "content"
+    t.integer  "discussion_topic_id"
+    t.integer  "user_id"
+    t.boolean  "removed",             default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "discussion_topics", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "general_forum_topic_id"
+    t.integer  "user_id"
+    t.boolean  "closed",                 default: false
+    t.boolean  "removed",                default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "faqs", force: true do |t|
     t.string   "question"
@@ -37,6 +57,13 @@ ActiveRecord::Schema.define(version: 20141118202224) do
     t.string   "name"
     t.boolean  "accepted",         default: false
     t.integer  "fee",              default: 0
+  end
+
+  create_table "general_forum_topics", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "ranks", force: true do |t|
