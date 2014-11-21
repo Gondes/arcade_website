@@ -24,8 +24,8 @@
             <% else %>
               <td><%= game.end_date %></td>
             <% end %>
-            <td>Lvl-<%= game.player_1.level %> <%= game.player_1.name %></td>
-            <td>Lvl-<%= game.player_2.level %> <%= game.player_2.name %></td>
+            <td>Lvl-<%= game.player_1.level %> <%= link_to game.player_1.user_name, user_path(game.player_1.id) %></td>
+            <td>Lvl-<%= game.player_2.level %> <%= link_to game.player_2.user_name, user_path(game.player_2.id) %></td>
 
             <% if !game.finished? %>
               <td></td>
