@@ -1,5 +1,5 @@
 <h1>Rock Paper Scissor: <%= @game.player_1.name %> vs <%= @game.player_2.name %></h1>
-<% if @game.winner_id.nil? %>
+<% if @game.winner == nil %>
   <h2>Results: It's a Tie!</h2>
 <% else %>
   <h2>Results: <%= @game.winner.name %> Wins!</h2>

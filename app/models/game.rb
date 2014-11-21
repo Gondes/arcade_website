@@ -20,8 +20,18 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    unless winner_id.nil?
-      User.find winner_id
+    #unless winner_id.nil?
+    #  User.find winner_id
+    #end
+
+    if self.finished?
+      if (self.user_1_win_count > self.round_count - self.tie_count - self.user_1_win_count)
+        self.player_1
+      elsif (self.user_2_win_count > self.round_count - self.tie_count - self.user_2_win_count)
+        self.player_2
+      else
+        nil
+      end
     end
   end
 

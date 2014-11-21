@@ -49,9 +49,30 @@ describe Game do
       g1.player_2.name.should eq(@d_user2.user_name)
     end
 
-    it "winner should return winner only if not nil" do
-      g1 = build(:game, :winner_id => @d_user1.id)
+    it "winner.name should return user 1.name" do
+      #g1 = build(:game, :winner_id => @d_user1.id)
+      g1 = build(:game, :user_1_id => @d_user1.id, :round_count => 1,
+                 :user_1_win_count => 1)
       g1.winner.name.should eq(@d_user1.name)
+    end
+
+    it "winner.name should return user_2.name" do
+      #g1 = build(:game, :winner_id => @d_user1.id)
+      g1 = build(:game, :user_2_id => @d_user2.id, :round_count => 1,
+                 :user_2_win_count => 1)
+      g1.winner.name.should eq(@d_user2.name)
+    end
+
+    it "winner should return nil when tie" do
+      #g1 = build(:game, :winner_id => @d_user1.id)
+      g1 = build(:game, :round_count => 1, :tie_count => 1)
+      g1.winner.should eq(nil)
+    end
+
+    it "winner should return nil when not finished" do
+      #g1 = build(:game, :winner_id => @d_user1.id)
+      g1 = build(:game, :round_count => 1)
+      g1.winner.should eq(nil)
     end
 
     it "clean_name should capitalize words and remove '_''s " do
