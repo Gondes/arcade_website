@@ -2,17 +2,12 @@
 
 <h1>General Forum Topics</h1>
 
-<h2>General Discussion</h2>
-<h2>Announcements</h2>
-<h2>Server Issues</h2>
-<h2><%= link_to 'Strategies', games_path(forum_id: "strategies") %></h2>
-<h2><%= link_to "FAQ", faqs_url %></h2>
-
-
 <% @forum.each do |forum| %>
   <article class="forum">
-    <h2><%= forum.name %>(<%= forum.discussion_topics_count %>)</h2>
+    <h2><%= link_to forum.name, discussion_topics_path(forum_id: forum.id) %>(<%= forum.discussion_topics_count %>)</h2>
     <p><%= link_to 'Show', forum %><p>
   </article>
 <% end %>
+
+<h2><%= link_to "FAQ", faqs_url %></h2>
 

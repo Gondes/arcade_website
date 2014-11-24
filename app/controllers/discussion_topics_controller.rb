@@ -2,26 +2,59 @@ class DiscussionTopicsController < ApplicationController
   before_action :set_discussion_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    @forum = DiscussionTopic.all
+    @topic = DiscussionTopic.all
+    if params.has_key? :forum_id
+      @forum = GeneralForumTopic.find params[:forum_id]
+      @topics = @forum.discussion_topics
+      @topics = @topics.sort_by(&:created_at).reverse
+    else
+      redirect_to general_forum_topics_path
+    end
   end
 
   def show
-    @topics = @forum.comments.sort_by(&:created_at).reverse
+    @topics = @topic.comments.sort_by(&:created_at).reverse
   end
 
   def new
+    @topic = DiscussionTopic.new
   end
 
   def edit
   end
 
   def create
+    @topic = DiscussionTopic.new(discussion_topic_params)
+
+    respond_to do |format|
+      if @topic.save
+        format.html { redirect_to @topic, notice: 'DiscussionTopic was successfully created.' }
+        format.json { render :show, status: :created, location: @topic }
+      else
+        format.html { render :new }
+        format.json { render json: @topic.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
+    respond_to do |format|
+      if @topic.update(discussion_topic_params)
+        format.html { redirect_to @topic, notice: 'DiscussionTopic was successfully updated.' }
+        format.json { render :show, status: :ok, location: @topic }
+      else
+        format.html { render :edit }
+        format.json { render json: @topic.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
+    @topic.destroy
+    respond_to do |format|
+      format.html { redirect_to discussion_topics_url, notice: 'DiscussionTopic was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private

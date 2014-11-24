@@ -1,15 +1,16 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   def index
-    @forum = DiscussionTopic.all
+    @comment = Comment.all
   end
 
   def show
-    @topics = @forum.comments.sort_by(&:created_at).reverse
   end
 
   def new
+    @comment = Comment.new
   end
 
   def edit

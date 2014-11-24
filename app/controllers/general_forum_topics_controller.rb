@@ -10,6 +10,7 @@ class GeneralForumTopicsController < ApplicationController
   end
 
   def new
+    @forum = GeneralForumTopic.new
   end
 
   def edit

@@ -1,2 +1,10 @@
 <h1>DiscussionTopics#show</h1>
-<p>Find me in app/views/discussion_topics/show.html.erb</p>
+
+<strong>Title:</strong>
+<p><%= @topic.title %></p><br>
+
+<strong>Description:</strong>
+<p><%= @topic.description %></p><br>
+
+<%= link_to 'Back', discussion_topics_path %>
+<%= link_to 'Edit', edit_discussion_topic_path(@topic) %>
