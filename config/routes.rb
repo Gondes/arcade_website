@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  
   root 'home#index'
 
   resources :rock_paper_scissor_rounds
@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   end
 
   devise_for :user, :controllers => { registrations: 'registrations' }
+
+  resources :general_forum_topics
 
   resources :faqs
   

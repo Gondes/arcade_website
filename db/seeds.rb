@@ -25,3 +25,14 @@ rank_list = [
 rank_list.each do |level, exp_required, name|
   Rank.create( level: level, exp_required: exp_required, name: name )
 end
+
+forum_list = [
+  [ "General Discussion", "Just any rambling goes here." ],
+  [ "Announcements", "Upcoming patches and events." ],
+  [ "Server Issues", "Report any issues or bugs here."],
+  [ "Strategies", "Discuss your strategies and and analysis here."]
+]
+
+forum_list.each do |title, description|
+  GeneralForumTopic.create( title: title, description: description)
+end

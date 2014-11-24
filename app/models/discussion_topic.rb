@@ -6,7 +6,7 @@ class DiscussionTopic < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   belongs_to :general_forum_topic
 
-  def op
+  def original_poster
     User.find self.user_id
   end
 
