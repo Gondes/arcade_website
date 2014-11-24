@@ -30,7 +30,7 @@ class GeneralForumTopicsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def faq_params
+    def general_forum_topic_params
       params.require(:general_forum_topic).permit(:title, :description)
     end
 end
