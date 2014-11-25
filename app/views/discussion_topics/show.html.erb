@@ -6,5 +6,22 @@
 <strong>Description:</strong>
 <p><%= @topic.description %></p><br>
 
-<%= link_to 'Back', discussion_topics_path %>
-<%= link_to 'Edit', edit_discussion_topic_path(@topic) %>
+
+<% @comments.each do |comment| %>
+  <article class="topic">
+    <aside>
+      <strong><%= comment.commenter.name %></strong>
+      <p><%= comment.created_at %></p>
+    </aside>
+      <p><%= comment.content %></p>
+      <% if user_signed_in? %>
+        <p><%= link_to 'Show', comment %></p>
+      <% end %>
+  </article>
+<% end %>
+
+<%= link_to 'Comment', new_comment_url(topic_id: @topic.id) %>
+<%= link_to 'Back', discussion_topics_path(forum_id: @topic.id) %>
+<% if @topic.is_op?(current_user.id) || current_user.admin? %>
+  <%= link_to 'Edit', edit_discussion_topic_path(@topic) %>
+<% end %>

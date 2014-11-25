@@ -1,2 +1,5 @@
-<h1>DiscussionTopics#edit</h1>
-<p>Find me in app/views/discussion_topics/edit.html.erb</p>
+<h1>DiscussionTopics</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', discussion_topics_path(forum_id: @topic.id) %>

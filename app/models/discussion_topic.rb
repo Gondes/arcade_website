@@ -14,4 +14,8 @@ class DiscussionTopic < ActiveRecord::Base
     temp = 'discussion_topic_id = ' + self.id.to_s
     Comment.where(temp).count
   end
+
+  def is_op?(some_id)
+    some_id = self.user_id
+  end
 end

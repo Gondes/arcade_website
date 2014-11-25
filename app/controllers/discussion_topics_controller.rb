@@ -1,8 +1,9 @@
 class DiscussionTopicsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_discussion_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    @topic = DiscussionTopic.all
+    #@topic = DiscussionTopic.all
     if params.has_key? :forum_id
       @forum = GeneralForumTopic.find params[:forum_id]
       @topics = @forum.discussion_topics
@@ -13,7 +14,7 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def show
-    @topics = @topic.comments.sort_by(&:created_at).reverse
+    @comments = @topic.comments.sort_by(&:created_at).reverse
   end
 
   def new

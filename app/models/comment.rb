@@ -6,4 +6,8 @@ class Comment < ActiveRecord::Base
   def commenter
     User.find self.user_id
   end
+
+  def forum
+  	GeneralForumTopic.find self.discussion_topic.general_forum_topic
+  end
 end
