@@ -1,7 +1,7 @@
 class DiscussionTopic < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
-  validates_length_of :title, :maximum => 64
+  validates_length_of :title, :maximum => 32
 
   has_many :comments, :dependent => :destroy
   belongs_to :general_forum_topic
@@ -17,5 +17,9 @@ class DiscussionTopic < ActiveRecord::Base
 
   def is_op?(some_id)
     some_id = self.user_id
+  end
+
+  def exist?
+    !self.title.nil? && !self.description.nil?
   end
 end

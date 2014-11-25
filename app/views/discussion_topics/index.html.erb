@@ -2,18 +2,31 @@
 
 <% if !@topics.empty? %>
 
-  <% @topics.each do |topic| %>
-    <article class="topic">
-      <h3><%= link_to topic.title, topic %>(<%= topic.comments_count %>)</h3>
-      <p><%= topic.description %></p>
-      <% if user_signed_in? %>
-        <p><%= link_to 'Show', topic %></p>
-        <p><%= link_to 'Edit', edit_discussion_topic_path(topic) %></p>
-        <p>Delete</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Comments</th>
+        <th>Created Time</th>
+        <th>Last Activity</th>
+        <th>Status</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @topics.each do |topic| %>
+        <tr>
+          <td><%= link_to topic.title, topic %>:<%= topic.description %></td>
+          <td><%= topic.comments_count %></td>
+          <td><%= topic.created_at %></td>
+          <td><%= topic.updated_at %></td>
+          <td><%= topic.closed %></td>
+          <td><%= link_to 'Edit', edit_discussion_topic_path(topic) %></td>
+        </tr>
       <% end %>
-    </article>
-  <% end %>
-
+    </tbody>
+  </table>
+  
 <% else %>
   <strong>There are no discussion topics for this section</strong>
 <% end %>

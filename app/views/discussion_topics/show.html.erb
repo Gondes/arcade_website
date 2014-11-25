@@ -1,7 +1,4 @@
-<h1>DiscussionTopics#show</h1>
-
-<strong>Title:</strong>
-<p><%= @topic.title %></p><br>
+<h1><%= @topic.title %></h1>
 
 <strong>Description:</strong>
 <p><%= @topic.description %></p><br>
@@ -22,6 +19,6 @@
 
 <%= link_to 'Comment', new_comment_url(topic_id: @topic.id) %>
 <%= link_to 'Back', discussion_topics_path(forum_id: @topic.id) %>
-<% if @topic.is_op?(current_user.id) || current_user.admin? %>
+<% if user_signed_in? && (@topic.is_op?(current_user.id) || current_user.admin?) %>
   <%= link_to 'Edit', edit_discussion_topic_path(@topic) %>
 <% end %>
