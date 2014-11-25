@@ -31,8 +31,6 @@
   <strong>There are no discussion topics for this section</strong>
 <% end %>
 
-<% if user_signed_in? %>
-  <%= button_to 'New Topic', new_discussion_topic_path, :method => "get" %>
-<% end %>
 
+<%= button_to 'New Topic', new_discussion_topic_path, :method => "get" %>
 <%= button_to 'Back', general_forum_topics_path, :method => "get" %>

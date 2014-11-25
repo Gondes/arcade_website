@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
     if user_signed_in?
       @comment = Comment.new
     else
-      redirect_to general_forum_topics_path, notice: 'You must be logged in to comment.'
+      redirect_to :back, notice: 'You must be logged in to comment.'
     end
   end
 
