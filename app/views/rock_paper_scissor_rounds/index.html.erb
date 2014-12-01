@@ -49,6 +49,7 @@
             <% else %>
               <td><%= round.winner.name %> Wins!</td>
             <% end %>
+
           <% elsif !round.is_locked? %>
             <% if round.user_1_move.nil? %>
               <td>Deciding...</td>
@@ -61,6 +62,7 @@
               <td>Locked in</td>
             <% end %>
             <td></td>
+            
           <% else %>
             <td></td>
             <td></td>

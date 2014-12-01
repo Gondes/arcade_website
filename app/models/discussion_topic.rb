@@ -10,6 +10,14 @@ class DiscussionTopic < ActiveRecord::Base
     User.find self.user_id
   end
 
+  def closed_status
+    if self.closed
+      'Closed'
+    else
+      'Open'
+    end
+  end
+
   def comments_count
     temp = 'discussion_topic_id = ' + self.id.to_s
     Comment.where(temp).count
