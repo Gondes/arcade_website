@@ -9,14 +9,19 @@
 
 <% @comments.each do |comment| %>
   <article class="topic">
-    <aside>
-      <strong><%= comment.commenter.name %></strong>
-      <p><%= comment.created_at %></p>
-    </aside>
-      <p><%= comment.content %></p>
-      <% if user_signed_in? %>
-        <p><%= link_to 'Show', comment %></p>
+    <div class="comment_info">
+      <strong><%= comment.commenter.show_rank %> <%= comment.commenter.name %></strong>
+      <% if comment.commenter.icon? %>
+        <td><%= image_tag comment.commenter.icon.url(:small) %></td>
       <% end %>
+      <p><%= comment.created_at %></p>
+      <% if user_signed_in? and (current_user == @topic.original_poster or current_user.admin?) %>
+        <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
+      <% end %>
+    </div>
+    <div class="comment_content">
+      <p><%= comment.show_content %></p>
+    </div>
   </article>
 <% end %>
 
