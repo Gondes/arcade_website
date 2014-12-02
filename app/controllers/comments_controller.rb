@@ -10,7 +10,12 @@ class CommentsController < ApplicationController
   end
 
   def new
-    @comment = Comment.new
+    @topic = DiscussionTopic.find(params[:topic_id])
+    if @topic.closed
+      redirect_to discussion_topic_path(@topic), alert: 'This discussion is closed.'
+    else
+      @comment = Comment.new
+    end
   end
 
   def edit
