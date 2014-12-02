@@ -1,5 +1,6 @@
 class DiscussionTopic < ActiveRecord::Base
   validates :title, presence: true
+  validates :title, uniqueness: { case_sensitive: false }
   validates :description, presence: true
   validates_length_of :title, :maximum => 32
 

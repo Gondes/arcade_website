@@ -6,7 +6,7 @@ describe UsersController do
   end
 
   after(:each) do
-    delete :destroy, :id => @my_user
+    User.destroy(@my_user.id)
   end
 
   describe "index" do
@@ -47,15 +47,27 @@ describe UsersController do
       sign_out @my_user
     end
 
-    it "if not logged in, it should redirect to users_path", type: :request do
+    it "if not logged in, it should redirect to new_user_session_path", type: :request do
       get :edit, :id => @my_user.id
       response.should redirect_to new_user_session_path
+    end
+
+    it "if not valid user, it should redirect to users_path", type: :request do
+      other_user = create(:user)
+      sign_in @my_user
+
+      get :edit, :id => other_user.id
+      response.should redirect_to users_url
+
+      User.destroy(other_user.id)
+      sign_out @my_user
     end
   end
 
   describe "create" do
     it "POST new user" do
       attributes = attributes_for(:user, :validate => false)
+      #attributes.should eq(1)
       expect { post :create, :user => attributes }.should change(User, :count)
     end
 
@@ -90,31 +102,39 @@ describe UsersController do
     end
 
     it "PUT should not update invalid user_name user, empty" do
+      sign_in @my_user
       attributes = attributes_for(:user, :user_name => "")
       put :update, :id => @my_user, :user => attributes
       @my_user.reload
       @my_user.user_name.should_not eq(attributes[:user_name])
+      sign_out @my_user
     end
 
     it "PUT should not update invalid user_name user, length" do
+      sign_in @my_user
       attributes = attributes_for(:user, :user_name => "1234567890123456789012345")
       put :update, :id => @my_user, :user => attributes
       @my_user.reload
       @my_user.user_name.should_not eq(attributes[:user_name])
+      sign_out @my_user
     end
 
     it "PUT should not update invalid fisrt_name user, empty" do
+      sign_in @my_user
       attributes = attributes_for(:user, :first_name => "")
       put :update, :id => @my_user, :user => attributes
       @my_user.reload
       @my_user.first_name.should_not eq(attributes[:first_name])
+      sign_out @my_user
     end
 
     it "PUT should not update invalid last_name user, empty" do
+      sign_in @my_user
       attributes = attributes_for(:user, :last_name => "")
       put :update, :id => @my_user, :user => attributes
       @my_user.reload
       @my_user.last_name.should_not eq(attributes[:last_name])
+      sign_out @my_user
     end
 
     pending "Still wondering how to check validation for backend update for #{__FILE__}"
