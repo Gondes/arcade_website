@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -10,11 +10,7 @@ class CommentsController < ApplicationController
   end
 
   def new
-    if user_signed_in?
-      @comment = Comment.new
-    else
-      redirect_to :back, notice: 'You must be logged in to comment.'
-    end
+    @comment = Comment.new
   end
 
   def edit

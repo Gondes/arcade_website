@@ -21,7 +21,13 @@
           <td><%= topic.created_at %></td>
           <td><%= topic.updated_at %></td>
           <td><%= topic.closed_status %></td>
-          <td><%= link_to 'Edit', edit_discussion_topic_path(topic) %></td>
+          <td>
+            <% if user_signed_in? and (topic.is_op?(current_user.id) or current_user.admin?) %>
+              <%= link_to 'Edit', edit_discussion_topic_path(topic) %>
+            <% else %>
+              <%= link_to 'Enter', topic %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

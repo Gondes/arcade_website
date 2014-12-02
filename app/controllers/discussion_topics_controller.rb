@@ -22,6 +22,9 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def edit
+    if !(valid_user(@topic.user_id) or user_admin?)
+      redirect_to discussion_topics_path(forum_id: @topic.general_forum_topic.id), alert: 'You cannot edit this topic.'
+    end
   end
 
   def create

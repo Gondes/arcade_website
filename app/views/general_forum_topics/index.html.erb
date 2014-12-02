@@ -1,13 +1,18 @@
-<strong>New Discussion Topic</strong>
-
 <h1>General Forum Topics</h1>
 
 <% @forum.each do |forum| %>
   <article class="forum">
     <h2><%= link_to forum.name, discussion_topics_path(forum_id: forum.id) %>(<%= forum.discussion_topics_count %>)</h2>
-    <p><%= link_to 'Show', forum %><p>
+    <% if user_signed_in? and current_user.admin? %>
+      <%= link_to 'Show', forum %>
+      <%= link_to 'Edit', edit_general_forum_topic_path(forum) %>
+    <% end %>
   </article>
 <% end %>
 
-<h2><%= link_to "FAQ", faqs_url %></h2>
+<article class="forum">
+  <h2><%= link_to "FAQ", faqs_url %></h2>
+</article>
+
+<strong>New Discussion Topic</strong>
 
