@@ -74,22 +74,21 @@ describe RockPaperScissorRoundsController do
   describe "create" do
     it "POST new round" do
       sign_in @my_user
-      attributes = attributes_for(:rock_paper_scissor_round, :game => @game,
+      attributes = attributes_for(:rock_paper_scissor_round,
         :game_id => @game.id)
+      #attributes = {:round_number => 1, :game_id => @game.id}
       my_i = RockPaperScissorRound.count
-      post :create#, :rock_paper_scissor_round => attributes
-      #expect { post :create, :rock_paper_scissor_round => attributes }.should change(
-      #  RockPaperScissorRound, :count)
+      expect { post :create, :rock_paper_scissor_round => attributes, :game_id => @game.id }.should change(RockPaperScissorRound, :count)
       RockPaperScissorRound.count.should_not eq(my_i)
       sign_out @my_user
     end
-  #
-  #  it "POST should not create new round" do
-  #    attributes = attributes_for(:rock_paper_scissor_round, :game => nil)
-  #    my_i = RockPaperScissorRound.count
-  #    post :create, :rock_paper_scissor_round => attributes
-  #    RockPaperScissorRound.count.should_not eq(my_i)
-  #  end
+  
+    it "POST should not create new round" do
+      attributes = attributes_for(:rock_paper_scissor_round, :game_id => nil)
+      my_i = RockPaperScissorRound.count
+      post :create, :rock_paper_scissor_round => attributes, :game_id => @game.id
+      RockPaperScissorRound.count.should eq(my_i)
+    end
   end
 
   describe "update" do
@@ -130,8 +129,6 @@ describe RockPaperScissorRoundsController do
       RockPaperScissorRound.destroy(rps.id)
       sign_out @my_user
     end
-
-    pending "Should write file for update fail in #{__FILE__}"
   end
 
   describe "destroy" do

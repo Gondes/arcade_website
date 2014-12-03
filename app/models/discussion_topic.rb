@@ -25,7 +25,7 @@ class DiscussionTopic < ActiveRecord::Base
   end
 
   def is_op?(some_id)
-    some_id = self.user_id
+    some_id == self.user_id
   end
 
   def exist?

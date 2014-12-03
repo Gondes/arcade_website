@@ -1,28 +1,28 @@
 FactoryGirl.define do
-
-  factory :comment do
-    content "MyText"
-    discussion_topic_id 1
-    user_id 1
-    removed false
-  end
-
-  factory :discussion_topic do
-    title "MyString"
-    description "MyText"
-    general_forum_topic_id 1
-    creator_id 1
-    closed false
-    removed false
-  end
-
-  factory :general_forum_topic do
-    title "MyString"
-	description "MyText"
+  sequence :title do |n|
+    "topic title#{n}"
   end
 
   factory :faq do
     question "Some title"
     answer "Some answer."
+  end
+
+  factory :comment do
+    content 'Some content'
+    discussion_topic_id 0
+    user_id 1
+  end
+
+  factory :discussion_topic do
+    title
+    description 'discussion topic description'
+    general_forum_topic_id = 0
+    user_id = 1
+  end
+
+  factory :general_forum_topic do
+    title
+    description 'general forum topic description'
   end
 end
