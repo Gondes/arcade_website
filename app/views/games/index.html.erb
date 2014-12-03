@@ -19,22 +19,10 @@
         <% @games.each do |game| %>
           <tr>
             <td><%= game.clean_name %></td>
-            <% if game.end_date == "" %>
-              <td>In Progress</td>
-            <% else %>
-              <td><%= game.end_date %></td>
-            <% end %>
-            <td>Lvl-<%= game.player_1.level %> <%= game.player_1.name %></td>
-            <td>Lvl-<%= game.player_2.level %> <%= game.player_2.name %></td>
-
-            <% if !game.finished? %>
-              <td></td>
-            <% elsif game.winner.nil? %>   <!--Winner Column-->
-              <td>Tie!</td>
-            <% else %>
-              <td><%= game.winner.name %>!</td>
-            <% end %>
-
+            <td><%= game.end_date %></td>
+            <td>Lvl-<%= game.player_1.level %> <%= link_to game.player_1.user_name, user_path(game.player_1.id) %></td>
+            <td>Lvl-<%= game.player_2.level %> <%= link_to game.player_2.user_name, user_path(game.player_2.id) %></td>
+            <td><%= game.winner_status %></td>
             <td><%= game.round_count %></td>
 
             <% if game.finished? %>   <!--Option Column-->

@@ -1,4 +1,5 @@
 class RockPaperScissorRoundsController < ApplicationController
+  before_action :authenticate_user!
   before_action :authenticate_player
   before_action :set_round, only: [:show, :edit, :update, :destroy]
 

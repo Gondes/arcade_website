@@ -38,21 +38,27 @@ class GamesController < ApplicationController
         @game.fee = @game.calculate_challenge_fee
         @game.save
         challenger = User.find(@game.player_1.id)
-        challenger.remove_coins(@game.fee)
-        challenger.save
+        if challenger.coins >= @game.fee
+          challenger.remove_coins(@game.fee)
+          challenger.save
 
-        #This needs a major change in logic to accomidate other game types
-        if @game.name == "rock_paper_scissor"
-          (0..@game.round_count - 1).each do |i|
-            #Round.create!(:game_id => @game.id)
-            rock_paper_scissor_round = RockPaperScissorRound.new
-            rock_paper_scissor_round.game = @game
-            rock_paper_scissor_round.round_number = i + 1
-            rock_paper_scissor_round.save!
+          #This needs a major change in logic to accomidate other game types
+          if @game.name == "rock_paper_scissor"
+            (0..@game.round_count - 1).each do |i|
+              #Round.create!(:game_id => @game.id)
+              rock_paper_scissor_round = RockPaperScissorRound.new
+              rock_paper_scissor_round.game = @game
+              rock_paper_scissor_round.round_number = i + 1
+              rock_paper_scissor_round.save!
+            end
           end
+          format.html { redirect_to games_url, notice: 'Game was successfully created.' }
+          format.json { render :index, status: :created, location: @game }
+        else
+          @game.destroy
+          format.html { redirect_to games_url, notice: 'You cannot pay the challenge fee.' }
+          format.json { render json: @game.errors, status: :unprocessable_entity }
         end
-        format.html { redirect_to games_url, notice: 'Game was successfully created.' }
-        format.json { render :index, status: :created, location: @game }
       else
         format.html { redirect_to games_url }
         format.json { render json: @game.errors, status: :unprocessable_entity }

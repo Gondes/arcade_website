@@ -28,6 +28,12 @@ Rails.application.routes.draw do
 
   devise_for :user, :controllers => { registrations: 'registrations' }
 
+  resources :general_forum_topics
+
+  resources :discussion_topics
+
+  resources :comments
+
   resources :faqs
   
   # The priority is based upon order of creation: first created -> highest priority.

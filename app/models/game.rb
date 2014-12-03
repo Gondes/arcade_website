@@ -20,8 +20,29 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    unless winner_id.nil?
-      User.find winner_id
+    #unless winner_id.nil?
+    #  User.find winner_id
+    #end
+
+    if self.finished?
+      if (self.user_1_win_count > self.round_count - self.tie_count - self.user_1_win_count)
+        self.player_1
+      elsif (self.user_2_win_count > self.round_count - self.tie_count - self.user_2_win_count)
+        self.player_2
+      else
+        'tie'
+      end
+    end
+  end
+
+  def winner_status
+    temp = self.winner
+    if temp == nil
+      
+    elsif temp == 'tie'
+      'Tie!'
+    else
+      temp.name
     end
   end
 
@@ -34,7 +55,7 @@ class Game < ActiveRecord::Base
     if self.done
       self.updated_at.strftime("%B %d, %Y, %H:%M %Z")
     else
-      ""
+      "In Progress"
     end
   end
   

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :show, :edit, :update, :destroy, :reset_stats]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :reset_stats]
 
   helper_method :sort_column, :sort_direction
@@ -12,9 +13,6 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    if !(user_signed_in?)
-      redirect_to users_url
-    end
   end
 
   # GET /users/new
@@ -28,7 +26,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    if !(valid_user(@user.id))
+    if !(valid_user(@user.id) or user_admin?)
       redirect_to users_url
     end
   end
@@ -37,10 +35,8 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
-
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else

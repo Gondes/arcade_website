@@ -1,13 +1,3 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-<script> 
-  $(document).ready(function(){
-    $("#flip").click(function(){
-      $("#panel").slideToggle("fast");
-    });
-  });
-</script>
-
 <%= form_for(@user, :html => { :multipart => true }) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -41,7 +31,7 @@
     <%= f.file_field :icon %>
   </div>
 
-  <% if current_user.admin %>
+  <% if current_user.admin? %>
     <h4>Admin Edits</h4>
 
     <div class="admin_field">
@@ -128,3 +118,13 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script> 
+  $(document).ready(function(){
+    $("#flip").click(function(){
+      $("#panel").slideToggle("fast");
+    });
+  });
+</script>

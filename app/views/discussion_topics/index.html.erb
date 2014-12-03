@@ -1,0 +1,42 @@
+<h1>Discussion Topics</h1>
+
+<% if !@topics.empty? %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Comments</th>
+        <th>Created Time</th>
+        <th>Last Activity</th>
+        <th>Status</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @topics.each do |topic| %>
+        <tr>
+          <td><%= link_to topic.title, topic %>:<%= topic.description %></td>
+          <td><%= topic.comments_count %></td>
+          <td><%= topic.created_at %></td>
+          <td><%= topic.updated_at %></td>
+          <td><%= topic.closed_status %></td>
+          <td>
+            <% if user_signed_in? and (topic.is_op?(current_user.id) or current_user.admin?) %>
+              <%= link_to 'Edit', edit_discussion_topic_path(topic) %>
+            <% else %>
+              <%= link_to 'Enter', topic %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+<% else %>
+  <strong>There are no discussion topics for this section</strong>
+<% end %>
+
+
+<%= button_to 'New Topic', new_discussion_topic_path, :method => "get" %>
+<%= button_to 'Back', general_forum_topics_path, :method => "get" %>

@@ -1,7 +1,7 @@
 <h2>Profile: <%= @user.user_name %></h2>
 <h3>Level: <%= @user.show_rank %></h3>
 
-<% if @user.admin %>
+<% if @user.admin? %>
   <strong>Administrator</strong><br>
 <% end %>
 
@@ -9,7 +9,7 @@
   <td><%= image_tag @user.icon.url(:small) %></td>
 <% end %>
 
-<% if current_user.id == @user.id or current_user.admin %>
+<% if current_user.id == @user.id or current_user.admin? %>
   <p>
     <strong>EXP:</strong>
     <%= @user.exp %>
@@ -62,7 +62,7 @@
   <%= @user.current_win_streak %>
 </p>
 
-<% if current_user.admin %>
+<% if current_user.admin? %>
   <p>
     <strong>Disabled</strong>
     <%= @user.is_disabled %>
@@ -74,15 +74,13 @@
   </p>
 <% end %>
 
-<% if current_user.id == @user.id or current_user.admin %>
+<% if current_user.id == @user.id or current_user.admin? %>
   <%= link_to 'Edit', edit_user_path(@user) %>
-  
 <% end %>
 
+<%= link_to 'Back', users_path %><br>
 
-<%= link_to 'Back', users_path %>
-<br>
-<% if current_user.admin %>
+<% if current_user.admin? %>
   <%= link_to 'RESET', reset_stats_users_path(@user), method: :put, data: { confirm: 'Are you sure you want to reset this user?' } %>
   <%= link_to 'DELETE', @user, method: :delete, data: { confirm: 'Are you sure? Remember to delete associated games.' } %>
 <% end %>

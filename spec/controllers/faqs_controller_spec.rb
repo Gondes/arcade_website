@@ -69,7 +69,7 @@ describe FaqsController do
   end
 
   describe "update" do
-    it "PUT faq" do
+    it "PUT faq should update" do
       attributes = attributes_for(:faq, :question => "q_update", :answer => "a_update")
       put :update, :id => @item, :faq => attributes
       @item.reload
@@ -77,7 +77,7 @@ describe FaqsController do
       @item.question.should eq(attributes[:question])
     end
 
-    it "PUT faq" do
+    it "PUT faq should not update" do
       attributes = attributes_for(:faq, :question => "", :answer => "a_update")
       put :update, :id => @item, :faq => attributes
       @item.reload

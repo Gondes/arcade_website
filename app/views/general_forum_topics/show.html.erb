@@ -1,0 +1,9 @@
+<h2><%= @forum.name %></h2>
+
+<% if !@topics.empty? %>
+  <p>Welcome</p>
+<% else %>
+  <strong>There are no discussion topics for this section</strong>
+<% end %>
+
+<%= button_to 'Back', general_forum_topics_path, :method => "get" %>

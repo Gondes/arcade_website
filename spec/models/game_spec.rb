@@ -49,9 +49,46 @@ describe Game do
       g1.player_2.name.should eq(@d_user2.user_name)
     end
 
-    it "winner should return winner only if not nil" do
-      g1 = build(:game, :winner_id => @d_user1.id)
+    it "winner.name should return user 1.name" do
+      #g1 = build(:game, :winner_id => @d_user1.id)
+      g1 = build(:game, :user_1_id => @d_user1.id, :round_count => 1,
+                 :user_1_win_count => 1)
       g1.winner.name.should eq(@d_user1.name)
+    end
+
+    it "winner.name should return user_2.name" do
+      #g1 = build(:game, :winner_id => @d_user1.id)
+      g1 = build(:game, :user_2_id => @d_user2.id, :round_count => 1,
+                 :user_2_win_count => 1)
+      g1.winner.name.should eq(@d_user2.name)
+    end
+
+    it "winner should return nil when tie" do
+      #g1 = build(:game, :winner_id => @d_user1.id)
+      g1 = build(:game, :round_count => 1, :tie_count => 1)
+      g1.winner.should eq('tie')
+    end
+
+    it "winner should return nil when not finished" do
+      #g1 = build(:game, :winner_id => @d_user1.id)
+      g1 = build(:game, :round_count => 1)
+      g1.winner.should eq(nil)
+    end
+
+    it "winner_status should return user_2.name" do
+      g1 = build(:game, :user_2_id => @d_user2.id, :round_count => 1,
+                 :user_2_win_count => 1)
+      g1.winner_status.should eq(@d_user2.name)
+    end
+
+    it "winner_status should return nil when tie" do
+      g1 = build(:game, :round_count => 1, :tie_count => 1)
+      g1.winner_status.should eq('Tie!')
+    end
+
+    it "winner_status should return nil when not finished" do
+      g1 = build(:game, :round_count => 1)
+      g1.winner_status.should eq(nil)
     end
 
     it "clean_name should capitalize words and remove '_''s " do
@@ -65,9 +102,9 @@ describe Game do
       g1.end_date.should eq(g1.updated_at.strftime("%B %d, %Y, %H:%M %Z"))
     end
 
-    it "end_date should return nothing if game is not done" do
+    it "end_date should return 'In Progress' if game is not done" do
       g1 = build(:game, :done => false)
-      g1.end_date.should eq("")
+      g1.end_date.should eq('In Progress')
     end
 
     it "finished? should be finished if round_count == user_1_win_count + user_2_win_count + tie_count" do
@@ -101,7 +138,7 @@ describe Game do
         :round_count => 3, :tie_count => 3)
         #:round_count => 2, :user_1_win_count => 1, :user_2_win_count => 1)
       g1.try_to_generate_winner
-      g1.winner.should eq(nil)
+      g1.winner.should eq('tie')
       Rank.destroy(rank.id)
     end
 

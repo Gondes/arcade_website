@@ -1,0 +1,32 @@
+<h1><%= @topic.title %></h1>
+
+<strong>Original Poster:</strong>
+<p><%= @topic.original_poster.name %></p>
+
+<strong>Description:</strong>
+<p><%= @topic.description %></p><br>
+
+
+<% @comments.each do |comment| %>
+  <article class="topic">
+    <div class="comment_info">
+      <strong><%= comment.commenter.show_rank %> <%= comment.commenter.name %></strong>
+      <% if comment.commenter.icon? %>
+        <td><%= image_tag comment.commenter.icon.url(:small) %></td>
+      <% end %>
+      <p><%= comment.created_at %></p>
+      <% if user_signed_in? and (current_user == @topic.original_poster or current_user.admin?) %>
+        <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
+      <% end %>
+    </div>
+    <div class="comment_content">
+      <p><%= comment.show_content %></p>
+    </div>
+  </article>
+<% end %>
+
+<%= link_to 'Comment', new_comment_url(topic_id: @topic.id) %>
+<%= link_to 'Back', discussion_topics_path(forum_id: @topic.general_forum_topic.id) %>
+<% if user_signed_in? && (@topic.is_op?(current_user.id) || current_user.admin?) %>
+  <%= link_to 'Edit', edit_discussion_topic_path(@topic) %>
+<% end %>
