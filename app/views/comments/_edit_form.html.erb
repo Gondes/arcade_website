@@ -11,10 +11,11 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
+  <strong>Commenter</strong>
+  <p><%= @comment.commenter.name %></p>
+
+  <strong>Content</strong>
+  <p><%= @comment.content %></p>
 
   <div class="field">
     <%= f.label :removed, "Remove this comment?" %>
