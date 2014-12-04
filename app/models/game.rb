@@ -46,6 +46,17 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def winner_declaration
+    temp = self.winner
+    if temp == nil
+      
+    elsif temp == 'tie'
+      "It's a Tie!"
+    else
+      temp.name + " wins this game!"
+    end
+  end
+
   def clean_name
     var = name.gsub!('_',' ')
     var.split.map(&:capitalize).join(' ')

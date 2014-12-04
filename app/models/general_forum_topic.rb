@@ -14,4 +14,8 @@ class GeneralForumTopic < ActiveRecord::Base
     temp = 'general_forum_topic_id = ' + self.id.to_s
     DiscussionTopic.where(temp).count
   end
+
+  def show_description
+    self.description
+  end
 end

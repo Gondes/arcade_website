@@ -25,8 +25,8 @@
   </article>
 <% end %>
 
-<%= link_to 'Comment', new_comment_url(topic_id: @topic.id) %>
-<%= link_to 'Back', discussion_topics_path(forum_id: @topic.general_forum_topic.id) %>
+<p><%= link_to 'Comment', new_comment_url(topic_id: @topic.id) %> | 
+<%= link_to 'Back', discussion_topics_path(forum_id: @topic.general_forum_topic.id) %></p>
 <% if user_signed_in? && (@topic.is_op?(current_user.id) || current_user.admin?) %>
-  <%= link_to 'Edit', edit_discussion_topic_path(@topic) %>
+  <p><%= link_to 'Edit', edit_discussion_topic_path(@topic) %></p>
 <% end %>
