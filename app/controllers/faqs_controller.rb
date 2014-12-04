@@ -1,5 +1,13 @@
 class FaqsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
+  before_action :validate_admin!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_faq, only: [:show, :edit, :update, :destroy]
+
+  def validate_admin!
+    if !current_user.admin?
+      redirect_to faqs_url, alert: 'Only admins may edit the faqs.'
+    end
+  end
 
   # GET /faqs
   # GET /faqs.json
