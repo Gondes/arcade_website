@@ -26,4 +26,8 @@
   <% end %>
 </p>
 
-<%= link_to 'Back', rock_paper_scissor_rounds_path(game_id: @round.game.id) %>
+<% if @round.game.finished? %>
+  <%= link_to 'Back', game_path(@round.game) %>
+<% else %>
+  <%= link_to 'Back', rock_paper_scissor_rounds_path(game_id: @round.game.id) %>
+<% end %>
