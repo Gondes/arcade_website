@@ -1,9 +1,13 @@
 <h2><%= @forum.name %></h2>
 
-<% if !@topics.empty? %>
-  <p>Welcome</p>
-<% else %>
-  <strong>There are no discussion topics for this section</strong>
-<% end %>
+<p>
+  <strong>Topics Count:</strong>
+  <%= @forum.discussion_topics_count %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @forum.show_description %>
+</p>
 
 <p><%= button_to 'Back', general_forum_topics_path, :method => "get" %></p>

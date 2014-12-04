@@ -18,5 +18,7 @@
 
 <br>
 
-<%= button_to 'New FAQ', new_faq_path, :method => "get" %>
+<% if user_signed_in? and current_user.admin? %>
+  <%= button_to 'New FAQ', new_faq_path, :method => "get" %>
+<% end %>
 <%= button_to 'Back', general_forum_topics_path, :method => "get" %>

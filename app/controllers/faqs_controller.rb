@@ -13,6 +13,7 @@ class FaqsController < ApplicationController
   # GET /faqs.json
   def index
     @faqs = Faq.all
+    @faqs = @faqs.sort_by(&:created_at)
   end
 
   # GET /faqs/1
