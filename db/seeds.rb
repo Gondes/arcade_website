@@ -7,7 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.create( :first_name => 'Admin', :last_name => 'Admin', :user_name => 'Admin',
-             :email => 'unsepyon@yahoo.com', :password => 'password', :admin => true)
+             :email => 'unsepyon@yahoo.com', :password => 'password', :admin => true, :master_admin => true,
+             :forum_access => true, :user_stat_access => true, :user_profile_access => true,
+             :game_access => true, :give_access => true)
 
 rank_list = [
   [ 1, 0, "Dirt" ],
@@ -27,10 +29,10 @@ rank_list.each do |level, exp_required, name|
 end
 
 forum_list = [
-  [ "General Discussion", "Just any rambling goes here." ],
-  [ "Announcements", "Upcoming patches and events." ],
-  [ "Server Issues", "Report any issues or bugs here."],
-  [ "Strategies", "Discuss your strategies and and analysis here."]
+  [ "General Discussion", "Just any rambling goes here.", false ],
+  [ "Announcements", "Upcoming patches and events.", true ],
+  [ "Server Issues", "Report any issues or bugs here.", true ],
+  [ "Strategies", "Discuss your strategies and and analysis here.", false ]
 ]
 
 forum_list.each do |title, description|
