@@ -19,6 +19,11 @@ class DiscussionTopicsController < ApplicationController
 
   def new
     @topic = DiscussionTopic.new
+    if current_user.admin?
+      @forum_topics = GeneralForumTopic.all
+    else
+      @forum_topics = GeneralForumTopic.where("forum_access_required = false")
+    end
   end
 
   def edit

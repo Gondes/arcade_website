@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141120201212) do
+ActiveRecord::Schema.define(version: 20141205191246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20141120201212) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "forum_access_required", default: false
   end
 
   create_table "ranks", force: true do |t|
@@ -117,6 +118,12 @@ ActiveRecord::Schema.define(version: 20141120201212) do
     t.integer  "coins",                  default: 0
     t.integer  "exp",                    default: 0
     t.integer  "level",                  default: 1
+    t.boolean  "forum_access",           default: false
+    t.boolean  "user_stat_access",       default: false
+    t.boolean  "user_profile_access",    default: false
+    t.boolean  "game_access",            default: false
+    t.boolean  "give_access",            default: false
+    t.boolean  "master_admin",           default: false
   end
 
 end
