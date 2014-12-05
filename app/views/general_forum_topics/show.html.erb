@@ -10,4 +10,9 @@
   <%= @forum.show_description %>
 </p>
 
+<p>
+  <strong>Forum Access Required:</strong>
+  <%= @forum.forum_access_required %>
+</p>
+
 <p><%= button_to 'Back', general_forum_topics_path, :method => "get" %></p>

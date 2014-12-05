@@ -14,11 +14,16 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def show
-    @comments = @topic.comments.sort_by(&:created_at).reverse
+    @comments = @topic.comments.sort_by(&:created_at)
   end
 
   def new
     @topic = DiscussionTopic.new
+    if current_user.admin?
+      @forum_topics = GeneralForumTopic.all
+    else
+      @forum_topics = GeneralForumTopic.where("forum_access_required = false")
+    end
   end
 
   def edit
