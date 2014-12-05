@@ -1,6 +1,6 @@
 <h1>DiscussionTopics</h1>
 
-<%= render 'form' %>
+<%= render 'edit_form' %>
 
 <% if user_signed_in? && current_user.admin? %>
   <p><%= link_to 'Back', discussion_topics_path(forum_id: @topic.general_forum_topic.id) %> | 

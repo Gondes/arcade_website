@@ -1,0 +1,55 @@
+<%= form_for(@topic) do |f| %>
+  <% if @topic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@topic.errors.count, "error") %> prohibited this topic from being saved:</h2>
+
+      <ul>
+      <% @topic.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= f.label :general_forum_topic_id %><br>
+      <%= f.select :general_forum_topic_id, options_from_collection_for_select(GeneralForumTopic.all, 'id', 'title') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :title %><br>
+      <%= f.text_area :title, maxlength: 50, size: "30x2", placeholder: 'Enter title less then or equal to 50 characters' %>
+    </div>
+
+    <div class="field">
+      <%= f.label :description %><br>
+      <%= f.text_area :description, maxlength: 2000, size: "30x10", placeholder: 'Enter text less then or equal to 2000 characters' %>
+    </div>
+  <% else %>
+    <h3><%= @topic.general_forum_topic.title %></h3>
+
+    <strong>Title</strong>
+    <p><%= @topic.title %></p>
+
+    <strong>Description</strong>
+    <p><%= @topic.description %></p>
+
+  <% end %>
+  <% if @topic.exist? %>
+    <div class="actions">
+      <%= f.label :closed, "Close this discussion?" %>
+      <%= f.check_box :closed %>
+    </div>
+
+    <div class="actions">
+      <%= f.label :removed, "Remove this discussion?" %>
+      <%= f.check_box :removed %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>
