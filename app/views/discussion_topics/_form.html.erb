@@ -18,12 +18,12 @@
 
   <div class="field">
     <%= f.label :title %><br>
-    <%= f.text_field :title, maxlength: 64, size: 64, placeholder: 'Enter title less then or equal to 64 characters' %>
+    <%= f.text_area :title, maxlength: 64, size: "30x2", placeholder: 'Enter title less then or equal to 64 characters' %>
   </div>
 
   <div class="field">
     <%= f.label :description %><br>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, maxlength: 2000, size: "30x10" %>
   </div>
 
   <div class="hidden_fields">

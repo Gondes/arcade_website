@@ -2,7 +2,8 @@ class DiscussionTopic < ActiveRecord::Base
   validates :title, presence: true
   validates :title, uniqueness: { case_sensitive: false }
   validates :description, presence: true
-  validates_length_of :title, :maximum => 32
+  validates_length_of :title, :maximum => 64
+  validates_length_of :description, :maximum => 2000
 
   has_many :comments, :dependent => :destroy
   belongs_to :general_forum_topic

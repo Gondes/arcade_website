@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
   validates :content, presence: true
+  validates_length_of :content, :maximum => 2000
 
   belongs_to :discussion_topic
 

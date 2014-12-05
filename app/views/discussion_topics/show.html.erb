@@ -3,9 +3,18 @@
 <strong>Original Poster:</strong>
 <p><%= @topic.original_poster.name %></p>
 
-<strong>Description:</strong>
-<p><%= @topic.description %></p><br>
-
+  <article class="topic">
+    <div class="comment_info">
+      <strong><%= @topic.original_poster.show_rank %> <%= @topic.original_poster.name %></strong>
+      <% if @topic.original_poster.icon? %>
+        <td><%= image_tag @topic.original_poster.icon.url(:small) %></td>
+      <% end %>
+      <p><%= @topic.created_at %></p>
+    </div>
+    <div class="comment_content">
+      <p><%= @topic.description %></p>
+    </div>
+  </article>
 
 <% @comments.each do |comment| %>
   <article class="topic">

@@ -16,7 +16,7 @@
       <tbody>
         <% @topics.each do |topic| %>
           <tr>
-            <td><%= link_to topic.title, topic %>:<%= topic.description %></td>
+            <td><%= link_to topic.title, topic %></td>
             <td><%= topic.comments_count %></td>
             <td><%= topic.created_at %></td>
             <td><%= topic.updated_at %></td>
