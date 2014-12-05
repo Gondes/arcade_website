@@ -3,7 +3,7 @@ class GeneralForumTopicsController < ApplicationController
   before_action :set_general_forum_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    @forum = GeneralForumTopic.all
+    @forum = GeneralForumTopic.all.sort_by(&:created_at)
   end
 
   def show
