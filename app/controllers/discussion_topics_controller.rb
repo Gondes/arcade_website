@@ -14,7 +14,7 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def show
-    @comments = @topic.comments.sort_by(&:created_at).reverse
+    @comments = @topic.comments.sort_by(&:created_at)
   end
 
   def new

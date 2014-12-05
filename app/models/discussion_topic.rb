@@ -2,7 +2,7 @@ class DiscussionTopic < ActiveRecord::Base
   validates :title, presence: true
   validates :title, uniqueness: { case_sensitive: false }
   validates :description, presence: true
-  validates_length_of :title, :maximum => 64
+  validates_length_of :title, :maximum => 50
   validates_length_of :description, :maximum => 2000
 
   has_many :comments, :dependent => :destroy
@@ -31,5 +31,13 @@ class DiscussionTopic < ActiveRecord::Base
 
   def exist?
     !self.title.nil? && !self.description.nil?
+  end
+
+  def show_title
+    if self.title.size > 30
+      self.title[0..30] + "..."
+    else
+      self.title
+    end
   end
 end

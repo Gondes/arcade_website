@@ -7,8 +7,6 @@
         <tr>
           <th>Title</th>
           <th>Comments</th>
-          <th>Created Time</th>
-          <th>Last Activity</th>
           <th>Status</th>
           <th>Options</th>
         </tr>
@@ -18,8 +16,6 @@
           <tr>
             <td><%= link_to topic.title, topic %></td>
             <td><%= topic.comments_count %></td>
-            <td><%= topic.created_at %></td>
-            <td><%= topic.updated_at %></td>
             <td><%= topic.closed_status %></td>
             <td>
               <% if user_signed_in? and (topic.is_op?(current_user.id) or current_user.admin?) %>
