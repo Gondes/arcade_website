@@ -3,17 +3,17 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:edit, :update]
 
   def new
+    @topic = DiscussionTopic.find(params[:topic_id])
     if @topic.closed
       redirect_to discussion_topic_path(@topic), alert: 'This discussion is closed.'
     else
-      @topic = DiscussionTopic.find(params[:topic_id])
       @comment = Comment.new
     end
   end
 
   def edit
     if !(current_user.has_forum_access?)
-      redirect_to discussion_topic_path(@topic)
+      redirect_to discussion_topic_path(@comment.discussion_topic.id)
     end
   end
 
@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         format.html { redirect_to discussion_topic_path(@comment.discussion_topic), notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
+        #format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -35,7 +35,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to discussion_topic_path(@comment.discussion_topic), notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
+        #format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
         format.json { render json: @comment.errors, status: :unprocessable_entity }

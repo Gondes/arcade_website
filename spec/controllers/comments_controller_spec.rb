@@ -11,19 +11,25 @@ describe CommentsController do
     Comment.destroy(@my_comment.id)
   end
 
-  describe "GET 'index" do
-    it "returns http success" do
-      get 'index'
-      response.should be_success
-    end
-  end
-
   describe "GET 'edit'" do
-    it "returns http success" do
+    it "users cannot edit their comments after creating it." do
+      topic = create(:discussion_topic)
+      comment = create(:comment, :discussion_topic_id => topic.id)
       sign_in @my_user
+      get 'edit', :id => comment
+      response.should_not be_success
+      sign_out @my_user
+      Comment.destroy(comment.id)
+      DiscussionTopic.destroy(topic.id)
+    end
+
+    it "admins should be able to access comment edits." do
+      my_admin = create(:user, :forum_access => true)
+      sign_in my_admin
       get 'edit', :id => @my_comment
       response.should be_success
-      sign_out @my_user
+      sign_out my_admin
+      User.destroy(my_admin.id)
     end
   end
 
