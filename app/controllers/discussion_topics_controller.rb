@@ -1,4 +1,5 @@
 class DiscussionTopicsController < ApplicationController
+  before_action :authenticate_new, only:[:new]
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_discussion_topic, only: [:show, :edit, :update, :destroy]
 
@@ -17,13 +18,14 @@ class DiscussionTopicsController < ApplicationController
     @comments = @topic.comments.sort_by(&:created_at)
   end
 
+  def authenticate_new
+    if !(params[:forum_id].to_i == 1 or params[:forum_id].to_i == 4) and !user_admin?
+      redirect_to general_forum_topics_path
+    end
+  end
+
   def new
     @topic = DiscussionTopic.new
-    if current_user.admin?
-      @forum_topics = GeneralForumTopic.all
-    else
-      @forum_topics = GeneralForumTopic.where("forum_access_required = false")
-    end
   end
 
   def edit
