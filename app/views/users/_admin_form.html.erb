@@ -1,0 +1,167 @@
+<%= form_for(@user, :html => { :multipart => true }) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_user.has_user_profile_access? %>
+    <h4>Admin Profile Edits</h4>
+
+    <div class="field">
+      <%= f.label :first_name %><br>
+      <%= f.text_field :first_name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :last_name %><br>
+      <%= f.text_field :last_name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :user_name %><br>
+      <%= f.text_field :user_name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :icon %><br>
+      <%= f.file_field :icon %>
+    </div>
+  <% end %>
+
+  <% if current_user.has_user_stat_access? %>
+    <h4>Admin Stat Edits</h4>
+
+    <div class="admin_field">
+      <%= f.label :level %><br>
+      <%= f.number_field :level, :min => Rank.minimum("level"), :max => Rank.maximum("level") %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :exp %><br>
+      <%= f.number_field :exp, :min => 0, :max => Rank.maximum("exp_required") %>
+    </div>
+
+    <div id="flip">Show Ranks</div>
+    <div id="panel">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Rank</th>
+            <th>EXP Required</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% Rank.all.sort_by(&:level).each do |rank| %>
+            <tr>
+              <td><%= rank.level %></td>
+              <td><%= rank.name %></td>
+              <td><%= rank.exp_required %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :coins %><br>
+      <%= f.number_field :coins, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :games_played_count %><br>
+      <%= f.number_field :games_played_count, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :wins_count %><br>
+      <%= f.number_field :wins_count, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :loss_count %><br>
+      <%= f.number_field :loss_count, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :tie_count %><br>
+      <%= f.number_field :tie_count, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :best_win_streak %><br>
+      <%= f.number_field :best_win_streak, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :current_win_streak %><br>
+      <%= f.number_field :current_win_streak, :min => 0 %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :is_disabled, "Disable this user?" %>
+      <%= f.check_box :is_disabled %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :is_hidden, "Hide this user?" %>
+      <%= f.check_box :is_hidden %>
+    </div>
+  <% end %>
+
+  <% if current_user.has_give_user_access? %>
+    <h4>Admin Access Rights</h4>
+
+    <div class="admin_field">
+      <%= f.label :admin, "Make admin?" %>
+      <%= f.check_box :admin %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :forum_access, "Give forum access?" %>
+      <%= f.check_box :forum_access %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :user_stat_access, "Give user stat access?" %>
+      <%= f.check_box :user_stat_access %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :user_profile_access, "Give user profile access?" %>
+      <%= f.check_box :user_profile_access %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :game_access, "Give game access?" %>
+      <%= f.check_box :game_access %>
+    </div>
+
+    <div class="admin_field">
+      <%= f.label :give_access, "Give access right authorization?" %>
+      <%= f.check_box :give_access %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script> 
+  $(document).ready(function(){
+    $("#flip").click(function(){
+      $("#panel").slideToggle("fast");
+    });
+  });
+</script>

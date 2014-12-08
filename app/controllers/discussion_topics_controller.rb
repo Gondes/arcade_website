@@ -19,7 +19,7 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def authenticate_new
-    if !(params[:forum_id].to_i == 1 or params[:forum_id].to_i == 4) and !user_admin?
+    if !(params[:forum_id].to_i == 1 or params[:forum_id].to_i == 4) and current_user.has_forum_access?
       redirect_to general_forum_topics_path
     end
   end
@@ -29,7 +29,7 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def edit
-    if !(valid_user(@topic.user_id) or user_admin?)
+    if !(valid_user(@topic.user_id) or current_user.has_forum_access?)
       redirect_to discussion_topics_path(forum_id: @topic.general_forum_topic.id), alert: 'You cannot edit this topic.'
     end
   end

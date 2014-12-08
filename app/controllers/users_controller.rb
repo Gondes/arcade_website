@@ -26,7 +26,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    if !(valid_user(@user.id) or user_admin?)
+    #if !(valid_user(@user.id) or !current_user.has_user_access?)
+    if valid_user(@user.id) or current_user.has_user_access?
+      
+    else
       redirect_to users_url
     end
   end
@@ -88,8 +91,10 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count, :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak,
-        :email, :encrypted_password, :icon, :is_disabled, :is_hidden, :coins, :exp, :level)
+      params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count,
+        :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak, :email,
+        :encrypted_password, :icon, :is_disabled, :is_hidden, :coins, :exp, :level, :admin,
+        :forum_access, :user_stat_access, :user_profile_access, :game_access, :give_access )
     end
 
     # These two methods are used to make the table sortable.

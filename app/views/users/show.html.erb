@@ -9,7 +9,7 @@
   <td><%= image_tag @user.icon.url(:small) %></td>
 <% end %>
 
-<% if current_user.id == @user.id or current_user.admin? %>
+<% if current_user.id == @user.id or current_user.has_user_stat_access? %>
   <p>
     <strong>EXP:</strong>
     <%= @user.exp %>
@@ -64,23 +64,32 @@
 
 <% if current_user.admin? %>
   <p>
-    <strong>Disabled</strong>
+    <strong>Disabled:</strong>
     <%= @user.is_disabled %>
   </p>
 
   <p>
-    <strong>Hidden</strong>
+    <strong>Hidden:</strong>
     <%= @user.is_hidden %>
   </p>
+
+  <% if current_user.id == @user.id or current_user.has_give_user_access? %>
+    <h3>Admin Access Rights</h3>
+    <p><%= @user.list_access_rights %></p>
+  <% end %>
+<% end %><br>
+
+<% if current_user.id == @user.id or current_user.has_user_access? %>
+  <p><%= link_to 'Edit', edit_user_path(@user) %> | 
+     <%= link_to 'Find Players', users_path %></p>
+<% else %>
+  <p><%= link_to 'Find Players', users_path %></p>
 <% end %>
 
-<% if current_user.id == @user.id or current_user.admin? %>
-  <p><%= link_to 'Edit', edit_user_path(@user) %></p>
+<% if current_user.has_user_stat_access? %>
+  <p><%= link_to 'RESET Stats', reset_stats_users_path(@user), method: :put, data: { confirm: 'Are you sure you want to reset this user?' } %></p>
 <% end %>
 
-<p><%= link_to 'Find Players', users_path %></p>
-
-<% if current_user.admin? %>
-  <p><%= link_to 'RESET', reset_stats_users_path(@user), method: :put, data: { confirm: 'Are you sure you want to reset this user?' } %> | 
-  <%= link_to 'DELETE', @user, method: :delete, data: { confirm: 'Are you sure? Remember to delete associated games.' } %></p>
+<% if current_user.has_user_profile_access? %>
+  <p><%= link_to 'DELETE User', @user, method: :delete, data: { confirm: 'Are you sure? Remember to delete associated games.' } %></p>
 <% end %>

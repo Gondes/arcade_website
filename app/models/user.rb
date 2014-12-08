@@ -26,12 +26,56 @@ class User < ActiveRecord::Base
     self.admin
   end
 
+  def master_admin?
+    self.master_admin
+  end
+
   def is_hidden?
     self.is_hidden
   end
 
   def is_disabled?
     self.is_disabled
+  end
+
+  def has_forum_access?
+    self.forum_access or self.master_admin?
+  end
+
+  def has_user_access?
+    self.has_user_stat_access? or self.has_user_profile_access? or self.has_give_user_access?
+  end
+
+  def has_user_stat_access?
+    self.user_stat_access or self.master_admin?
+  end
+
+  def has_user_profile_access?
+    self.user_profile_access or self.master_admin?
+  end
+
+  def has_game_access?
+    self.game_access or self.master_admin?
+  end
+
+  def has_give_user_access?
+    self.give_access or self.master_admin?
+  end
+
+  def list_access_rights
+    temp = ""
+    self.admin? ? temp += "admin" : false
+    self.has_forum_access? ? temp += ", forum access" : false
+    self.has_user_stat_access? ? temp += ", user stat access" : false
+    self.has_user_profile_access? ? temp += ", user profile access" : false
+    self.has_game_access? ? temp += ", game access" : false
+    self.has_give_user_access? ? temp += ", give access" : false
+    self.master_admin ? temp += ", master admin" : false
+    if temp == ""
+      "None"
+    else
+      temp
+    end
   end
 
   def rank

@@ -29,4 +29,8 @@ class ApplicationController < ActionController::Base
     user_signed_in? and current_user.admin
   end
 
+  def user_master_admin?
+    user_signed_in? and current_user.admin
+  end
+
 end
