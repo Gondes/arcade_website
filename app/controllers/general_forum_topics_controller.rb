@@ -26,7 +26,7 @@ class GeneralForumTopicsController < ApplicationController
   def update
     respond_to do |format|
       if @forum.update(general_forum_topic_params)
-        format.html { redirect_to @forum, notice: 'GeneralForumTopic was successfully updated.' }
+        format.html { redirect_to @forum, notice: 'General Forum Topic was successfully updated.' }
         format.json { render :show, status: :ok, location: @forum }
       else
         format.html { render :edit }

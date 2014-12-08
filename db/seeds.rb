@@ -38,3 +38,4 @@ forum_list = [
 forum_list.each do |title, description|
   GeneralForumTopic.create( title: title, description: description)
 end
+
