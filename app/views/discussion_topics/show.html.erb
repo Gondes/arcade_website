@@ -30,7 +30,7 @@
         <td><%= image_tag comment.commenter.icon.url(:small) %></td>
       <% end %>
       <p><%= comment.created_at %></p>
-      <% if user_signed_in? and (current_user == @topic.original_poster or current_user.admin?) %>
+      <% if user_signed_in? and (current_user == @topic.original_poster or current_user.has_forum_access?) %>
         <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
       <% end %>
     </div>
@@ -42,6 +42,6 @@
 
 <p><%= link_to 'Comment', new_comment_url(topic_id: @topic.id) %> | 
 <%= link_to 'Back', discussion_topics_path(forum_id: @topic.general_forum_topic.id) %></p>
-<% if user_signed_in? && (@topic.is_op?(current_user.id) || current_user.admin?) %>
+<% if user_signed_in? && (@topic.is_op?(current_user.id) || current_user.has_forum_access?) %>
   <p><%= link_to 'Edit', edit_discussion_topic_path(@topic) %></p>
 <% end %>

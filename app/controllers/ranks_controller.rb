@@ -16,7 +16,7 @@ class RanksController < ApplicationController
   #end
 
   def edit
-    if !(user_admin?)
+    if !(user_master_admin?)
       redirect_to ranks_path
     end
   end

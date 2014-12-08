@@ -3,7 +3,7 @@
 <% @forum.each do |forum| %>
   <article class="forum">
     <h2><%= link_to forum.name, discussion_topics_path(forum_id: forum.id) %></h2>
-    <% if user_signed_in? and current_user.admin? %>
+    <% if user_signed_in? and current_user.has_forum_access? %>
       <p><%= link_to 'Show', forum %> | 
       <%= link_to 'Edit', edit_general_forum_topic_path(forum) %></p>
     <% end %>

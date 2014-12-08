@@ -1,6 +1,6 @@
 class GeneralForumTopicsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
-  before_action :set_general_forum_topic, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:show, :new, :edit, :update]
+  before_action :set_general_forum_topic, only: [:show, :edit, :update]
 
   def index
     @forum = GeneralForumTopic.all.sort_by(&:created_at)
@@ -15,12 +15,9 @@ class GeneralForumTopicsController < ApplicationController
   end
 
   def edit
-    if !user_admin?
+    if !(current_user.has_forum_access?)
       redirect_to general_forum_topics_path, alert: 'You cannot edit this forum.'
     end
-  end
-
-  def create
   end
 
   def update
@@ -33,9 +30,6 @@ class GeneralForumTopicsController < ApplicationController
         format.json { render json: @forum.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def destroy
   end
 
   private

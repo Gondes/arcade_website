@@ -1,24 +1,20 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @comment = Comment.all
-  end
-
-  def show
-  end
+  before_action :authenticate_user!, only: [:new, :edit, :update]
+  before_action :set_comment, only: [:edit, :update]
 
   def new
-    @topic = DiscussionTopic.find(params[:topic_id])
     if @topic.closed
       redirect_to discussion_topic_path(@topic), alert: 'This discussion is closed.'
     else
+      @topic = DiscussionTopic.find(params[:topic_id])
       @comment = Comment.new
     end
   end
 
   def edit
+    if !(current_user.has_forum_access?)
+      redirect_to discussion_topic_path(@topic)
+    end
   end
 
   def create
@@ -38,16 +34,13 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to discussion_topics_path, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to discussion_topic_path(@comment.discussion_topic), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def destroy
   end
 
   private
