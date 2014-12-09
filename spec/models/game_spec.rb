@@ -91,6 +91,22 @@ describe Game do
       g1.winner_status.should eq(nil)
     end
 
+    it "winner_declaration should return user 1 win declaration" do
+      g1 = build(:game, :user_1_id => @d_user1.id, :round_count => 1,
+                 :user_1_win_count => 1)
+      g1.winner_declaration.should eq(@d_user1.name + " wins this game!")
+    end
+
+    it "winner_declaration should return a tie declaration when tie" do
+      g1 = build(:game, :round_count => 1, :tie_count => 1)
+      g1.winner_declaration.should eq("It's a Tie!")
+    end
+
+    it "winner_declaration should return nil when not finished" do
+      g1 = build(:game, :round_count => 1)
+      g1.winner_declaration.should eq(nil)
+    end
+
     it "clean_name should capitalize words and remove '_''s " do
       g1 = build(:game, :name => "rock_paper_scissor")
       g1.clean_name.should eq("Rock Paper Scissor")

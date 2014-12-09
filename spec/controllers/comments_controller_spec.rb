@@ -66,12 +66,15 @@ describe CommentsController do
 
   describe "update" do
     it "PUT should update" do
+      topic = create(:discussion_topic)
+      comment = create(:comment, :discussion_topic_id => topic.id)
       sign_in @my_user
-      attributes = attributes_for(:comment, :removed => true)
-      put :update, :id => @my_comment, :comment => attributes
-      @my_comment.reload
-      @my_comment.removed.should eq(attributes[:removed])
+      attributes = {:removed => true}
+      put :update, :id => comment, :comment => attributes
+      comment.reload
+      comment.removed.should eq(attributes[:removed])
       sign_out @my_user
+      DiscussionTopic.destroy(topic.id)
     end
 
     it "PUT faq should not update if not signed in" do

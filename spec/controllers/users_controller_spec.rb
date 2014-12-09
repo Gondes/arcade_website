@@ -66,15 +66,8 @@ describe UsersController do
 
   describe "create" do
     it "POST new user" do
-      #attributes = attributes_for(:user, :validate => false)
-      #attributes.should eq(1)
       user = build(:user)
-      #attributes = attributes_for(:user)
-      attributes = {:first_name => "first",
-                    :last_name => "last",
-                    :user_name => "aaa",
-                    :email => "aaa@aaa.com",
-                    :password => "password"}
+      attributes = attributes_for(:user)
       expect { post :create, :user => attributes }.should change(User, :count)
       User.destroy(User.order("created_at").last)
     end

@@ -64,14 +64,14 @@ class User < ActiveRecord::Base
 
   def list_access_rights
     temp = ""
-    self.admin? ? temp += "admin" : false
-    self.has_forum_access? ? temp += ", forum access" : false
-    self.has_user_stat_access? ? temp += ", user stat access" : false
-    self.has_user_profile_access? ? temp += ", user profile access" : false
-    self.has_game_access? ? temp += ", game access" : false
-    self.has_give_user_access? ? temp += ", give access" : false
-    self.master_admin ? temp += ", master admin" : false
-    if temp == ""
+    self.admin? ? temp += "Admin" : false
+    self.has_forum_access? ? temp += ", Forum Access" : false
+    self.has_user_stat_access? ? temp += ", User Stat Access" : false
+    self.has_user_profile_access? ? temp += ", User Profile Access" : false
+    self.has_game_access? ? temp += ", Game Access" : false
+    self.has_give_user_access? ? temp += ", Give Access" : false
+    self.master_admin ? temp += ", Master Admin" : false
+    if temp.length == 0
       "None"
     else
       temp

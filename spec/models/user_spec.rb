@@ -57,7 +57,7 @@ describe "User" do
 
   describe "is_disabled" do
     it "should not be able to log in" do
-      user = create(:user, :is_disabled => true)
+      user = build(:user, :is_disabled => true)
       user.active_for_authentication?.should eq(false)
     end
 
@@ -74,18 +74,30 @@ describe "User" do
     end
 
     it "admin? should return admin boolean" do
-      user = build(:user, :admin => true)
-      user.admin?.should eq(true)
+      build(:user, :admin => true).admin?.should eq(true)
     end
 
     it "is_hidden? should return is_hidden boolean" do
-      user = build(:user, :is_hidden => true)
-      user.is_hidden?.should eq(true)
+      build(:user, :is_hidden => true).is_hidden?.should eq(true)
     end
 
     it "is_disabled? should return is_disabled boolean" do
-      user = build(:user, :is_disabled => true)
-      user.is_disabled?.should eq(true)
+      build(:user, :is_disabled => true).is_disabled?.should eq(true)
+    end
+
+    it "has_user_access? should be true for 3 cases" do
+      build(:user).has_user_access?.should eq(false)
+      build(:user, :user_stat_access => true).has_user_access?.should eq(true)
+      build(:user, :user_profile_access => true).has_user_access?.should eq(true)
+      build(:user, :master_admin => true).has_user_access?.should eq(true)
+    end
+
+    it "list_access_rights should return a string list of access rights" do
+      build(:user, :admin => true).list_access_rights.should eq("Admin")
+    end
+
+    it "list_access_rights should return 'None' if user has no access rights" do
+      build(:user).list_access_rights.should eq("None")
     end
 
     describe "rank logic:" do

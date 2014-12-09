@@ -2,7 +2,12 @@ require 'spec_helper'
 
 describe Rank do
   describe "validations" do
-    pending "test uniqueness for name, level, and exp_required in #{__FILE__}"
+    it "should not create the following violations." do
+      rank = create(:rank)
+      build(:rank, :name => rank.name).should_not be_valid
+      build(:rank, :level => rank.level).should_not be_valid
+      build(:rank, :exp_required => rank.exp_required).should_not be_valid
+    end
   end
 
   describe "methods" do
