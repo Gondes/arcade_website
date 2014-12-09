@@ -19,6 +19,40 @@ class Game < ActiveRecord::Base
     User.find user_2_id
   end
 
+  def static_player_1
+    if self.user_1_level != 0
+      rank = Rank.find_by(:level => self.user_1_level)
+      rank.name + "-" + self.user_1_level.to_s + " " + player_1.name
+    else
+      "Lvl-" + self.user_1_level.to_s + " " + player_1.name
+    end
+  end
+
+  def static_player_2
+    if self.user_2_level != 0
+      rank = Rank.find_by(:level => self.user_2_level)
+      rank.name + "-" + self.user_2_level.to_s + " " + player_2.name
+    else
+      "Lvl-" + self.user_2_level.to_s + " " + player_2.name
+    end
+  end
+
+  def player_1_exp
+    if self.user_1_exp_change >= 0
+      "gained " + self.user_1_exp_change.to_s + " exp"
+    else
+      "lost " + (self.user_1_exp_change * -1).to_s + "exp"
+    end
+  end
+
+  def player_2_exp
+    if self.user_2_exp_change >= 0
+      "gained " + self.user_2_exp_change.to_s + " exp"
+    else
+      "lost " + (self.user_2_exp_change * -1).to_s + "exp"
+    end
+  end
+
   def winner
     #unless winner_id.nil?
     #  User.find winner_id

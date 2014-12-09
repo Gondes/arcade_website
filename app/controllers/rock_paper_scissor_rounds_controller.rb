@@ -25,6 +25,10 @@ class RockPaperScissorRoundsController < ApplicationController
     else
       @rounds = RockPaperScissorRound.all
     end
+
+    if @game.done
+      redirect_to game_path(@game)
+    end
   end
 
   # GET /rounds/1

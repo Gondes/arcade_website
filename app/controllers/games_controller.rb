@@ -35,6 +35,8 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
+        @game.user_1_level = @game.player_1.level
+        @game.user_2_level = @game.player_2.level
         @game.fee = @game.calculate_challenge_fee
         @game.save
         challenger = User.find(@game.player_1.id)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205191246) do
+ActiveRecord::Schema.define(version: 20141209194543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,19 +44,25 @@ ActiveRecord::Schema.define(version: 20141205191246) do
   end
 
   create_table "games", force: true do |t|
-    t.integer  "user_1_id",                        null: false
-    t.integer  "user_2_id",                        null: false
+    t.integer  "user_1_id",                           null: false
+    t.integer  "user_2_id",                           null: false
     t.integer  "winner_id"
-    t.boolean  "done",             default: false
-    t.integer  "round_count",      default: 0
+    t.boolean  "done",                default: false
+    t.integer  "round_count",         default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_1_win_count", default: 0
-    t.integer  "user_2_win_count", default: 0
-    t.integer  "tie_count",        default: 0
+    t.integer  "user_1_win_count",    default: 0
+    t.integer  "user_2_win_count",    default: 0
+    t.integer  "tie_count",           default: 0
     t.string   "name"
-    t.boolean  "accepted",         default: false
-    t.integer  "fee",              default: 0
+    t.boolean  "accepted",            default: false
+    t.integer  "fee",                 default: 0
+    t.integer  "user_1_exp_change",   default: 0
+    t.integer  "user_2_exp_change",   default: 0
+    t.integer  "user_1_coins_earned", default: 0
+    t.integer  "user_2_coins_earned", default: 0
+    t.integer  "user_1_level",        default: 0
+    t.integer  "user_2_level",        default: 0
   end
 
   create_table "general_forum_topics", force: true do |t|
