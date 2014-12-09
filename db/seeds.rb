@@ -39,3 +39,13 @@ forum_list.each do |title, description|
   GeneralForumTopic.create( title: title, description: description)
 end
 
+faq_list = [
+  ["How do I play a game?", "To start off, you must have log into your account or create one if you haven't. Then select a user from the user list to challenge. After creating the game, you must wait for the user to accept."],
+  ["Why do I need to pay coins to play?", "You must pay coins to challenge someone of a higher level than yourself (10 coins per level), to prevent lower levels from spamming higher levels."],
+  ["How do I create a topic on the forum?", "You must be logged in in order to create a topic or comment on a topic. Go into either General Discussion or Strategies and click New Topic."],
+  ["How do I get coins and exp?", "You gain coins and exp by winning games against others"]
+]
+
+faq_list.each do |question, answer|
+  Faq.create( question: question, answer: answer)
+end

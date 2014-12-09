@@ -44,7 +44,7 @@
     </div>
 
     <div class="container-fluid">
-    	<div class="row-fluid">
+      <div class="row-fluid">
 
         <% if notice %>
           <p class="alert alert-success"><%= notice %></p>
@@ -53,12 +53,20 @@
           <p class="alert alert-danger"><%= alert %></p>
         <% end %>
         
-    		<div class="col-lg-9" id="main"><%= yield %></div>
-    		<div class="col-lg-3" id="side_bar">
-    			<h2>About Us</h2>
-    			<p>This is just a filler text that will be later replace with actual information that will be useful for the person(s) using this website. Until then, please put up with this completely verbose and useless block of rambling text. I thank you for your understanding. Thank You.</p>
-    		</div>
-    	</div>
+        <div class="col-lg-9" id="main"><%= yield %></div>
+        <div class="col-lg-3" id="side_bar">
+          <h2>How to play!</h2>
+          <ol>
+            <li>Create an account</li>
+            <li>Sign in</li>
+            <li>Click Users</li>
+            <li>Find someone to Challenge</li>
+            <li>Select the round count and click Send Challenge</li>
+            <li>Wait for opponent to accept (manually refresh page)</li>
+            <li>Play!</li>
+          </ol>
+        </div>
+      </div>
     </div>
 
     <div class="footer">
