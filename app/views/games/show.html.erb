@@ -2,12 +2,12 @@
 <h2>Results: <%= @game.winner_declaration %></h2>
 
 <% if current_user.has_game_access? %>
-  <h4><%= @game.player_1.name %> <%= @game.player_1_exp %> and <%= @game.user_1_coins_earned %> coins!</h4>
-  <h4><%= @game.player_2.name %> <%= @game.player_2_exp %> and <%= @game.user_2_coins_earned %> coins!</h4>
+  <h4><%= @game.player_1.name %> <%= @game.show_player_1_exp %> and <%= @game.user_1_coins_earned %> coins!</h4>
+  <h4><%= @game.player_2.name %> <%= @game.show_player_2_exp %> and <%= @game.user_2_coins_earned %> coins!</h4>
 <% elsif current_user.id == @game.player_1.id %>
-  <h4>You <%= @game.player_1_exp %> and <%= @game.user_1_coins_earned %> coins!</h4>
+  <h4>You <%= @game.show_player_1_exp %> and <%= @game.user_1_coins_earned %> coins!</h4>
 <% elsif current_user.id == @game.player_2.id %>
-  <h4>You <%= @game.player_2_exp %> and <%= @game.user_2_coins_earned %> coins!</h4>
+  <h4>You <%= @game.show_player_2_exp %> and <%= @game.user_2_coins_earned %> coins!</h4>
 <% end %>
 
 <div class="table-responsive">

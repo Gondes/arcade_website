@@ -178,32 +178,32 @@ describe "User" do
     describe "exp logic:" do
       it "calculate_win_exp_against(opponent_level) should return exp = self.level * 10" do
         user = build(:user, :level => @rankMid.level)
-        user.calculate_win_exp_against(@rankMid.level)
+        user.calculate_win_exp_against(@rankMid.level).should eq(user.level * 10)
       end
 
       it "calculate_win_exp_against(opponent_level) should return x1.5 exp when current_win_streak = 2" do
         user = build(:user, :level => @rankMid.level, :current_win_streak => 2)
-        user.calculate_win_exp_against(@rankMid.level)
+        user.calculate_win_exp_against(@rankMid.level).should eq(user.level * 10 * 1.5)
       end
 
       it "calculate_win_exp_against(opponent_level) should return x2 exp when current_win_streak > 2" do
         user = build(:user, :level => @rankMid.level, :current_win_streak => 3)
-        user.calculate_win_exp_against(@rankMid.level)
+        user.calculate_win_exp_against(@rankMid.level).should eq(user.level * 10 * 2)
       end
 
       it "calculate_lose_exp_against(opponent_level) should return exp = self.level * 10" do
         user = build(:user, :level => @rankMid.level)
-        user.calculate_lose_exp_against(@rankMid.level)
+        user.calculate_lose_exp_against(@rankMid.level).should eq(user.level * 10)
       end
 
       it "calculate_lose_exp_against(opponent_level) should return at minimum 5" do
         user = build(:user, :level => @rankMin.level)
-        user.calculate_lose_exp_against(@rankMax.level)
+        user.calculate_lose_exp_against(@rankMax.level).should eq(5)
       end
 
       it "calculate_tie_exp_against(opponent_level) should return exp = 0" do
         user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
-        user.calculate_tie_exp_against(@rankMid.level)
+        user.calculate_tie_exp_against(@rankMid.level).should eq(0)
       end
     end
 
@@ -233,10 +233,22 @@ describe "User" do
       user.coins.should eq(@rankMid.level * 10)
     end
 
+    it "wins_against(opponent_level) testing the returned exp_gain value" do
+      user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
+      exp_change = user.wins_against(@rankMid.level)
+      exp_change.should eq(@rankMid.level * 10)
+    end
+
     it "loses_against(opponent_level) testing leveling down" do
       user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
       user.loses_against(@rankMid.level)
       user.level.should eq(@rankMin.level)
+    end
+
+    it "loses_against(opponent_level) testing the returned exp_lost value" do
+      user = build(:user, :level => @rankMid.level, :exp => @rankMax.exp_required - 1)
+      exp_change = user.loses_against(@rankMid.level)
+      exp_change.should eq(@rankMid.level * -10)
     end
 
     it "loses_against(opponent_level) testing mix exp should be 0" do
@@ -245,10 +257,22 @@ describe "User" do
       user.exp.should eq(0)
     end
 
+    it "loses_against(opponent_level) testing the returned exp_lost value capped" do
+      user = build(:user, :level => @rankMin.level, :exp => 1)
+      exp_change = user.loses_against(@rankMid.level)
+      exp_change.should eq(-1)
+    end
+
     it "ties_against(opponent_level) testing" do
       user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
       user.ties_against(@rankMid.level)
       user.level.should eq(@rankMid.level)
+    end
+
+    it "ties_against(opponent_level) testing the returned exp_change value" do
+      user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
+      exp_change = user.ties_against(@rankMin.level)
+      exp_change.should eq((@rankMin.level - @rankMid.level) * 5)
     end
 
     it "update_stats_wins should only change games, wins, and streaks" do

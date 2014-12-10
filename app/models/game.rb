@@ -37,19 +37,19 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def player_1_exp
+  def show_player_1_exp
     if self.user_1_exp_change >= 0
       "gained " + self.user_1_exp_change.to_s + " exp"
     else
-      "lost " + (self.user_1_exp_change * -1).to_s + "exp"
+      "lost " + (self.user_1_exp_change * -1).to_s + " exp"
     end
   end
 
-  def player_2_exp
+  def show_player_2_exp
     if self.user_2_exp_change >= 0
       "gained " + self.user_2_exp_change.to_s + " exp"
     else
-      "lost " + (self.user_2_exp_change * -1).to_s + "exp"
+      "lost " + (self.user_2_exp_change * -1).to_s + " exp"
     end
   end
 
@@ -113,22 +113,34 @@ class Game < ActiveRecord::Base
   def try_to_generate_winner
     if self.finished?
       var = self.user_1_win_count - self.user_2_win_count
-      player_1_level = self.player_1.level
-      player_2_level = self.player_2.level
+      player_1_change = 0
+      player_2_change = 0
       if var > 0
         self.update_attributes( :done => true, :winner_id => user_1_id )
-        self.player_1.wins_against(player_2_level)
-        self.player_2.loses_against(player_1_level)
+        player_1_change = self.player_1.wins_against(self.user_2_level)
+        player_2_change = self.player_2.loses_against(self.user_1_level)
       elsif var < 0
         self.update_attributes( :done => true, :winner_id => user_2_id )
-        self.player_1.loses_against(player_2_level)
-        self.player_2.wins_against(player_1_level)
+        player_1_change = self.player_1.loses_against(self.user_2_level)
+        player_2_change = self.player_2.wins_against(self.user_1_level)
       else
         self.update_attribute( :done, true )
-        self.player_1.ties_against(player_2_level)
-        self.player_2.ties_against(player_1_level)
+        player_1_change = self.player_1.ties_against(self.user_2_level)
+        player_2_change = self.player_2.ties_against(self.user_1_level)
       end
+      self.update_game_stats(player_1_change, player_2_change)
     end
+  end
+
+  def update_game_stats(player_1_change, player_2_change)
+    if player_1_change > 0
+      self.update_attribute( :user_1_coins_earned, player_1_change )
+    end
+    if player_2_change > 0
+      self.update_attribute( :user_2_coins_earned, player_2_change )
+    end
+    self.update_attributes( :user_1_exp_change => player_1_change,
+                            :user_2_exp_change => player_2_change )
   end
 
   def calculate_challenge_fee
