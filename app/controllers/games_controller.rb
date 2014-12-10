@@ -5,8 +5,23 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    @games = Game.all
-    @games = @games.sort_by(&:created_at).reverse
+    amount = 5
+    if !(params[:user_id].nil?)
+      @games = Game.where("user_1_id = ? OR user_2_id = ?", params[:user_id], params[:user_id])
+      if !(params[:page].nil?) 
+        
+      else
+        @games = @games.sort_by(&:created_at).reverse
+      end
+    else
+      @games = Game.where("user_1_id = ? OR user_2_id = ?",
+        current_user.id.to_i, current_user.id.to_i).order(created_at: :desc)
+      if !(params[:page].nil?)
+        @games = @games.limit(amount).offset(amount * params[:page].to_i)
+      else
+        @games = @games.limit(amount)
+      end
+    end
   end
 
   # GET /games/1

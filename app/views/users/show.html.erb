@@ -81,9 +81,11 @@
 
 <% if current_user.id == @user.id or current_user.has_user_access? %>
   <p><%= link_to 'Edit', edit_user_path(@user) %> | 
-     <%= link_to 'Find Players', users_path %></p>
+     <%= link_to 'Find Players', users_path %> | 
+     <%= link_to 'View History', games_path(:user_id => @user.id) %></p>
 <% else %>
-  <p><%= link_to 'Find Players', users_path %></p>
+  <p><%= link_to 'Find Players', users_path %> | 
+  <%= link_to 'View History', games_path(:user_id => @user.id) %></p>
 <% end %>
 
 <% if current_user.has_user_stat_access? %>

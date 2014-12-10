@@ -13,6 +13,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if (@user.is_hidden? && !current_user.has_user_access? && @user.id != current_user.id)
+      redirect_to users_url
+    end
   end
 
   # GET /users/new

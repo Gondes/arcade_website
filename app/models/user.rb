@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :icon, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
   def active_for_authentication?
-    super and (!self.is_disabled or self.admin)
+    super and (!self.is_disabled or self.admin? or self.master_admin?)
   end
 
   def name

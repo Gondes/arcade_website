@@ -21,7 +21,7 @@
       <tbody>
         <% @users.each do |user| %>
 
-          <% if !user.is_hidden? or current_user.try(:admin?)%>
+          <% if !user.is_hidden? or current_user.has_user_access? or user.id == current_user.id %>
             <tr>
               <% if user.icon? %>
                 <td><%= image_tag user.icon.url(:tiny) %></td>
