@@ -4,7 +4,7 @@ class DiscussionTopicsController < ApplicationController
   before_action :set_discussion_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    amount = 5
+    amount = 15
     if !params[:forum_id].nil?
       @forum = GeneralForumTopic.find params[:forum_id]
       @topics = @forum.discussion_topics
@@ -24,7 +24,17 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def show
-    @comments = @topic.comments.sort_by(&:created_at)
+    amount = 2
+    @comments = @topic.comments.order(created_at: :asc)
+
+    if !(params[:page].nil?) && (params[:page].to_i > 0)
+      @items = ( @comments.limit(amount).offset((amount) * (params[:page].to_i)) ).size
+      @next_available = (( @comments.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
+      @previous_available = params[:page].to_i > 1
+      @comments = @comments.limit(amount).offset(amount * (params[:page].to_i - 1))
+    else
+      redirect_to discussion_topic_url(@topic, :page => 1)
+    end
   end
 
   def authenticate_new

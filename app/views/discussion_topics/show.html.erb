@@ -23,23 +23,45 @@
     </div>
   </article>
 
-<% @comments.each do |comment| %>
-  <article class="topic">
-    <div class="comment_info">
-      <strong><%= comment.commenter.show_rank %> <%= comment.commenter.name %></strong>
-      <% if comment.commenter.icon? %>
-        <td><%= image_tag comment.commenter.icon.url(:small) %></td>
-      <% end %>
-      <p><%= comment.created_at %></p>
-      <% if user_signed_in? and (current_user == @topic.original_poster or current_user.has_forum_access?) %>
-        <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
-      <% end %>
-    </div>
-    <div class="comment_content">
-      <p style="word-wrap:break-word;"><%= comment.show_content %></p>
-    </div>
-  </article>
+<% if !@comments.empty? %>
+  <% @comments.each do |comment| %>
+    <article class="topic">
+      <div class="comment_info">
+        <strong><%= comment.commenter.show_rank %> <%= comment.commenter.name %></strong>
+        <% if comment.commenter.icon? %>
+          <td><%= image_tag comment.commenter.icon.url(:small) %></td>
+        <% end %>
+        <p><%= comment.created_at %></p>
+        <% if user_signed_in? and (current_user == @topic.original_poster or current_user.has_forum_access?) %>
+          <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
+        <% end %>
+      </div>
+      <div class="comment_content">
+        <p style="word-wrap:break-word;"><%= comment.show_content %></p>
+      </div>
+    </article>
+  <% end %>
+
+  <p>|
+    <%= link_to 'First', discussion_topic_url(:forum_id => params[:forum_id], :page => 1) %> |
+
+    <% if @previous_available %>
+      <%= previous_page "comments" %> |
+    <% end %>
+
+    <% if @next_available %>
+      <%= next_page "comments" %> |
+    <% end %>
+  </p>
+
+<% else %>
+  <h3>There are no comments yet</h3>
 <% end %>
+
+<p>Items is <%= @items %></p>
+<p>Previous is <%= @previous_available %></p>
+<p>Next is <%= @next_available %></p>
+
 
 <p><%= link_to 'Comment', new_comment_url(topic_id: @topic.id) %> | 
 <%= link_to 'Back', discussion_topics_path(forum_id: @topic.general_forum_topic.id) %></p>

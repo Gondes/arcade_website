@@ -11,14 +11,15 @@ module ApplicationHelper
     if title.nil?
       link_to link_name, :page => params[:page].to_i + 1
     elsif title == "games"
-      #link_to "Next", :page => page + 1, :user_id => some_id
       link_to link_name, :page => params[:page].to_i + 1, :user_id => params[:user_id].to_i
     elsif title == "topics"
       link_to link_name, :page => params[:page].to_i + 1, :forum_id => params[:forum_id].to_i
     elsif title == "comments"
-      "comment"
+      link_to link_name, :page => params[:page].to_i + 1
     elsif title == "users"
       "user"
+    else
+      "Next"
     end
   end
 
@@ -31,9 +32,11 @@ module ApplicationHelper
     elsif title == "topics"
       link_to link_name, :page => params[:page].to_i - 1, :forum_id => params[:forum_id].to_i
     elsif title == "comments"
-      "comment"
+      link_to link_name, :page => params[:page].to_i - 1
     elsif title == "users"
       "user"
+    else
+      "Previous"
     end
   end
 end
