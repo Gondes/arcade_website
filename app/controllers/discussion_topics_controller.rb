@@ -4,11 +4,20 @@ class DiscussionTopicsController < ApplicationController
   before_action :set_discussion_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    #@topic = DiscussionTopic.all
-    if params.has_key? :forum_id
+    amount = 5
+    if !params[:forum_id].nil?
       @forum = GeneralForumTopic.find params[:forum_id]
       @topics = @forum.discussion_topics
-      @topics = @topics.sort_by(&:created_at).reverse
+      @topics = @topics.order(created_at: :desc)
+
+      if !(params[:page].nil?) && (params[:page].to_i > 0)
+        @items = ( @topics.limit(amount).offset((amount) * (params[:page].to_i)) ).size
+        @next_available = (( @topics.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
+        @previous_available = params[:page].to_i > 1
+        @topics = @topics.limit(amount).offset(amount * (params[:page].to_i - 1))
+      else
+        redirect_to discussion_topics_url(:forum_id => params[:forum_id].to_i, :page => 1)
+      end
     else
       redirect_to general_forum_topics_path
     end

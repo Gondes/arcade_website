@@ -45,23 +45,24 @@
       </tbody>
     </table>
   </div>
+
+  <p>|
+    <%= link_to 'First', games_url(:page => 1) %> |
+
+    <% if @previous_available %>
+      <%= previous_page "games" %> |
+    <% end %>
+
+    <% if @next_available %>
+      <%= next_page "games" %> |
+    <% end %>
+  </p>
+
 <% else %>
   <h2>There are no recorded games</h2>
-<% end %>
-
-<p>|
-<%= link_to 'First', games_url(:page => 1) %> |
-
-<% if @previous_available %>
-  <%= previous_page "games" %> |
-<% end %>
-
-<% if @next_available %>
-  <%= next_page "games" %> |
 <% end %>
 
 <p>Items is <%= @items %></p>
 <p>Previous is <%= @previous_available %></p>
 <p>Next is <%= @next_available %></p>
 
-</p>

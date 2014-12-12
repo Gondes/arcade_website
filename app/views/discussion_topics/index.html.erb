@@ -29,9 +29,30 @@
       </tbody>
     </table>
   </div>
+
+  <p>|
+    <%= link_to 'First', discussion_topics_url(:forum_id => params[:forum_id], :page => 1) %> |
+
+    <% if @previous_available %>
+      <%= previous_page "topics" %> |
+    <% end %>
+
+    <% if @next_available %>
+      <%= next_page "topics" %> |
+    <% end %>
+  </p>
+  
 <% else %>
   <strong>There are no discussion topics for this section</strong>
 <% end %>
+
+
+
+<p>Items is <%= @items %></p>
+<p>Previous is <%= @previous_available %></p>
+<p>Next is <%= @next_available %></p>
+
+<br>
 
 
 <p><%= link_to 'New Topic', new_discussion_topic_path(forum_id: @forum.id) %> |
