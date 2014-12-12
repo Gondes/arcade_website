@@ -7,7 +7,16 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    amount = 25
     @users = User.order(sort_column + " " + sort_direction)
+
+    if !(params[:page].nil?) && (params[:page].to_i > 0)
+      @next_available = (( @users.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
+      @previous_available = params[:page].to_i > 1
+      @users = @users.limit(amount).offset(amount * (params[:page].to_i - 1))
+    else
+      redirect_to users_url(:page => 1)
+    end
   end
 
   # GET /users/1

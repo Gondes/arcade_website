@@ -4,14 +4,13 @@ class DiscussionTopicsController < ApplicationController
   before_action :set_discussion_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    amount = 15
+    amount = 25
     if !params[:forum_id].nil?
       @forum = GeneralForumTopic.find params[:forum_id]
       @topics = @forum.discussion_topics
       @topics = @topics.order(created_at: :desc)
 
       if !(params[:page].nil?) && (params[:page].to_i > 0)
-        @items = ( @topics.limit(amount).offset((amount) * (params[:page].to_i)) ).size
         @next_available = (( @topics.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
         @previous_available = params[:page].to_i > 1
         @topics = @topics.limit(amount).offset(amount * (params[:page].to_i - 1))
@@ -24,11 +23,9 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def show
-    amount = 2
+    amount = 10
     @comments = @topic.comments.order(created_at: :asc)
-
     if !(params[:page].nil?) && (params[:page].to_i > 0)
-      @items = ( @comments.limit(amount).offset((amount) * (params[:page].to_i)) ).size
       @next_available = (( @comments.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
       @previous_available = params[:page].to_i > 1
       @comments = @comments.limit(amount).offset(amount * (params[:page].to_i - 1))

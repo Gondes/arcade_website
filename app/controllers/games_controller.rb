@@ -5,13 +5,12 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    amount = 5
+    amount = 25
     if !(params[:user_id].nil?)
       @games = Game.where("user_1_id = ? OR user_2_id = ?", params[:user_id], params[:user_id])
       @games = @games.order(updated_at: :desc)
       
       if !(params[:page].nil?) && (params[:page].to_i > 0)
-        @items = ( @games.limit(amount).offset((amount) * (params[:page].to_i)) ).size
         @next_available = (( @games.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
         @previous_available = params[:page].to_i > 1
         @games = @games.limit(amount).offset(amount * (params[:page].to_i - 1))

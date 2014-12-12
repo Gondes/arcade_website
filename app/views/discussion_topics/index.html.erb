@@ -1,6 +1,20 @@
 <h1>Discussion Topics</h1>
 
 <% if !@topics.empty? %>
+  <p>|
+    Page <%= params[:page] %> |
+
+    <%= link_to 'First', discussion_topics_url(:forum_id => @forum.id, :page => 1) %> |
+
+    <% if @previous_available %>
+      <%= previous_page "topics" %> |
+    <% end %>
+
+    <% if @next_available %>
+      <%= next_page "topics" %> |
+    <% end %>
+  </p>
+
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -31,7 +45,9 @@
   </div>
 
   <p>|
-    <%= link_to 'First', discussion_topics_url(@topic, :page => 1) %> |
+    Page <%= params[:page] %> |
+
+    <%= link_to 'First', discussion_topics_url(:forum_id => @forum.id, :page => 1) %> |
 
     <% if @previous_available %>
       <%= previous_page "topics" %> |
@@ -45,15 +61,6 @@
 <% else %>
   <strong>There are no discussion topics for this section</strong>
 <% end %>
-
-
-
-<p>Items is <%= @items %></p>
-<p>Previous is <%= @previous_available %></p>
-<p>Next is <%= @next_available %></p>
-
-<br>
-
 
 <p><%= link_to 'New Topic', new_discussion_topic_path(forum_id: @forum.id) %> |
 <%= link_to 'Back', general_forum_topics_path %></p>
