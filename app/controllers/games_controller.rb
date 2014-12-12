@@ -5,8 +5,21 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    @games = Game.all
-    @games = @games.sort_by(&:created_at).reverse
+    amount = 25
+    if !(params[:user_id].nil?)
+      @games = Game.where("user_1_id = ? OR user_2_id = ?", params[:user_id], params[:user_id])
+      @games = @games.order(updated_at: :desc)
+      
+      if !(params[:page].nil?) && (params[:page].to_i > 0)
+        @next_available = (( @games.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
+        @previous_available = params[:page].to_i > 1
+        @games = @games.limit(amount).offset(amount * (params[:page].to_i - 1))
+      else
+        redirect_to games_url(:user_id => params[:user_id].to_i, :page => 1)
+      end
+    else
+      redirect_to games_url(:user_id => current_user.id)
+    end
   end
 
   # GET /games/1
@@ -35,6 +48,8 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
+        @game.user_1_level = @game.player_1.level
+        @game.user_2_level = @game.player_2.level
         @game.fee = @game.calculate_challenge_fee
         @game.save
         challenger = User.find(@game.player_1.id)

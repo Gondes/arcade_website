@@ -48,7 +48,7 @@ describe DiscussionTopic do
       topic.exist?.should eq(true)
     end
 
-     it 'exist? should return false if the title and description are nil' do
+    it 'exist? should return false if the title and description are nil' do
       topic = build(:discussion_topic, :title => nil, :description => nil)
       topic.exist?.should eq(false)
     end

@@ -33,11 +33,12 @@ class DiscussionTopic < ActiveRecord::Base
     !self.title.nil? && !self.description.nil?
   end
 
-  def show_title
-    if self.title.size > 30
-      self.title[0..30] + "..."
-    else
-      self.title
-    end
-  end
+  # Deciding if this should be used or not
+  #def show_title
+  #  if self.title.size > 30
+  #    self.title[0..30] + "..."
+  #  else
+  #    self.title
+  #  end
+  #end
 end

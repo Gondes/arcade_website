@@ -20,5 +20,10 @@ describe GeneralForumTopic do
       DiscussionTopic.destroy(topic.id)
       GeneralForumTopic.destroy(forum.id)
     end
+
+    it 'show_description' do
+      forum = build(:general_forum_topic)
+      forum.show_description.should eq(forum.description)
+    end
   end
 end

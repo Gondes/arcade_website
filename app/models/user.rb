@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :icon, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
   def active_for_authentication?
-    super and (!self.is_disabled or self.admin)
+    super and (!self.is_disabled or self.admin? or self.master_admin?)
   end
 
   def name
@@ -26,12 +26,56 @@ class User < ActiveRecord::Base
     self.admin
   end
 
+  def master_admin?
+    self.master_admin
+  end
+
   def is_hidden?
     self.is_hidden
   end
 
   def is_disabled?
     self.is_disabled
+  end
+
+  def has_forum_access?
+    self.forum_access or self.master_admin?
+  end
+
+  def has_user_access?
+    self.has_user_stat_access? or self.has_user_profile_access? or self.has_give_user_access?
+  end
+
+  def has_user_stat_access?
+    self.user_stat_access or self.master_admin?
+  end
+
+  def has_user_profile_access?
+    self.user_profile_access or self.master_admin?
+  end
+
+  def has_game_access?
+    self.game_access or self.master_admin?
+  end
+
+  def has_give_user_access?
+    self.give_access or self.master_admin?
+  end
+
+  def list_access_rights
+    temp = ""
+    self.admin? ? temp += "Admin" : false
+    self.has_forum_access? ? temp += ", Forum Access" : false
+    self.has_user_stat_access? ? temp += ", User Stat Access" : false
+    self.has_user_profile_access? ? temp += ", User Profile Access" : false
+    self.has_game_access? ? temp += ", Game Access" : false
+    self.has_give_user_access? ? temp += ", Give Access" : false
+    self.master_admin ? temp += ", Master Admin" : false
+    if temp.length == 0
+      "None"
+    else
+      temp
+    end
   end
 
   def rank
@@ -102,28 +146,37 @@ class User < ActiveRecord::Base
                             :games_played_count => (self.games_played_count + 1) )
   end
 
+  # This method returns int > 0 representing the exp gained for the game to record
   def wins_against(opponent_level)
     update_stats_wins
     exp_gained = self.calculate_win_exp_against(opponent_level)
     self.update_attributes( :exp => self.exp + exp_gained,
                             :coins => self.coins + exp_gained )
     self.update_rank
+    return exp_gained
   end
 
+  # This method returns int < 0 representing the exp lost for the game to record
   def loses_against(opponent_level)
     update_stats_loses
-    if ( (check = (self.exp - self.calculate_lose_exp_against(opponent_level))) <= 0 )
+    exp_lost = self.calculate_lose_exp_against(opponent_level)
+    if ( (check = (self.exp - exp_lost)) <= 0 )
+      exp_lost = self.exp
       self.update_attribute( :exp, 0 )
     else
       self.update_attribute( :exp, check )
     end
     self.update_rank
+    return exp_lost * -1
   end
 
+  # Returns positive or negative int depending if user gained or loss exp
   def ties_against(opponent_level)
     update_stats_ties
-    self.update_attribute( :exp, self.exp + self.calculate_tie_exp_against(opponent_level) )
+    exp_change = self.calculate_tie_exp_against(opponent_level)
+    self.update_attribute( :exp, self.exp + exp_change )
     self.update_rank
+    return exp_change
   end
 
   def calculate_win_exp_against(opponent_level)
@@ -139,6 +192,7 @@ class User < ActiveRecord::Base
     return (base_exp + level_difference_exp) * 10 * win_streak_multiplier
   end
 
+  # Returns a positive integer > 0 that represents exp lost
   def calculate_lose_exp_against(opponent_level)
     base_exp = self.level
     level_difference_exp = opponent_level - self.level
@@ -150,6 +204,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Returns positive if you are lower leveled and negative if you are higher leveled
   def calculate_tie_exp_against(opponent_level)
     level_difference_exp = opponent_level - self.level
     return level_difference_exp * 5

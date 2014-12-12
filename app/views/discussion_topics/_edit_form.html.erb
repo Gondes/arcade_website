@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <% if current_user.admin? %>
+  <% if current_user.has_forum_access? %>
     <div class="field">
       <%= f.label :general_forum_topic_id %><br>
       <%= f.select :general_forum_topic_id, options_from_collection_for_select(GeneralForumTopic.all, 'id', 'title') %>
@@ -34,8 +34,8 @@
 
     <strong>Description</strong>
     <p><%= @topic.description %></p>
-
   <% end %>
+
   <% if @topic.exist? %>
     <div class="actions">
       <%= f.label :closed, "Close this discussion?" %>

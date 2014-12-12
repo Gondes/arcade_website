@@ -57,7 +57,7 @@ describe "User" do
 
   describe "is_disabled" do
     it "should not be able to log in" do
-      user = create(:user, :is_disabled => true)
+      user = build(:user, :is_disabled => true)
       user.active_for_authentication?.should eq(false)
     end
 
@@ -74,18 +74,30 @@ describe "User" do
     end
 
     it "admin? should return admin boolean" do
-      user = build(:user, :admin => true)
-      user.admin?.should eq(true)
+      build(:user, :admin => true).admin?.should eq(true)
     end
 
     it "is_hidden? should return is_hidden boolean" do
-      user = build(:user, :is_hidden => true)
-      user.is_hidden?.should eq(true)
+      build(:user, :is_hidden => true).is_hidden?.should eq(true)
     end
 
     it "is_disabled? should return is_disabled boolean" do
-      user = build(:user, :is_disabled => true)
-      user.is_disabled?.should eq(true)
+      build(:user, :is_disabled => true).is_disabled?.should eq(true)
+    end
+
+    it "has_user_access? should be true for 3 cases" do
+      build(:user).has_user_access?.should eq(false)
+      build(:user, :user_stat_access => true).has_user_access?.should eq(true)
+      build(:user, :user_profile_access => true).has_user_access?.should eq(true)
+      build(:user, :master_admin => true).has_user_access?.should eq(true)
+    end
+
+    it "list_access_rights should return a string list of access rights" do
+      build(:user, :admin => true).list_access_rights.should eq("Admin")
+    end
+
+    it "list_access_rights should return 'None' if user has no access rights" do
+      build(:user).list_access_rights.should eq("None")
     end
 
     describe "rank logic:" do
@@ -166,32 +178,32 @@ describe "User" do
     describe "exp logic:" do
       it "calculate_win_exp_against(opponent_level) should return exp = self.level * 10" do
         user = build(:user, :level => @rankMid.level)
-        user.calculate_win_exp_against(@rankMid.level)
+        user.calculate_win_exp_against(@rankMid.level).should eq(user.level * 10)
       end
 
       it "calculate_win_exp_against(opponent_level) should return x1.5 exp when current_win_streak = 2" do
         user = build(:user, :level => @rankMid.level, :current_win_streak => 2)
-        user.calculate_win_exp_against(@rankMid.level)
+        user.calculate_win_exp_against(@rankMid.level).should eq(user.level * 10 * 1.5)
       end
 
       it "calculate_win_exp_against(opponent_level) should return x2 exp when current_win_streak > 2" do
         user = build(:user, :level => @rankMid.level, :current_win_streak => 3)
-        user.calculate_win_exp_against(@rankMid.level)
+        user.calculate_win_exp_against(@rankMid.level).should eq(user.level * 10 * 2)
       end
 
       it "calculate_lose_exp_against(opponent_level) should return exp = self.level * 10" do
         user = build(:user, :level => @rankMid.level)
-        user.calculate_lose_exp_against(@rankMid.level)
+        user.calculate_lose_exp_against(@rankMid.level).should eq(user.level * 10)
       end
 
       it "calculate_lose_exp_against(opponent_level) should return at minimum 5" do
         user = build(:user, :level => @rankMin.level)
-        user.calculate_lose_exp_against(@rankMax.level)
+        user.calculate_lose_exp_against(@rankMax.level).should eq(5)
       end
 
       it "calculate_tie_exp_against(opponent_level) should return exp = 0" do
         user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
-        user.calculate_tie_exp_against(@rankMid.level)
+        user.calculate_tie_exp_against(@rankMid.level).should eq(0)
       end
     end
 
@@ -221,10 +233,22 @@ describe "User" do
       user.coins.should eq(@rankMid.level * 10)
     end
 
+    it "wins_against(opponent_level) testing the returned exp_gain value" do
+      user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
+      exp_change = user.wins_against(@rankMid.level)
+      exp_change.should eq(@rankMid.level * 10)
+    end
+
     it "loses_against(opponent_level) testing leveling down" do
       user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
       user.loses_against(@rankMid.level)
       user.level.should eq(@rankMin.level)
+    end
+
+    it "loses_against(opponent_level) testing the returned exp_lost value" do
+      user = build(:user, :level => @rankMid.level, :exp => @rankMax.exp_required - 1)
+      exp_change = user.loses_against(@rankMid.level)
+      exp_change.should eq(@rankMid.level * -10)
     end
 
     it "loses_against(opponent_level) testing mix exp should be 0" do
@@ -233,10 +257,22 @@ describe "User" do
       user.exp.should eq(0)
     end
 
+    it "loses_against(opponent_level) testing the returned exp_lost value capped" do
+      user = build(:user, :level => @rankMin.level, :exp => 1)
+      exp_change = user.loses_against(@rankMid.level)
+      exp_change.should eq(-1)
+    end
+
     it "ties_against(opponent_level) testing" do
       user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
       user.ties_against(@rankMid.level)
       user.level.should eq(@rankMid.level)
+    end
+
+    it "ties_against(opponent_level) testing the returned exp_change value" do
+      user = build(:user, :level => @rankMid.level, :exp => @rankMid.exp_required)
+      exp_change = user.ties_against(@rankMin.level)
+      exp_change.should eq((@rankMin.level - @rankMid.level) * 5)
     end
 
     it "update_stats_wins should only change games, wins, and streaks" do

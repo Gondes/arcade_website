@@ -7,12 +7,24 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    amount = 25
     @users = User.order(sort_column + " " + sort_direction)
+
+    if !(params[:page].nil?) && (params[:page].to_i > 0)
+      @next_available = (( @users.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
+      @previous_available = params[:page].to_i > 1
+      @users = @users.limit(amount).offset(amount * (params[:page].to_i - 1))
+    else
+      redirect_to users_url(:page => 1)
+    end
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    if (@user.is_hidden? && !current_user.has_user_access? && @user.id != current_user.id)
+      redirect_to users_url
+    end
   end
 
   # GET /users/new
@@ -26,7 +38,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    if !(valid_user(@user.id) or user_admin?)
+    #if !(valid_user(@user.id) or !current_user.has_user_access?)
+    if valid_user(@user.id) or current_user.has_user_access?
+      
+    else
       redirect_to users_url
     end
   end
@@ -88,8 +103,11 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count, :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak,
-        :email, :encrypted_password, :icon, :is_disabled, :is_hidden, :coins, :exp, :level)
+      params.require(:user).permit(:first_name, :last_name, :user_name, :games_played_count,
+        :wins_count, :loss_count, :tie_count, :best_win_streak, :current_win_streak, :email,
+        :encrypted_password, :icon, :is_disabled, :is_hidden, :coins, :exp, :level, :admin,
+        :forum_access, :user_stat_access, :user_profile_access, :game_access, :give_access,
+        :password )
     end
 
     # These two methods are used to make the table sortable.

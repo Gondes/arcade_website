@@ -1,4 +1,4 @@
-<h1>Rock Paper Scissor: <%= @game.player_1.name %> vs <%= @game.player_2.name %></h1>
+<h1>Rock Paper Scissor: <%= @game.static_player_1 %> vs <%= @game.static_player_2 %></h1>
 
 <% if @game.accepted %>
   <% if @game.finished? %>     <!--Winner Message-->
@@ -86,6 +86,10 @@
 <% end %>
 
 <p><%= button_to 'Back', games_path, :method => "get" %></p>
+
+<% if current_user.has_game_access? %>
+  <p><%= link_to 'Delete', @game, method: :delete, data: { confirm: 'Game is still in progress, are you sure?' } %></p>
+<% end %>
 
 <script>
 $(document).ready(

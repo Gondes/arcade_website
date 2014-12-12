@@ -9,39 +9,75 @@
 <strong>Last Updated</strong>
   <p><%= @topic.updated_at %></p>
 
-  <article class="topic">
-    <div class="comment_info">
-      <strong><%= @topic.original_poster.show_rank %> <%= @topic.original_poster.name %></strong>
-      <% if @topic.original_poster.icon? %>
-        <td><%= image_tag @topic.original_poster.icon.url(:small) %></td>
-      <% end %>
-      <p><%= @topic.created_at %></p>
-    </div>
-    <div class="comment_content">
-      <p style="word-wrap:break-word;"><%= @topic.description %></p>
-    </div>
-  </article>
+<% if !@comments.empty? %>
+  <p>|
+    Page <%= params[:page] %> |
 
-<% @comments.each do |comment| %>
-  <article class="topic">
-    <div class="comment_info">
-      <strong><%= comment.commenter.show_rank %> <%= comment.commenter.name %></strong>
-      <% if comment.commenter.icon? %>
-        <td><%= image_tag comment.commenter.icon.url(:small) %></td>
-      <% end %>
-      <p><%= comment.created_at %></p>
-      <% if user_signed_in? and (current_user == @topic.original_poster or current_user.admin?) %>
-        <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
-      <% end %>
-    </div>
-    <div class="comment_content">
-      <p style="word-wrap:break-word;"><%= comment.show_content %></p>
-    </div>
-  </article>
+    <%= link_to 'First', discussion_topic_url(:forum_id => params[:forum_id], :page => 1) %> |
+
+    <% if @previous_available %>
+      <%= previous_page "comments" %> |
+    <% end %>
+
+    <% if @next_available %>
+      <%= next_page "comments" %> |
+    <% end %>
+  </p>
+<% end %>
+
+<article class="topic">
+  <div class="comment_info">
+    <strong><%= @topic.original_poster.show_rank %> <%= @topic.original_poster.name %></strong>
+    <% if @topic.original_poster.icon? %>
+      <td><%= image_tag @topic.original_poster.icon.url(:small) %></td>
+    <% end %>
+    <p><%= @topic.created_at %></p>
+  </div>
+  <div class="comment_content">
+    <p><strong>Topic Description</strong></p>
+    <p style="word-wrap:break-word;"><%= @topic.description %></p>
+  </div>
+</article>
+
+<% if !@comments.empty? %>
+  <% @comments.each do |comment| %>
+    <article class="topic">
+      <div class="comment_info">
+        <strong><%= comment.commenter.show_rank %> <%= comment.commenter.name %></strong>
+        <% if comment.commenter.icon? %>
+          <td><%= image_tag comment.commenter.icon.url(:small) %></td>
+        <% end %>
+        <p><%= comment.created_at %></p>
+        <% if user_signed_in? and (current_user == @topic.original_poster or current_user.has_forum_access?) %>
+          <p><%= link_to 'Edit', edit_comment_path(comment) %></p>
+        <% end %>
+      </div>
+      <div class="comment_content">
+        <p style="word-wrap:break-word;"><%= comment.show_content %></p>
+      </div>
+    </article>
+  <% end %>
+
+  <p>|
+    Page <%= params[:page] %> |
+
+    <%= link_to 'First', discussion_topic_url(:forum_id => params[:forum_id], :page => 1) %> |
+
+    <% if @previous_available %>
+      <%= previous_page "comments" %> |
+    <% end %>
+
+    <% if @next_available %>
+      <%= next_page "comments" %> |
+    <% end %>
+  </p>
+
+<% else %>
+  <h3>There are no comments yet</h3>
 <% end %>
 
 <p><%= link_to 'Comment', new_comment_url(topic_id: @topic.id) %> | 
 <%= link_to 'Back', discussion_topics_path(forum_id: @topic.general_forum_topic.id) %></p>
-<% if user_signed_in? && (@topic.is_op?(current_user.id) || current_user.admin?) %>
+<% if user_signed_in? && (@topic.is_op?(current_user.id) || current_user.has_forum_access?) %>
   <p><%= link_to 'Edit', edit_discussion_topic_path(@topic) %></p>
 <% end %>

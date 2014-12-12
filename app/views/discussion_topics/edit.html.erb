@@ -2,7 +2,7 @@
 
 <%= render 'edit_form' %>
 
-<% if user_signed_in? && current_user.admin? %>
+<% if current_user.has_forum_access? %>
   <p><%= link_to 'Back', discussion_topics_path(forum_id: @topic.general_forum_topic.id) %> | 
   <%= link_to 'Delete', @topic, method: :delete, data: { confirm: 'Are you sure?' } %></p>
 <% else %>

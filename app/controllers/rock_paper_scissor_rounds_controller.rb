@@ -10,7 +10,7 @@ class RockPaperScissorRoundsController < ApplicationController
     else
       @game = Game.find params[:game_id]
     end
-    if (@game.player_1.id != current_user.id and @game.player_2.id != current_user.id and !current_user.admin)
+    if (@game.player_1.id != current_user.id and @game.player_2.id != current_user.id and !current_user.has_game_access?)
       redirect_to games_url
     end
   end
@@ -24,6 +24,10 @@ class RockPaperScissorRoundsController < ApplicationController
       @rounds = @rounds.sort_by(&:round_number)
     else
       @rounds = RockPaperScissorRound.all
+    end
+
+    if @game.done
+      redirect_to game_path(@game)
     end
   end
 
