@@ -53,11 +53,11 @@
 <%= link_to 'First', games_url(:page => 1) %> |
 
 <% if @previous_available %>
-  <%= previous_page params[:page].to_i, params[:user_id].to_i %> |
+  <%= previous_page "games" %> |
 <% end %>
 
 <% if @next_available %>
-  <%= next_page params[:page].to_i, params[:user_id].to_i %> |
+  <%= next_page "games" %> |
 <% end %>
 
 <p>Items is <%= @items %></p>
