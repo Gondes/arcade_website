@@ -49,6 +49,19 @@
   <h2>There are no recorded games</h2>
 <% end %>
 
-<p><%= link_to 'Next Page', games_url(:page => 1) %></p>
+<p>|
+<%= link_to 'First', games_url(:page => 1) %> |
 
-<br>
+<% if @previous_available %>
+  <%= previous_page params[:page].to_i, params[:user_id].to_i %> |
+<% end %>
+
+<% if @next_available %>
+  <%= next_page params[:page].to_i, params[:user_id].to_i %> |
+<% end %>
+
+<p>Items is <%= @items %></p>
+<p>Previous is <%= @previous_available %></p>
+<p>Next is <%= @next_available %></p>
+
+</p>
