@@ -59,5 +59,9 @@
   </table>
 </div>
 
-<p><%= link_to 'Delete', @game, method: :delete, data: { confirm: 'Are you sure?' } %> | 
-<%= link_to 'Back', games_path %></p>
+<% if current_user.has_game_access? %>
+  <p><%= link_to 'Delete', @game, method: :delete, data: { confirm: 'Are you sure?' } %> | 
+  <%= link_to 'Back', games_path %></p>
+<% else %>
+  <p><%= link_to 'Back', games_path %></p>
+<% end %>
