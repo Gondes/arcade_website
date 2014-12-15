@@ -1,5 +1,5 @@
 class DiscussionTopicsController < ApplicationController
-  before_action :authenticate_new, only:[:new]
+  #before_action :authenticate_new, only:[:new]
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_discussion_topic, only: [:show, :edit, :update, :destroy]
 
@@ -36,16 +36,12 @@ class DiscussionTopicsController < ApplicationController
     end
   end
 
-  def authenticate_new
-    if (params[:forum_id].to_i == 1 or params[:forum_id].to_i == 4) or current_user.has_forum_access?
-      
-    else
-      redirect_to general_forum_topics_path
-    end
-  end
-
   def new
+    @forum = GeneralForumTopic.find(params[:forum_id])
     @topic = DiscussionTopic.new
+    if @forum.forum_access_required and !current_user.has_forum_access?
+      redirect_to general_forum_topics_path, alert: 'You cannot make a topic for this forum.'
+    end
   end
 
   def edit
