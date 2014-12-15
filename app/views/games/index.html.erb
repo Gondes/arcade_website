@@ -23,8 +23,8 @@
       <thead>
         <tr>
           <th>Finish Date</th>
-          <th>Player 1</th>
-          <th>Player 2</th>
+          <th>Challenger</th>
+          <th>Challenged</th>
           <th>Winner</th>
           <th>Best Of</th>
           <th colspan="1">Options</th>
@@ -35,8 +35,8 @@
         <% @games.each do |game| %>
           <tr>
             <td><%= game.end_date %></td>
-            <td>Lvl-<%= game.player_1.level %> <%= link_to game.player_1.user_name, user_path(game.player_1.id) %></td>
-            <td>Lvl-<%= game.player_2.level %> <%= link_to game.player_2.user_name, user_path(game.player_2.id) %></td>
+            <td>Lvl-<%= game.user_1_level %> <%= link_to game.player_1.user_name, user_path(game.player_1.id) %></td>
+            <td>Lvl-<%= game.user_2_level %> <%= link_to game.player_2.user_name, user_path(game.player_2.id) %></td>
             <td><%= game.winner_status %></td>
             <td><%= game.round_count %></td>
 

@@ -18,14 +18,25 @@
   </div>
 
   <div class="field">
-    <%= f.label :user_1_id, "Challenger" %><br>
-    <%= f.select :user_1_id, options_for_select([ [(User.find params[:user_1_id]).name, params[:user_1_id]] ]) %>
+    <p>
+      <%= f.label :user_1_id, "Challenger:" %>
+      <%= @challenger.user_name %>
+    </p>
+    <%= f.hidden_field :user_1_id, :value => params[:user_1_id].to_i %>
   </div>
 
   <div class="field">
-    <%= f.label :user_2_id, "Challenged" %><br>
-    <%= f.select :user_2_id, options_for_select([ [(User.find params[:user_2_id]).name, params[:user_2_id]] ]) %>
+    <p>
+      <%= f.label :user_2_id, "Challenged:" %>
+      <%= @challenged.user_name %>
+    </p>
+    <%= f.hidden_field :user_2_id, :value => params[:user_2_id].to_i %>
   </div>
+
+  <p>
+    <strong>Challenge Fee:</strong>
+    <%= @game.calculate_challenge_fee_from(@challenger.level, @challenged.level) %> coins
+  </p>
 
   <div class="field">
     <%= f.label :round_count, 'Select Round Count' %><br>

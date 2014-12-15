@@ -12,8 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :general_forum_topic_id, "Forum" %><br>
-    <%= f.select :general_forum_topic_id, options_for_select([ [(GeneralForumTopic.find params[:forum_id]).name, params[:forum_id]] ]) %>
+    <%= f.hidden_field :general_forum_topic_id, :value => params[:forum_id].to_i %>
   </div>
 
   <div class="field">
@@ -45,7 +44,5 @@
   <div class="actions">
     <%= f.submit %>
   </div>
-
-  <p><%= params[:user_1_id] %></p>
 
 <% end %>

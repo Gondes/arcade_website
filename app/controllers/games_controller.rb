@@ -35,8 +35,10 @@ class GamesController < ApplicationController
 
   # GET /games/new
   def new
-    if ( valid_user(params[:user_1_id].to_i) or valid_user(params[:user_2_id].to_i) )# and (params[:user_1_id] != params[:user_2_id])
+    if ( valid_user(params[:user_1_id].to_i) or valid_user(params[:user_2_id].to_i) )
       @game = Game.new
+      @challenger = User.find(params[:user_1_id])
+      @challenged = User.find(params[:user_2_id])
     else
       redirect_to games_path
     end
@@ -72,7 +74,7 @@ class GamesController < ApplicationController
           format.json { render :index, status: :created, location: @game }
         else
           @game.destroy
-          format.html { redirect_to games_url, notice: 'You cannot pay the challenge fee.' }
+          format.html { redirect_to users_url, alert: 'You cannot pay the challenge fee.' }
           format.json { render json: @game.errors, status: :unprocessable_entity }
         end
       else
@@ -115,7 +117,6 @@ class GamesController < ApplicationController
         challenged.save
         format.html { redirect_to rock_paper_scissor_rounds_path(game_id: @game.id),
                       notice: 'Challenge was accepted.' }
-      #format.html { redirect_to games_url, notice: 'Challenge was accepted.' }
       end
     end
   end

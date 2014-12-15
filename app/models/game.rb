@@ -151,4 +151,13 @@ class Game < ActiveRecord::Base
       challenge_fee
     end
   end
+
+  def calculate_challenge_fee_from(challenger_level, challenged_level)
+    challenge_fee = (challenged_level - challenger_level) * 10
+    if challenge_fee < 0
+      0
+    else
+      challenge_fee
+    end
+  end
 end
