@@ -5,11 +5,7 @@
   <p>|
     Page <%= params[:page] %> |
   
-    <% if !params[:sort].nil? && !params[:direction].nil? %>
-      <%= link_to 'First', users_url(:page => 1, :sort => params[:sort], :direction => params[:direction]) %> |
-    <% else %>
-      <%= link_to 'First', users_url(:page => 1) %> |
-    <% end %>
+    <%= link_to 'First', users_url(:page => 1, :sort => params[:sort], :direction => params[:direction]) %> |
 
     <% if @previous_available %>
       <%= previous_page "users" %> |
@@ -18,6 +14,8 @@
     <% if @next_available %>
       <%= next_page "users" %> |
     <% end %>
+
+    <%= link_to 'Last', users_url(:page => @last_page, :sort => params[:sort], :direction => params[:direction]) %> |
   </p>
 
   <div class="table-responsive">
@@ -73,11 +71,7 @@
   <p>|
     Page <%= params[:page] %> |
 
-    <% if !params[:sort].nil? && !params[:direction].nil? %>
-      <%= link_to 'First', users_url(:page => 1, :sort => params[:sort], :direction => params[:direction]) %> |
-    <% else %>
-      <%= link_to 'First', users_url(:page => 1) %> |
-    <% end %>
+    <%= link_to 'First', users_url(:page => 1, :sort => params[:sort], :direction => params[:direction]) %> |
 
     <% if @previous_available %>
       <%= previous_page "users" %> |
@@ -86,6 +80,8 @@
     <% if @next_available %>
       <%= next_page "users" %> |
     <% end %>
+
+    <%= link_to 'Last', users_url(:page => @last_page, :sort => params[:sort], :direction => params[:direction]) %> |
   </p>
 
 <% else %>

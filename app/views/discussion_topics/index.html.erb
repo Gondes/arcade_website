@@ -1,4 +1,4 @@
-<h1>Discussion Topics</h1>
+<h1><%= @forum.name %></h1>
 
 <% if !@topics.empty? %>
   <p>|
@@ -13,6 +13,8 @@
     <% if @next_available %>
       <%= next_page "topics" %> |
     <% end %>
+
+    <%= link_to 'Last', discussion_topics_url(:forum_id => @forum.id, :page => @last_page) %> |
   </p>
 
   <div class="table-responsive">
@@ -56,6 +58,8 @@
     <% if @next_available %>
       <%= next_page "topics" %> |
     <% end %>
+
+    <%= link_to 'Last', discussion_topics_url(:forum_id => @forum.id, :page => @last_page) %> |
   </p>
 
 <% else %>

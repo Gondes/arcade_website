@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     @users = User.order(sort_column + " " + sort_direction)
 
     if !(params[:page].nil?) && (params[:page].to_i > 0)
+      @last_page = (@users.count - 1) / amount + 1
       @next_available = (( @users.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
       @previous_available = params[:page].to_i > 1
       @users = @users.limit(amount).offset(amount * (params[:page].to_i - 1))

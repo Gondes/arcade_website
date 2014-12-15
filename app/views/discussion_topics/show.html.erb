@@ -22,6 +22,8 @@
     <% if @next_available %>
       <%= next_page "comments" %> |
     <% end %>
+
+    <%= link_to 'Last', discussion_topic_url(:forum_id => params[:forum_id], :page => @last_page) %> |
   </p>
 <% end %>
 
@@ -70,6 +72,8 @@
     <% if @next_available %>
       <%= next_page "comments" %> |
     <% end %>
+
+    <%= link_to 'Last', discussion_topic_url(:forum_id => params[:forum_id], :page => @last_page) %> |
   </p>
 
 <% else %>

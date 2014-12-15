@@ -11,6 +11,7 @@ class GamesController < ApplicationController
       @games = @games.order(updated_at: :desc)
       
       if !(params[:page].nil?) && (params[:page].to_i > 0)
+        @last_page = (@games.count - 1) / amount + 1
         @next_available = (( @games.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
         @previous_available = params[:page].to_i > 1
         @games = @games.limit(amount).offset(amount * (params[:page].to_i - 1))

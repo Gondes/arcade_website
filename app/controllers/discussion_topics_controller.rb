@@ -11,6 +11,7 @@ class DiscussionTopicsController < ApplicationController
       @topics = @topics.order(created_at: :desc)
 
       if !(params[:page].nil?) && (params[:page].to_i > 0)
+        @last_page = (@topics.count - 1) / amount + 1
         @next_available = (( @topics.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
         @previous_available = params[:page].to_i > 1
         @topics = @topics.limit(amount).offset(amount * (params[:page].to_i - 1))
@@ -26,6 +27,7 @@ class DiscussionTopicsController < ApplicationController
     amount = 10
     @comments = @topic.comments.order(created_at: :asc)
     if !(params[:page].nil?) && (params[:page].to_i > 0)
+      @last_page = (@comments.count - 1) / amount + 1
       @next_available = (( @comments.limit(amount).offset((amount) * (params[:page].to_i)) ).size > 0)
       @previous_available = params[:page].to_i > 1
       @comments = @comments.limit(amount).offset(amount * (params[:page].to_i - 1))
@@ -35,7 +37,9 @@ class DiscussionTopicsController < ApplicationController
   end
 
   def authenticate_new
-    if !(params[:forum_id].to_i == 1 or params[:forum_id].to_i == 4) and current_user.has_forum_access?
+    if (params[:forum_id].to_i == 1 or params[:forum_id].to_i == 4) or current_user.has_forum_access?
+      
+    else
       redirect_to general_forum_topics_path
     end
   end
